@@ -38,8 +38,6 @@ function App() {
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
-            
-
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

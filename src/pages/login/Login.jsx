@@ -73,7 +73,6 @@ const LinkTo = styled.a`
 const Login = () => {
   const dispatch = useDispatch();
   const userAuth = useSelector((state) => state.user.currentUser);
-  const currentUsername = useSelector((state) => state.user.username);
   const errorState = useSelector((state) => state.user.error.message);
   const navigate = useNavigate();
   const emailRef = useRef();
@@ -87,7 +86,7 @@ const Login = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     });
-    console.log(`${currentUsername} is authenticated`);
+   
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import './chart.scss';
 import { useEffect, useMemo, useState } from 'react';
 import axios from "axios";
 import { publicRequest, userRequest } from '../../utils/api';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AreaChart,
@@ -23,7 +24,7 @@ const dummyData = [
 
 
 const Chart = ({ aspect, title }) => {
-  const productId = "62bcae3bd756db5cb4e254ad"
+  const userId = useSelector((state) => state.user.userId);
   const [data, setdata] = useState([]);
   const MONTHS = useMemo(
     () => [
@@ -46,7 +47,9 @@ const Chart = ({ aspect, title }) => {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await publicRequest.get(`orders/find/62bc1c8ba7574cf70b422328`);
+        const res = await userRequest.get(`/orders/find/${userId}`);
+        console.log(userId)
+      
         const list = res.data.sort((a,b)=>{
             return a._id - b._id
         })

@@ -11,7 +11,7 @@ import { publicRequest, userRequest } from '../utils/api';
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
-    const res = await publicRequest.post('auth/login', user);
+    const res = await publicRequest.post('/auth/login', user);
     dispatch(loginSuccess(res.data));
     console.log('created session');
   } catch (err) {
@@ -23,7 +23,7 @@ export const login = async (dispatch, user) => {
 export const logout = async (dispatch, user) => {
   dispatch(logoutStart());
   try {
-    const res = await publicRequest.post('/auth/logout', { currentUser: user });
+    const res = await userRequest.post('/auth/logout', { currentUser: user });
     dispatch(logoutSuccess(res.data));
     console.log('currentUser logged in ?', res.data);
   } catch (err) {
