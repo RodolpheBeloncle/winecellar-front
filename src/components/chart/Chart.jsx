@@ -1,8 +1,7 @@
 import './chart.scss';
 import { useEffect, useMemo, useState } from 'react';
-import axios from "axios";
-import { publicRequest, userRequest } from '../../utils/api';
-import { useDispatch, useSelector } from 'react-redux';
+import {userRequest } from '../../utils/api';
+import { useSelector } from 'react-redux';
 
 import {
   AreaChart,
@@ -13,14 +12,14 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const dummyData = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+// const dummyData = [
+//   { name: "January", Total: 1200 },
+//   { name: "February", Total: 2100 },
+//   { name: "March", Total: 800 },
+//   { name: "April", Total: 1600 },
+//   { name: "May", Total: 900 },
+//   { name: "June", Total: 1700 },
+// ];
 
 
 const Chart = ({ aspect, title }) => {
@@ -67,7 +66,6 @@ const Chart = ({ aspect, title }) => {
     getStats();
   }, [MONTHS]);
 
-  console.log(data)
 
   return (
     <div className="chart">
