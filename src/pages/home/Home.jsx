@@ -7,12 +7,12 @@ import { useEffect, useState } from 'react';
 import { userRequest } from '../../utils/api';
 
 const Home = () => {
-  const [nbUsers, setNbUsers] = useState([]);
-  const [usersStat, setUsersStat] = useState([]);
+  const [nbCustomers, setNbCustomers] = useState([]);
+  const [customersStat, setCustomersStat] = useState(null);
 
-  // Calculate percentage difference
-  const diffStatUsers = (fstVal, scdVal) => {
-    const result = ((fstVal - scdVal) / (fstVal + scdVal / 2)) * 100;
+  // Calculate users % range betwwen last 2 months
+  const diffStatCustomers = (lstMonth, prvMonth) => {
+    const result = ((lstMonth - prvMonth) / (lstMonth + prvMonth / 2)) * 100;
     return Math.ceil(result);
   };
 
@@ -20,7 +20,7 @@ const Home = () => {
     const getAllUsers = async () => {
       try {
         const res = await userRequest.get(`/users`);
-        setNbUsers(res.data);
+        setNbCustomers(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -28,7 +28,8 @@ const Home = () => {
     const getUserStats = async () => {
       try {
         const res = await userRequest.get(`/users/stats`);
-        setUsersStat(res.data);
+        let customersStats = diffStatCustomers(res.data[0].total,res.data[1].total)
+        setCustomersStat(customersStats);
       } catch (err) {
         console.log(err);
       }
@@ -42,7 +43,11 @@ const Home = () => {
     <div className="home">
       <div className="homeContainer">
         <div className="widgets">
-          <Widget type="user" nbUsers={nbUsers.length} diff={diffStatUsers(10, 11)} />
+          <Widget
+            type="customer"
+            nbCustomers={nbCustomers.length}
+            diff={customersStat}
+          />
           <Widget type="order" />
           <Widget type="earning" />
           <Widget type="balance" />

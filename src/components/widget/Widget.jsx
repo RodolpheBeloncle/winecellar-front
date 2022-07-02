@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './widget.scss';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -7,7 +8,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import { Link } from 'react-router-dom';
 
-const Widget = ({ type, nbUsers, diff }) => {
+const Widget = ({ type, nbCustomers, diff }) => {
   let data;
 
   //temporary
@@ -15,11 +16,11 @@ const Widget = ({ type, nbUsers, diff }) => {
   // const diff = 20;
 
   switch (type) {
-    case 'user':
+    case 'customer':
       data = {
-        title: 'USERS',
-        diffStat: 6,
-        amount: nbUsers,
+        title: 'CUSTOMERS',
+        diffStat: diff,
+        amount: nbCustomers,
         isMoney: false,
         link: (
           <Link to="/users" style={{ textDecoration: 'none' }}>
@@ -88,6 +89,8 @@ const Widget = ({ type, nbUsers, diff }) => {
     default:
       break;
   }
+  
+  useEffect(() => [nbCustomers, diff]);
 
   return (
     <div className="widget">
@@ -107,10 +110,12 @@ const Widget = ({ type, nbUsers, diff }) => {
         >
           {data.diffStat < 0 ? (
             <KeyboardArrowDownIcon />
-          ) : (
+          ) : data.diffStat > 0 ? (
             <KeyboardArrowUpIcon />
+          ) : (
+            data.diffStat === 0 && ''
           )}
-          {data.diffStat ? `${data.diffStat}€` : ''}
+          {data.diffStat ? `${data.diffStat}%` : ''}
         </div>
         {data.icon}
       </div>
