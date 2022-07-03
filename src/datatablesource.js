@@ -1,3 +1,5 @@
+import wine_bottle from './img/wine24px.png';
+
 export const userColumns = [
   { field: 'id', headerName: 'ID', width: 70 },
   {
@@ -24,18 +26,18 @@ export const userColumns = [
     headerName: 'Age',
     width: 100,
   },
-  // {
-  //   field: "status",
-  //   headerName: "Status",
-  //   width: 160,
-  //   renderCell: (params) => {
-  //     return (
-  //       <div className={`cellWithStatus ${params.row.status}`}>
-  //         {params.row.status}
-  //       </div>
-  //     );
-  //   },
-  // },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 160,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.status}`}>
+          {params.row.status}
+        </div>
+      );
+    },
+  },
 ];
 
 export const productColumns = [
@@ -47,20 +49,28 @@ export const productColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          <img className="cellImg" src={params.row.img} alt="avatar" />
-          {params.row.username}
+          {params.row.img === '' ? (
+            <>
+              <img className="cellImg" src={wine_bottle} alt="winelabel" />
+              {params.row.title}
+            </>
+          ) : (
+            <>
+              <img
+                className="cellImg"
+                src={`http://localhost:8000/${params.row.img}`}
+                alt="label"
+              />
+              {params.row.title}
+            </>
+          )}
         </div>
       );
     },
   },
   {
-    field: 'title',
-    headerName: 'Title',
-    width: 230,
-  },
-  {
-    field: 'color',
-    headerName: 'Color',
+    field: 'type',
+    headerName: 'Type',
     width: 100,
   },
   {
