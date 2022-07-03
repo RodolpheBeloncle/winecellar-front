@@ -10,11 +10,13 @@ import { DarkModeContextProvider } from './context/darkModeContext';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <DarkModeContextProvider>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </DarkModeContextProvider>
+      <WinesContextProvider>
+        <DarkModeContextProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </DarkModeContextProvider>
+      </WinesContextProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

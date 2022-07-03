@@ -52,7 +52,7 @@ export const userColumns = [
 ];
 
 export const productColumns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  { field: '_id', headerName: 'ID', width: 70 },
   {
     field: 'product',
     headerName: 'Product',

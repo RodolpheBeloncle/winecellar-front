@@ -1,30 +1,30 @@
-import "./datatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
+import './datatable.scss';
+import { DataGrid } from '@mui/x-data-grid';
 // import { userColumns, userRows } from "../../datatablesource";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
-const Datatable = ({productColumns, userRows}) => {
-  const [data, setData] = useState(userRows);
-
+const Datatable = ({ productColumns, wineData }) => {
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    wineData.filter((item) => item._id !== id);
   };
+
+  useEffect(() => {}, []);
 
   const actionColumn = [
     {
-      field: "action",
-      headerName: "Action",
+      field: 'action',
+      headerName: 'Action',
       width: 200,
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link to="/users/test" style={{ textDecoration: 'none' }}>
               <div className="viewButton">View</div>
             </Link>
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row._id)}
             >
               Delete
             </div>
@@ -43,7 +43,8 @@ const Datatable = ({productColumns, userRows}) => {
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        getRowId={(r) => r._id}
+        rows={wineData}
         columns={productColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}

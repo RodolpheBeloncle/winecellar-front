@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { publicRequest } from '../utils/api';
-import axios from 'axios';
 
 export const WinesContext = createContext();
 
