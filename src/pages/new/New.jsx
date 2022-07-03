@@ -1,13 +1,16 @@
 import './new.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { sizeSelection, typeSelection } from '../../formSource';
-import { useState } from 'react';
+import { userRequest } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const New = ({ inputs, title }) => {
+  const navigate = useNavigate();
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
     title: '',
-    description: '',
+    desc: '',
     vintage: '',
     price: '',
     quantity: '',
@@ -18,9 +21,52 @@ const New = ({ inputs, title }) => {
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
+
+    if (e.target.name === 'type' || e.target.name === 'size') {
+      setInputsValue((prevState) => ({ ...prevState, [name]: value }));
+    }
+
     setInputsValue((prevState) => ({ ...prevState, [name]: value }));
-    console.log(inputsValue);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+
+    const { title, desc, vintage, price, quantity, type, size } =
+      inputsValue;
+    data.append('title', title);
+    data.append('desc', desc);
+    data.append('vintage', vintage);
+    data.append('quantity', quantity);
+    data.append('price', price);
+    data.append('size', size);
+    data.append('type', type);
+
+    if (file) {
+      try {
+        data.append('img', file);
+      } catch (err) {
+        alert(`something went wrong with this file`);
+      }
+    }
+
+    try {
+      await userRequest.post(`/products/`, data).then(({ data }) => {
+        console.log('response', data);
+        alert(`your ${inputsValue.title} is in stock`);
+
+        navigate('/products');
+      });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    console.log('inputField', inputsValue);
+  }, [inputsValue]);
 
   return (
     <div className="new">
@@ -91,7 +137,7 @@ const New = ({ inputs, title }) => {
                   ))}
                 </select>
               </div>
-              <button>Send</button>
+              <button onClick={(e) => handleSubmit(e)}>create</button>
             </form>
           </div>
         </div>
