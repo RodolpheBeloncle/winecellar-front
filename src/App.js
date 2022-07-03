@@ -1,9 +1,7 @@
 import { useContext } from 'react';
-import { WinesContext } from './wineContext/WinesContextProvider';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import List from './pages/list/List';
-import { productColumns, userRows } from './datatablesource';
 import NotFound from './pages/notFound/NotFound';
 import PrivateRoutes from './components/privateRoutes/PrivateRoutes';
 import Single from './pages/single/Single';
@@ -16,7 +14,6 @@ import { DarkModeContext } from './context/darkModeContext';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
-  const { wineData } = useContext(WinesContext);
   return (
     <div className={darkMode ? 'app dark' : 'app'}>
       <BrowserRouter>
@@ -25,9 +22,9 @@ function App() {
           <Route path="/" element={<PrivateRoutes />}>
             <Route index element={<Home />} />
 
-            <Route path="users">
-              <Route index element={<List />} />
-              <Route path=":userId" element={<Single />} />
+            <Route path="customer">
+              <Route index element={<List dataType={'customer'} />} />
+              <Route path=":customerId" element={<Single />} />
               {/* <Route
                 path="new"
                 element={<NewProduct inputs={userInputs} title="Add NewCustomer" />}
@@ -35,13 +32,11 @@ function App() {
             </Route>
 
             <Route path="products">
+              <Route index element={<List dataType={'product'} />} />
               <Route
-                index
-                element={
-                  <List productColumns={productColumns} wineData={wineData} />
-                }
+                path=":productId"
+                element={<SingleProduct />}
               />
-              <Route path=":productId" element={<SingleProduct wineData={wineData} />} />
               <Route
                 path="new"
                 element={

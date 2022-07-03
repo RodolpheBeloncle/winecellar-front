@@ -4,12 +4,17 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const Datatable = ({ productColumns, wineData }) => {
+const Datatable = ({ headersColumns, nestedData ,title}) => {
   const handleDelete = (id) => {
-    wineData.filter((item) => item._id !== id);
+    nestedData.filter((item) => item._id !== id);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("customlistdata",nestedData)
+
+
+
+  }, []);
 
   const actionColumn = [
     {
@@ -19,7 +24,7 @@ const Datatable = ({ productColumns, wineData }) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: 'none' }}>
+            <Link to={`/${title}s/${params.row._id}`} style={{ textDecoration: 'none' }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -36,16 +41,16 @@ const Datatable = ({ productColumns, wineData }) => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
-        <Link to="/users/new" className="link">
+        Add New {title}
+        <Link to={`${title}s/new`} className="link">
           Add New
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         getRowId={(r) => r._id}
-        rows={wineData}
-        columns={productColumns.concat(actionColumn)}
+        rows={nestedData}
+        columns={headersColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

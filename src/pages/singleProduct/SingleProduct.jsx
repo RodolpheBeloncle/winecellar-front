@@ -3,9 +3,9 @@ import wine_bottle from '../../img/wine-bottle.png';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 
-const SingleProduct = ({wineData}) => {
+const SingleProduct = () => {
 
-  console.log(wineData)
+ 
   
   return (
     <div className="single">
