@@ -1,11 +1,11 @@
-import './newProduct.scss';
+import './newCustomer.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { sizeSelection, typeSelection } from '../../formSource';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const NewProduct = ({ inputs, title }) => {
+const NewCustomer = ({ inputs, title }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
@@ -69,8 +69,8 @@ const NewProduct = ({ inputs, title }) => {
   }, [inputsValue]);
 
   return (
-    <div className="newProducts">
-      <div className="newProductsContainer">
+    <div className="newOrder">
+      <div className="newOrderContainer">
         <div className="top">
           <h1>{title}</h1>
         </div>
@@ -146,5 +146,5 @@ const NewProduct = ({ inputs, title }) => {
   );
 };
 
-export default NewProduct
+export default NewCustomer
 ;

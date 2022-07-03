@@ -1,11 +1,12 @@
-import './single.scss';
+import './singleProduct.scss';
+import wine_bottle from '../../img/wine-bottle.png';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 
-const Single = ({wineData}) => {
+const SingleProduct = ({wineData}) => {
 
-  let emptyAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-
+  console.log(wineData)
+  
   return (
     <div className="single">
       <div className="singleContainer">
@@ -55,4 +56,4 @@ const Single = ({wineData}) => {
   );
 };
 
-export default Single;
+export default SingleProduct;
