@@ -4,6 +4,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import WinesContextProvider from './wineContext/WinesContextProvider';
 import { DarkModeContextProvider } from './context/darkModeContext';
 
 ReactDOM.render(

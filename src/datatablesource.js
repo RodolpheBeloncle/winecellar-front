@@ -1,4 +1,15 @@
-import wine_bottle from './img/wine24px.png';
+import wine_bottle from './img/wine-bottle.png';
+import validStock from './img/valid.png';
+import cautionStock from './img/caution.png';
+import warningStock from './img/warning.png';
+
+export const stockStatus = {
+  outOfStock: 'outOfStock',
+  toOrder: 'order',
+  valid: 'valid',
+};
+
+
 
 export const userColumns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -49,7 +60,7 @@ export const productColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          {params.row.img === '' ? (
+          {params.row.img === "" ? (
             <>
               <img className="cellImg" src={wine_bottle} alt="winelabel" />
               {params.row.title}
@@ -79,13 +90,39 @@ export const productColumns = [
     width: 100,
   },
   {
+    field: 'price',
+    headerName: 'Price',
+    width: 100,
+  },
+  {
     field: 'quantity',
     headerName: 'Quantity',
     width: 160,
     renderCell: (params) => {
       return (
-        <div className={`cellWithStatus ${params.row.quantity}`}>
-          {params.row.quantity}
+        <div className="cellWithImg">
+          {params.row.quantity >= 3 ? (
+            <>
+              <img className="cellImg" src={validStock} alt="stateStock" />
+              <div className={`cellWithStatus ${stockStatus.valid}`}>
+                {params.row.quantity}
+              </div>
+            </>
+          ) : params.row.quantity > 0 && params.row.quantity < 3 ? (
+            <>
+              <img className="cellImg" src={cautionStock} alt="stateStock" />
+              <div className={`cellWithStatus ${stockStatus.toOrder}`}>
+                {params.row.quantity}
+              </div>
+            </>
+          ) : (
+            <>
+              <img className="cellImg" src={warningStock} alt="stateStock" />
+              <div className={`cellWithStatus ${stockStatus.outOfSotck}`}>
+                {params.row.quantity}
+              </div>
+            </>
+          )}
         </div>
       );
     },
@@ -113,7 +150,7 @@ export const userRows = [
   {
     id: 3,
     username: 'Lannister',
-    img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    img: '',
     email: '3snow@gmail.com',
     status: 'pending',
     age: 45,

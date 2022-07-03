@@ -117,17 +117,4 @@ export const typeSelection = [
   },
 ];
 
-export const statusSelection = [
-  {
-    label: 'InStock',
-    value: 'inStock',
-  },
-  {
-    label: 'OutOfStock',
-    value: 'outOfStock',
-  },
-  {
-    label: 'OnOrder',
-    value: 'onOrder',
-  }
-];
+

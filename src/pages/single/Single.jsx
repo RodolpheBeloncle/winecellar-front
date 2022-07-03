@@ -3,6 +3,8 @@ import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 
 const Single = () => {
+
+  let emptyAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
   return (
     <div className="single">
       <div className="singleContainer">
