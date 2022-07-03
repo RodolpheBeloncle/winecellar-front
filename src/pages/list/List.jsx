@@ -1,9 +1,12 @@
 import './list.scss';
 import { useContext } from 'react';
 import Datatable from '../../components/datatable/Datatable';
-import { productColumns, userRows, userColumns } from '../../datatablesource';
+import {
+  productColumns,
+  customerData,
+  customerColumns,
+} from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
-import { Link } from 'react-router-dom';
 
 const List = ({ dataType }) => {
   const { wineData } = useContext(WinesContext);
@@ -15,8 +18,8 @@ const List = ({ dataType }) => {
       data = {
         customList: (
           <Datatable
-            headersColumns={userColumns}
-            nestedData={userRows}
+            headersColumns={customerColumns}
+            nestedData={customerData}
             title={dataType}
           />
         ),

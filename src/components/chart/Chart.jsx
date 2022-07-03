@@ -47,7 +47,7 @@ const Chart = ({ aspect, title }) => {
     const getStats = async () => {
       try {
         const res = await userRequest.get(`/orders/find/${userId}`);
-        console.log(userId)
+        console.log("chart userId",userId)
       
         const list = res.data.sort((a,b)=>{
             return a._id - b._id

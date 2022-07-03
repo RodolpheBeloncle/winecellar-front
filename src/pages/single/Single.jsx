@@ -1,10 +1,45 @@
 import './single.scss';
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import wine_bottle from '../../img/wine-bottle.png';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
+import { customerData } from '../../datatablesource';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 
-const Single = ({wineData}) => {
+const Single = ({ dataType }) => {
+  let selectedId = useParams();
 
-  let emptyAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+  const [selectedItem, setSelectedItem] = useState([]);
+  const { wineData } = useContext(WinesContext);
+  let data;
+
+  switch (dataType) {
+    case 'customer':
+      data = {
+        selected: Object.values(selectedId),
+      };
+      break;
+    case 'product':
+      data = {
+        selected: Object.values(selectedId),
+      };
+      break;
+
+    default:
+      break;
+  }
+
+  useEffect(() => {
+    console.log('data.infoById', data.selected[0]);
+    wineData
+      .filter((element) => {
+        return element._id === data.selected[0];
+      })
+      .map((item) => console.log(item));
+
+   
+  }, [data.selected[0]]);
 
   return (
     <div className="single">

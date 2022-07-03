@@ -5,7 +5,6 @@ import List from './pages/list/List';
 import NotFound from './pages/notFound/NotFound';
 import PrivateRoutes from './components/privateRoutes/PrivateRoutes';
 import Single from './pages/single/Single';
-import SingleProduct from './pages/singleProduct/SingleProduct';
 import NewProduct from './pages/newProduct/NewProduct';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { productInputs, userInputs } from './formSource';
@@ -22,9 +21,9 @@ function App() {
           <Route path="/" element={<PrivateRoutes />}>
             <Route index element={<Home />} />
 
-            <Route path="customer">
+            <Route path="customers">
               <Route index element={<List dataType={'customer'} />} />
-              <Route path=":customerId" element={<Single />} />
+              <Route path=":customerId" element={<Single  dataType={'customer'}/>} />
               {/* <Route
                 path="new"
                 element={<NewProduct inputs={userInputs} title="Add NewCustomer" />}
@@ -35,7 +34,7 @@ function App() {
               <Route index element={<List dataType={'product'} />} />
               <Route
                 path=":productId"
-                element={<SingleProduct />}
+                element={<Single dataType={'product'} />}
               />
               <Route
                 path="new"
