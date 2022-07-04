@@ -10,19 +10,28 @@ import { WinesContext } from '../../wineContext/WinesContextProvider';
 const Single = ({ dataType }) => {
   let selectedId = useParams();
 
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedItem, setSelectedItem] = useState();
   const { wineData } = useContext(WinesContext);
+
   let data;
 
   switch (dataType) {
-    case 'customer':
-      data = {
-        selected: Object.values(selectedId),
-      };
-      break;
     case 'product':
       data = {
-        selected: Object.values(selectedId),
+        selected: wineData
+          .filter((element) => {
+            return element._id === selectedId.productId;
+          })
+          .map((item) => item),
+      };
+      break;
+    case 'customer':
+      data = {
+        selected: customerData
+          .filter((element) => {
+            return element._id === parseInt(Object.values(selectedId));
+          })
+          .map((item) => item),
       };
       break;
 
@@ -30,16 +39,7 @@ const Single = ({ dataType }) => {
       break;
   }
 
-  useEffect(() => {
-    console.log('data.infoById', data.selected[0]);
-    wineData
-      .filter((element) => {
-        return element._id === data.selected[0];
-      })
-      .map((item) => console.log(item));
-
-   
-  }, [data.selected[0]]);
+  useEffect(() => {}, []);
 
   return (
     <div className="single">

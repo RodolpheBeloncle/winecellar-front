@@ -11,8 +11,6 @@ const Datatable = ({ headersColumns, nestedData ,title}) => {
   useEffect(() => {
     console.log("customlistdata",nestedData)
 
-
-
   }, []);
 
   const actionColumn = [
