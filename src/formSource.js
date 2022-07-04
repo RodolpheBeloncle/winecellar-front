@@ -64,14 +64,20 @@ export const productInputs = [
   {
     id: 4,
     label: 'Price',
-    type: 'text',
-    placeholder: '100',
+    type: 'number',
+    placeholder: 100,
   },
   {
     id: 5,
     label: 'Quantity',
     type: 'number',
     placeholder: 0,
+  },
+  {
+    id: 6,
+    label: 'Country',
+    type: 'text',
+    placeholder: 'country',
   },
 ];
 
@@ -115,6 +121,12 @@ export const typeSelection = [
     label: 'Sparkling',
     value: 'sparkling',
   },
+  {
+    label: 'Brandy',
+    value: 'brandy',
+  },
+  {
+    label: 'VDL / VDN',
+    value: 'vdl / vdn',
+  },
 ];
-
-

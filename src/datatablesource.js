@@ -118,7 +118,7 @@ export const productColumns = [
           ) : (
             <>
               <img className="cellImg" src={warningStock} alt="stateStock" />
-              <div className={`cellWithStatus ${stockStatus.outOfSotck}`}>
+              <div className={`cellWithStatus ${stockStatus.outOfStock}`}>
                 {params.row.quantity}
               </div>
             </>

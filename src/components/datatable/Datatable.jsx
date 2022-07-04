@@ -1,20 +1,18 @@
 import './datatable.scss';
-import { useEffect,useContext } from 'react';
+import { useEffect} from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { Link } from 'react-router-dom';
 
-
 const Datatable = ({ headersColumns, nestedData, title }) => {
-  const { wineData } = useContext(WinesContext);
+
   const handleDelete = (id) => {
     nestedData.filter((item) => item._id !== id);
   };
 
   useEffect(() => {
     console.log('customlistdata', nestedData);
-    console.log("winedata",wineData)
-  }, [wineData]);
+   
+  }, []);
 
   const actionColumn = [
     {

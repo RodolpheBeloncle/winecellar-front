@@ -1,21 +1,20 @@
 import './newProduct.scss';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { sizeSelection, typeSelection } from '../../formSource';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const NewProduct = ({ inputs, title }) => {
   const navigate = useNavigate();
-  const { wineData } = useContext(WinesContext);
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
     title: '',
     desc: '',
     vintage: '',
-    price: '',
-    quantity: '',
+    price: 0,
+    quantity: 0,
+    country: '',
     type: '',
     size: '',
   });
@@ -36,11 +35,13 @@ const NewProduct = ({ inputs, title }) => {
 
     const data = new FormData();
 
-    const { title, desc, vintage, price, quantity, type, size } = inputsValue;
+    const { title, desc, vintage, price, quantity, country, type, size } =
+      inputsValue;
     data.append('title', title);
     data.append('desc', desc);
     data.append('vintage', vintage);
     data.append('quantity', quantity);
+    data.append('country', country);
     data.append('price', price);
     data.append('size', size);
     data.append('type', type);
@@ -67,7 +68,7 @@ const NewProduct = ({ inputs, title }) => {
 
   useEffect(() => {
     console.log('inputField', inputsValue);
-  }, [inputsValue, wineData]);
+  }, [inputsValue]);
 
   return (
     <div className="newProduct">

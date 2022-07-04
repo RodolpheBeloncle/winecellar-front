@@ -1,6 +1,7 @@
 import './list.scss';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Datatable from '../../components/datatable/Datatable';
+import { publicRequest } from '../../utils/api';
 import {
   productColumns,
   customerData,
@@ -9,7 +10,16 @@ import {
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const List = ({ dataType }) => {
-  const { wineData } = useContext(WinesContext);
+  const { wineData, setWineData } = useContext(WinesContext);
+
+  const getWineData = async () => {
+    const res = await publicRequest.get('/products/');
+    setWineData(res.data);
+  };
+
+  useEffect(() => {
+    getWineData();
+  }, []);
 
   let data;
 
