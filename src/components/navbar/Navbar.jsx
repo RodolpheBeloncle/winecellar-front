@@ -17,6 +17,7 @@ import { useContext } from 'react';
 const Navbar = () => {
   const dispatcher = useDispatch();
   const navigate = useNavigate();
+  const quantity = useSelector((state) => state.cart.quantity);
   const userAuth = useSelector((state) => state.user.currentUser);
   const { dispatch } = useContext(DarkModeContext);
 
@@ -24,6 +25,10 @@ const Navbar = () => {
     console.log('user is authenticated after logout', userAuth);
     logout(dispatcher, userAuth);
     localStorage.removeItem('persist:globalState');
+  };
+
+  const onCart = () => {
+    navigate('new/invoice');
   };
 
   useEffect(() => {
@@ -68,6 +73,14 @@ const Navbar = () => {
               alt=""
               className="avatar"
             />
+          </div>
+          <div className="item" onClick={onCart}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1007/1007908.png"
+              alt=""
+              className="avatar"
+            />
+            <div className="counter">{quantity}</div>
           </div>
           <div className="item">
             <LogoutIcon onClick={handleDisconnect} className="icon" />
