@@ -9,7 +9,7 @@ export const stockStatus = {
   valid: 'valid',
 };
 
-
+// customer headers
 
 export const customerColumns = [
   { field: '_id', headerName: 'ID', width: 70 },
@@ -51,6 +51,8 @@ export const customerColumns = [
   },
 ];
 
+// product headers
+
 export const productColumns = [
   { field: '_id', headerName: 'ID', width: 70 },
   {
@@ -60,7 +62,7 @@ export const productColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          {params.row.img === "" ? (
+          {params.row.img === '' ? (
             <>
               <img className="cellImg" src={wine_bottle} alt="winelabel" />
               {params.row.title}
@@ -128,6 +130,9 @@ export const productColumns = [
     },
   },
 ];
+
+// order headers
+// use table rows
 
 //temporary data
 export const customerData = [

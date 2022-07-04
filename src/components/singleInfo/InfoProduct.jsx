@@ -1,6 +1,10 @@
 import React from 'react';
 
-const InfoProduct = ({info}) => {
+const InfoProduct = ({ info }) => {
+  const totalStockValue = () => {
+    let result = info.quantity * info.price;
+    return result;
+  };
   return (
     <div>
       <div className="editButton">Edit</div>
@@ -14,20 +18,30 @@ const InfoProduct = ({info}) => {
         <div className="details">
           <h1 className="itemTitle">{info.title}</h1>
           <div className="detailItem">
-            <span className="itemKey">Email:</span>
-            <span className="itemValue">janedoe@gmail.com</span>
-          </div>
-          <div className="detailItem">
-            <span className="itemKey">Phone:</span>
-            <span className="itemValue">+1 2345 67 89</span>
-          </div>
-          <div className="detailItem">
-            <span className="itemKey">Address:</span>
-            <span className="itemValue">Elton St. 234 Garden Yd. NewYork</span>
-          </div>
-          <div className="detailItem">
             <span className="itemKey">Country:</span>
-            <span className="itemValue">USA</span>
+            <span className="itemValue">{info.country}</span>
+          </div>
+          {/* <div className="detailItem">
+            <span className="itemKey">Description:</span>
+            <span className="itemValue">{info.desc}</span>
+          </div> */}
+          <div className="detailItem">
+            <span className="itemKey">type:</span>
+            <span className="itemValue">{info.type}</span>
+          </div>
+          <div className="detailItem">
+            <span className="itemKey">Quantity:</span>
+            <span className="itemValue">
+              {info.quantity && `${info.quantity}`}{' '}
+            </span>
+          </div>
+          <div className="detailItem">
+            <span className="itemKey">Unit Price:</span>
+            <span className="itemValue">{info.price && `${info.price}€`} </span>
+          </div>
+          <div className="detailItem">
+            <span className="itemKey">Stock Value:</span>
+            <span className="itemValue">{`${totalStockValue()}€`} </span>
           </div>
         </div>
       </div>

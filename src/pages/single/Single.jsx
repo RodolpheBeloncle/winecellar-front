@@ -67,7 +67,10 @@ const Single = ({ dataType }) => {
             {dataType === 'customer' && <>{customerInfo}</>}
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
+            <Chart
+              aspect={3 / 1}
+              title={`sales ${dataType} ( Last 6 Months)`}
+            />
           </div>
         </div>
         <div className="bottom">

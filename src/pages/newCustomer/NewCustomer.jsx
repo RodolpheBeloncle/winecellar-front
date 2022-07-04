@@ -69,7 +69,7 @@ const NewCustomer = ({ inputs, title }) => {
   }, [inputsValue]);
 
   return (
-    <div className="newOrder">
+    <div className="newCustomer">
       <div className="newOrderContainer">
         <div className="top">
           <h1>{title}</h1>
