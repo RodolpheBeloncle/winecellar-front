@@ -1,17 +1,20 @@
 import './datatable.scss';
+import { useEffect,useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
-const Datatable = ({ headersColumns, nestedData ,title}) => {
+
+const Datatable = ({ headersColumns, nestedData, title }) => {
+  const { wineData } = useContext(WinesContext);
   const handleDelete = (id) => {
     nestedData.filter((item) => item._id !== id);
   };
 
   useEffect(() => {
-    console.log("customlistdata",nestedData)
-
-  }, []);
+    console.log('customlistdata', nestedData);
+    console.log("winedata",wineData)
+  }, [wineData]);
 
   const actionColumn = [
     {
@@ -21,7 +24,10 @@ const Datatable = ({ headersColumns, nestedData ,title}) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/${title}s/${params.row._id}`} style={{ textDecoration: 'none' }}>
+            <Link
+              to={`/${title}s/${params.row._id}`}
+              style={{ textDecoration: 'none' }}
+            >
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -39,7 +45,7 @@ const Datatable = ({ headersColumns, nestedData ,title}) => {
     <div className="datatable">
       <div className="datatableTitle">
         Add New {title}
-        <Link to={`${title}s/new`} className="link">
+        <Link to={`/${title}s/new`} className="link">
           Add New
         </Link>
       </div>

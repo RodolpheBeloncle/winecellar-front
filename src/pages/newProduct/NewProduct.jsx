@@ -1,12 +1,14 @@
 import './newProduct.scss';
+import { useState, useEffect, useContext } from 'react';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { sizeSelection, typeSelection } from '../../formSource';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 const NewProduct = ({ inputs, title }) => {
   const navigate = useNavigate();
+  const { wineData } = useContext(WinesContext);
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
     title: '',
@@ -34,8 +36,7 @@ const NewProduct = ({ inputs, title }) => {
 
     const data = new FormData();
 
-    const { title, desc, vintage, price, quantity, type, size } =
-      inputsValue;
+    const { title, desc, vintage, price, quantity, type, size } = inputsValue;
     data.append('title', title);
     data.append('desc', desc);
     data.append('vintage', vintage);
@@ -66,7 +67,7 @@ const NewProduct = ({ inputs, title }) => {
 
   useEffect(() => {
     console.log('inputField', inputsValue);
-  }, [inputsValue]);
+  }, [inputsValue, wineData]);
 
   return (
     <div className="newProduct">
@@ -116,22 +117,30 @@ const NewProduct = ({ inputs, title }) => {
               <div className="formInput">
                 <label>Type</label>
                 <select
+                  defaultValue={'DEFAULT'}
                   name="type"
                   onChange={(e) => {
                     handleChange(e);
                   }}
                 >
+                  <option value="DEFAULT" disabled>
+                    Choose wine type
+                  </option>
                   {typeSelection.map((option) => (
                     <option value={option.value}>{option.label}</option>
                   ))}
                 </select>
                 <label>Content</label>
                 <select
+                  defaultValue={'DEFAULT'}
                   name="size"
                   onChange={(e) => {
                     handleChange(e);
                   }}
                 >
+                  <option value="DEFAULT" disabled>
+                    Choose content
+                  </option>
                   {sizeSelection.map((option) => (
                     <option value={option.value}>{option.label}</option>
                   ))}
@@ -146,5 +155,4 @@ const NewProduct = ({ inputs, title }) => {
   );
 };
 
-export default NewProduct
-;
+export default NewProduct;

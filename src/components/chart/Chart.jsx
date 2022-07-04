@@ -1,6 +1,6 @@
 import './chart.scss';
 import { useEffect, useMemo, useState } from 'react';
-import {userRequest } from '../../utils/api';
+import { userRequest } from '../../utils/api';
 import { useSelector } from 'react-redux';
 
 import {
@@ -20,7 +20,6 @@ import {
 //   { name: "May", Total: 900 },
 //   { name: "June", Total: 1700 },
 // ];
-
 
 const Chart = ({ aspect, title }) => {
   const userId = useSelector((state) => state.user.userId);
@@ -47,11 +46,11 @@ const Chart = ({ aspect, title }) => {
     const getStats = async () => {
       try {
         const res = await userRequest.get(`/orders/find/${userId}`);
-        console.log("chart userId",userId)
-      
-        const list = res.data.sort((a,b)=>{
-            return a._id - b._id
-        })
+        console.log('chart userId', userId);
+
+        const list = res.data.sort((a, b) => {
+          return a._id - b._id;
+        });
         list.map((item) =>
           setdata((prev) => [
             ...prev,
@@ -62,10 +61,9 @@ const Chart = ({ aspect, title }) => {
         console.log(err);
       }
     };
-    console.log("data",data)
+
     getStats();
   }, [MONTHS]);
-
 
   return (
     <div className="chart">
