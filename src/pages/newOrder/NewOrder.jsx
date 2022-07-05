@@ -8,8 +8,9 @@ import { productColumns } from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
-
   const { wineData } = useContext(WinesContext);
+  const [selectedId, setSelectedId] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState([]);
 
   const handleDelete = (id) => {
     wineData.filter((item) => item._id !== id);
@@ -18,13 +19,20 @@ const NewOrder = () => {
   let dataSelected = {
     _id: 9,
     title: 'Roxie',
-    type:'rosé',
+    type: 'rosé',
     img: 'uploads/img/fe8eed6cbbf6f9bd705d6e2ea29c6548',
     country: 'France',
     quantity: 1,
     price: 65,
   };
- 
+
+  useEffect(() => {
+    wineData
+      .filter((element) => {
+        return element._id === selectedId[0];
+      })
+      .map((item) => setSelectedProduct(item));
+  }, [selectedId]);
 
   const actionColumn = [
     {
@@ -48,13 +56,12 @@ const NewOrder = () => {
     },
   ];
 
-
   return (
     <div className="newOrder">
       <div className="newOrderContainer">
         <div className="top">
           <div className="left">
-            <InfoProduct info={dataSelected} />
+            <InfoProduct info={selectedProduct} />
           </div>
           {/* <div className="right">
 ==== shopping car increase or decrease amount product
@@ -74,7 +81,12 @@ const NewOrder = () => {
               columns={productColumns.concat(actionColumn)}
               pageSize={9}
               rowsPerPageOptions={[9]}
-              checkboxSelection
+              onSelectionModelChange={(ids) => {
+                console.log(ids);
+                setSelectedId(ids);
+              }}
+              selectionModel={selectedId}
+              // checkboxSelection
             />
           </div>
         </div>
