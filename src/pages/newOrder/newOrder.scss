@@ -75,6 +75,34 @@
       margin: 10px 20px;
     }
 
+    .addContainer {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .amountContainer {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+
+        span {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 0.7rem;
+          border: 1px solid teal;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0rem 0.4rem;
+        }
+
+        p {
+          cursor: pointer;
+        }
+      }
+    }
+
     .title {
       font-size: 16px;
       color: lightgray;
