@@ -8,7 +8,7 @@ import Single from './pages/single/Single';
 import NewProduct from './pages/newProduct/NewProduct';
 import NewOrder from './pages/newOrder/NewOrder';
 import NewCustomer from './pages/newCustomer/NewCustomer';
-import Table from './components/table/Table';
+import OrderTable from './components/orderTable/OrderTable';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { productInputs, userInputs } from './formSource';
 import './style/dark.scss';
@@ -51,12 +51,8 @@ function App() {
             </Route>
 
             <Route path="orders">
-              <Route index element={<Table />} />
-              <Route path=":orderId" element={<Single dataType={'order'} />} />
-              <Route
-                path="new"
-                element={<NewOrder inputs={userInputs} title="New Order" />}
-              />
+              <Route index element={<OrderTable />} />
+              <Route path="new" element={<NewOrder title="New Order" />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -12,11 +12,10 @@ import { WinesContext } from '../../wineContext/WinesContextProvider';
 const Single = ({ dataType }) => {
   let selectedId = useParams();
 
-  const [selectedItem, setSelectedItem] = useState([]);
+  // const [selectedItem, setSelectedItem] = useState([]);
   const { wineData } = useContext(WinesContext);
 
   let data;
-  let selectedInfo;
 
   switch (dataType) {
     case 'product':
@@ -55,7 +54,7 @@ const Single = ({ dataType }) => {
 
   useEffect(() => {
     console.log('element Selected', data.selected);
-    setSelectedItem(data.selected);
+    // setSelectedItem(data.selected);
   }, []);
 
   return (

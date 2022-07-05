@@ -81,22 +81,15 @@ export const productInputs = [
   },
 ];
 
-export const sizeSelection = [
+export const orderInputs = [
   {
-    label: 'Bottle',
-    value: '75cl',
-  },
-  {
-    label: 'Magnum',
-    value: '150cl',
-  },
-  {
-    label: 'Dbl Magnum',
-    value: '300cl',
-  },
-  {
-    label: 'Jéroboam',
-    value: '500cl',
+    userId: '',
+    customer: '',
+    products:'',
+    paymentMethod: '',
+    amount: 0,
+    address: '',
+   
   },
 ];
 
@@ -128,5 +121,24 @@ export const typeSelection = [
   {
     label: 'VDL / VDN',
     value: 'vdl / vdn',
+  },
+];
+
+export const sizeSelection = [
+  {
+    label: 'Bottle',
+    value: '75cl',
+  },
+  {
+    label: 'Magnum',
+    value: '150cl',
+  },
+  {
+    label: 'Dbl Magnum',
+    value: '300cl',
+  },
+  {
+    label: 'Jéroboam',
+    value: '500cl',
   },
 ];
