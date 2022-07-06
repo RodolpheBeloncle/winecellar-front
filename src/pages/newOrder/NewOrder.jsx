@@ -8,17 +8,54 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { publicRequest } from '../../utils/api';
 import { productColumns } from '../../datatablesource';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
   const dispatch = useDispatch();
   const { wineData, setWineData } = useContext(WinesContext);
   const [selectedId, setSelectedId] = useState([]);
+  const [prevSelectedId, setPrevSelectedId] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
-  const [productQty,setProductQty] = useState(0);
+  const [initQty, setInitQty] = useState({});
+  const [productQty, setProductQty] = useState(0);
 
   const handleDelete = (id) => {
     wineData.filter((item) => item._id !== id);
+  };
+
+  const initialQty = async () => {
+    const { data } = await publicRequest.get('/products/');
+    data
+      .filter((element) => {
+        return element._id === selectedId[0];
+      })
+      .map((item) => {
+        setSelectedProduct(item);
+      });
+  };
+
+  const checkInitialQty = async () => {
+    const { data } = await publicRequest.get('/products/');
+    data
+      .filter((element) => {
+        return element._id === selectedId[0];
+      })
+      .map((item) => {
+        setInitQty(item);
+      });
+  };
+
+  const backToInitialStock = () => {
+    initialQty();
+    wineData
+      .filter((element) => {
+        return element._id === selectedId[0];
+      })
+      .map((item) => {
+        item.quantity = selectedProduct.quantity;
+        setProductQty(0);
+      });
   };
 
   const handleQuantity = (type) => {
@@ -28,11 +65,8 @@ const NewOrder = () => {
           return element._id === selectedId[0];
         })
         .map((item) => {
-          if (item.quantity > 0) {
-            item.quantity -= 1;
-            setProductQty(item.quantity)
-          }
-          setSelectedProduct(item);
+          setProductQty((prevState) => prevState - 1);
+          item.quantity += 1;
         });
     } else {
       wineData
@@ -40,9 +74,8 @@ const NewOrder = () => {
           return element._id === selectedId[0];
         })
         .map((item) => {
-          item.quantity += 1;
-          setProductQty(item.quantity)
-          setSelectedProduct(item);
+          setProductQty((prevState) => prevState + 1);
+          item.quantity -= 1;
         });
     }
   };
@@ -60,23 +93,8 @@ const NewOrder = () => {
         setSelectedProduct(item);
       });
 
-    //   function setArrayElement(array, index, value) {
-    //     array = array.slice();
-    //     array[index] = value;
-    //     return array;
-    // }
+    checkInitialQty();
   }, [selectedId]);
-
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get('/products/find/' + selectedId[0]);
-        setWineData(res.data);
-      } catch {}
-    };
-
-    getProduct();
-  }, []);
 
   const actionColumn = [
     {
@@ -84,39 +102,41 @@ const NewOrder = () => {
       headerName: 'Action',
       width: 200,
       renderCell: (params) => {
+        setPrevSelectedId(params.row._id);
         return (
           <div className="cellAction">
             {selectedId[0] === params.row._id && (
-              <div className="addContainer">
-                <div className="amountContainer">
-                  <p
-                    className="minus"
-                    onClick={() => {
-                      handleQuantity('dec');
-                    }}
-                  >
-                    -
-                  </p>
-                  <span type="text" className="amount">
-                    {params.row.quantity}
-                  </span>
-                  <p
-                    className="plus"
-                    onClick={() => {
-                      handleQuantity('inc', params);
-                    }}
-                  >
-                    +
-                  </p>
+              <>
+                <div className="addContainer">
+                  <div className="amountContainer">
+                    <p
+                      className="minus"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleQuantity('dec');
+                      }}
+                    >
+                      -
+                    </p>
+                    <span type="text" className="amount">
+                      {productQty}
+                    </span>
+                    <p
+                      className="plus"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleQuantity('inc');
+                      }}
+                    >
+                      +
+                    </p>
+                  </div>
                 </div>
-              </div>
+                <div className="refreshButton">
+                  <RotateLeftIcon onClick={backToInitialStock} />
+                </div>
+              </>
             )}
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              Delete
-            </div>
           </div>
         );
       },
@@ -151,6 +171,7 @@ const NewOrder = () => {
               onSelectionModelChange={(ids) => {
                 console.log(ids);
                 setSelectedId(ids);
+                setProductQty(0);
               }}
               selectionModel={selectedId}
             />
