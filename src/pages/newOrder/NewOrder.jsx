@@ -1,7 +1,7 @@
 import './newOrder.scss';
 import '../../components/datatable/datatable.scss';
 import { useContext, useEffect, useState } from 'react';
-import { addProduct } from '../../redux/cartRedux';
+import { addProduct ,decreaseProduct} from '../../redux/cartRedux';
 import { useDispatch } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
 import { DataGrid } from '@mui/x-data-grid';
@@ -81,7 +81,9 @@ const NewOrder = () => {
   };
 
   // const handleClick = () => {
-  //   dispatch(addProduct({ ...selectedProduct, quantity }));
+  //   dispatch(
+  //     addProduct({ ...selectedProduct, quantity: selectedProduct.quantity })
+  //   );
   // };
 
   useEffect(() => {
@@ -113,7 +115,15 @@ const NewOrder = () => {
                       className="minus"
                       onClick={(event) => {
                         event.stopPropagation();
-                        handleQuantity('dec');
+                        if (selectedProduct.quantity >= 0 && productQty > 0) {
+                          handleQuantity('dec');
+                          dispatch(
+                            decreaseProduct({
+                              ...selectedProduct,
+                              quantity: selectedProduct.quantity,
+                            })
+                          );
+                        }
                       }}
                     >
                       -
@@ -125,7 +135,15 @@ const NewOrder = () => {
                       className="plus"
                       onClick={(event) => {
                         event.stopPropagation();
-                        handleQuantity('inc');
+                        if (selectedProduct.quantity > 0) {
+                          handleQuantity('inc');
+                          dispatch(
+                            addProduct({
+                              ...selectedProduct,
+                              quantity: selectedProduct.quantity,
+                            })
+                          );
+                        }
                       }}
                     >
                       +

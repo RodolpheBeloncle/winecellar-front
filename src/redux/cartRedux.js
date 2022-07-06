@@ -14,8 +14,15 @@ const cartSlice = createSlice({
       state.products.push(action.payload);
       state.total += action.payload.price * action.payload.quantity;
     },
+    decreaseProduct: (state, action) => {
+      state.quantity -= 1;
+      state.products.push(action.payload);
+      state.total -= action.payload.price * action.payload.quantity;
+    },
+
+    // function to clear shopping cart after pdf click
   },
 });
 
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, decreaseProduct } = cartSlice.actions;
 export default cartSlice.reducer;

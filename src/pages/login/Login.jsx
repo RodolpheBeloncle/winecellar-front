@@ -100,8 +100,8 @@ const Login = () => {
       <Wrapper>
         <Title>Login</Title>
         <Form onSubmit={(e) => handleLogin(e)}>
-          <Input placeholder="email" ref={emailRef} />
-          <Input placeholder="password" ref={passwordRef} />
+          <Input type="email" placeholder="email" ref={emailRef} />
+          <Input type="password" placeholder="password" ref={passwordRef} />
           <>
             <br />
             <span style={{ color: 'red' }}>{errorState}</span>
