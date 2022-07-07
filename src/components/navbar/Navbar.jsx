@@ -1,7 +1,7 @@
 import './navbar.scss';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';

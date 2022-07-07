@@ -2,8 +2,12 @@ import React from 'react';
 import './newOrder.scss';
 import '../../components/datatable/datatable.scss';
 import { useContext, useEffect, useState } from 'react';
-import { addProduct ,decreaseProduct} from '../../redux/cartRedux';
-import { useDispatch } from 'react-redux';
+import {
+  addProduct,
+  decreaseProduct,
+  resetCartProduct,
+} from '../../redux/cartRedux';
+import { useDispatch, useSelector } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
@@ -14,6 +18,7 @@ import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
   const dispatch = useDispatch();
+  const orderCart = useSelector((state) => state.cart);
   const { wineData, setWineData } = useContext(WinesContext);
   const [selectedId, setSelectedId] = useState([]);
   const [prevSelectedId, setPrevSelectedId] = useState([]);
@@ -95,9 +100,9 @@ const NewOrder = () => {
       .map((item) => {
         setSelectedProduct(item);
       });
-
+    console.log('orderCart', orderCart);
     checkInitialQty();
-  }, [selectedId]);
+  }, [selectedId, orderCart]);
 
   const actionColumn = [
     {
@@ -118,10 +123,11 @@ const NewOrder = () => {
                         event.stopPropagation();
                         if (selectedProduct.quantity >= 0 && productQty > 0) {
                           handleQuantity('dec');
+                          console.log("check",orderCart.products.some(element => element._id === selectedProduct._id))
                           dispatch(
                             decreaseProduct({
                               ...selectedProduct,
-                              quantity: selectedProduct.quantity,
+                              quantity: productQty - 1,
                             })
                           );
                         }
@@ -129,7 +135,8 @@ const NewOrder = () => {
                     >
                       -
                     </p>
-                    <span type="text" className="amount">
+                    <span type="text" className="amount"  onClick={(event) => {
+                        event.stopPropagation()}}>
                       {productQty}
                     </span>
                     <p
@@ -137,11 +144,12 @@ const NewOrder = () => {
                       onClick={(event) => {
                         event.stopPropagation();
                         if (selectedProduct.quantity > 0) {
+                          console.log("check",orderCart.products.some(element => element._id === selectedProduct._id))
                           handleQuantity('inc');
                           dispatch(
                             addProduct({
                               ...selectedProduct,
-                              quantity: selectedProduct.quantity,
+                              quantity: productQty + 1,
                             })
                           );
                         }
@@ -152,7 +160,12 @@ const NewOrder = () => {
                   </div>
                 </div>
                 <div className="refreshButton">
-                  <RotateLeftIcon onClick={backToInitialStock} />
+                  <RotateLeftIcon
+                    onClick={() => {
+                      backToInitialStock();
+                      dispatch(resetCartProduct());
+                    }}
+                  />
                 </div>
               </>
             )}

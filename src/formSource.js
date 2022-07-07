@@ -126,6 +126,10 @@ export const typeSelection = [
 
 export const sizeSelection = [
   {
+    label: '1/2 Bottle',
+    value: '150cl',
+  },
+  {
     label: 'Bottle',
     value: '75cl',
   },
