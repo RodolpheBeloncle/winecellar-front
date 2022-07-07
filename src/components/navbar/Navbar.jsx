@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   const onCart = () => {
-    navigate('new/invoice');
+    navigate('new/order');
   };
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import './datatable.scss';
 import { useEffect} from 'react';
 import { DataGrid } from '@mui/x-data-grid';

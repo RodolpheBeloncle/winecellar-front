@@ -1,3 +1,4 @@
+import React from 'react';
 import './single.scss';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

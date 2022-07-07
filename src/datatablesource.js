@@ -1,3 +1,5 @@
+
+import React from 'react';
 import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
 import cautionStock from './img/caution.png';

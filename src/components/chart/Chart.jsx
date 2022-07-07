@@ -1,3 +1,4 @@
+import React from 'react';
 import './chart.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { userRequest } from '../../utils/api';

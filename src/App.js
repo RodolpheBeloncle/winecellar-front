@@ -1,3 +1,4 @@
+import React from 'react';
 import { useContext } from 'react';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
@@ -8,6 +9,7 @@ import Single from './pages/single/Single';
 import NewProduct from './pages/newProduct/NewProduct';
 import NewOrder from './pages/newOrder/NewOrder';
 import NewCustomer from './pages/newCustomer/NewCustomer';
+import OrderInvoice from './pages/orderInvoice/OrderInvoice';
 import OrderTable from './components/orderTable/OrderTable';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { productInputs, userInputs } from './formSource';
@@ -54,6 +56,7 @@ function App() {
               <Route index element={<OrderTable />} />
               <Route path="new" element={<NewOrder title="New Order" />} />
             </Route>
+            <Route path="new/order" element={<OrderInvoice />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

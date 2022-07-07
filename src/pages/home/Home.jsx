@@ -1,3 +1,4 @@
+import React from 'react';
 import './home.scss';
 import Widget from '../../components/widget/Widget';
 import Featured from '../../components/featured/Featured';

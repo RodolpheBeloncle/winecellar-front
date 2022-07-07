@@ -1,3 +1,4 @@
+import React from 'react';
 import './newProduct.scss';
 import { useState, useEffect } from 'react';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';

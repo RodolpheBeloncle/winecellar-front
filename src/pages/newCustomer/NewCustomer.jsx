@@ -1,3 +1,4 @@
+import React from 'react';
 import './newCustomer.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { sizeSelection, typeSelection } from '../../formSource';
