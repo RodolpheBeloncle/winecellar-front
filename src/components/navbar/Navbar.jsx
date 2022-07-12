@@ -18,6 +18,7 @@ const Navbar = () => {
   const dispatcher = useDispatch();
   const navigate = useNavigate();
   const quantity = useSelector((state) => state.cart.quantity);
+  const productsOrdered = useSelector((state) => state.cart.products);
   const userAuth = useSelector((state) => state.user.currentUser);
   const { dispatch } = useContext(DarkModeContext);
 
@@ -31,9 +32,13 @@ const Navbar = () => {
     navigate('new/order');
   };
 
+ 
   useEffect(() => {
     !userAuth && navigate('/login');
-  }, [userAuth]);
+    
+   
+    
+  }, [userAuth, productsOrdered]);
 
   return (
     <div className="navbar">

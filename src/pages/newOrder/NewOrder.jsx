@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import {
   addProduct,
   decreaseProduct,
+  increaseQuantityProduct,
   resetCartProduct,
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +19,8 @@ import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
   const dispatch = useDispatch();
-  const orderCart = useSelector((state) => state.cart);
+  const orderCart = useSelector((state) => state.cart.products);
+  const [orderCartList, setOrderCartList] = useState([]);
   const { wineData, setWineData } = useContext(WinesContext);
   const [selectedId, setSelectedId] = useState([]);
   const [prevSelectedId, setPrevSelectedId] = useState([]);
@@ -73,6 +75,7 @@ const NewOrder = () => {
         .map((item) => {
           setProductQty((prevState) => prevState - 1);
           item.quantity += 1;
+          handleQuantityDecrease();
         });
     } else {
       wineData
@@ -82,6 +85,7 @@ const NewOrder = () => {
         .map((item) => {
           setProductQty((prevState) => prevState + 1);
           item.quantity -= 1;
+          handleQuantityIncrease();
         });
     }
   };
@@ -91,7 +95,47 @@ const NewOrder = () => {
   //     addProduct({ ...selectedProduct, quantity: selectedProduct.quantity })
   //   );
   // };
+  // ============TEST=================
 
+  const handleQuantityIncrease = () => {
+    const newOrders = [...orderCartList];
+    if (newOrders.some((product) => product._id === selectedProduct._id)) {
+      const findIdx = newOrders.findIndex((product) => {
+        return product._id === selectedProduct._id;
+      });
+
+      newOrders[findIdx].quantity += 1;
+
+      setOrderCartList(newOrders);
+    } else {
+      const newOrder = {
+        ...selectedProduct,
+        quantity: 1,
+      };
+
+      const newOrders = [...orderCartList, newOrder];
+
+      setOrderCartList(newOrders);
+    }
+  };
+
+  const handleQuantityDecrease = () => {
+    const newOrders = [...orderCartList];
+
+    if (newOrders.some((product) => product._id === selectedProduct._id)) {
+      const findIdx = newOrders.findIndex((product) => {
+        return product._id === selectedProduct._id;
+      });
+      newOrders[findIdx].quantity -= 1;
+    }
+    newOrders.some((product) => product.quantity === 0)
+      ? setOrderCartList(
+          orderCartList.filter((item) => item._id !== selectedId[0])
+        )
+      : setOrderCartList(newOrders);
+  };
+
+  // ===========TEST===============
   useEffect(() => {
     wineData
       .filter((element) => {
@@ -100,9 +144,18 @@ const NewOrder = () => {
       .map((item) => {
         setSelectedProduct(item);
       });
-    console.log('orderCart', orderCart);
+
+    orderCartList
+      .filter((element) => {
+        return element._id === selectedId[0];
+      })
+      .map((item) => {
+        setProductQty(item.quantity);
+      });
+
     checkInitialQty();
-  }, [selectedId, orderCart]);
+    console.log('orderCartList', orderCartList);
+  }, [selectedId, orderCartList]);
 
   const actionColumn = [
     {
@@ -121,22 +174,22 @@ const NewOrder = () => {
                       className="minus"
                       onClick={(event) => {
                         event.stopPropagation();
+
                         if (selectedProduct.quantity >= 0 && productQty > 0) {
                           handleQuantity('dec');
-                          console.log("check",orderCart.products.some(element => element._id === selectedProduct._id))
-                          dispatch(
-                            decreaseProduct({
-                              ...selectedProduct,
-                              quantity: productQty - 1,
-                            })
-                          );
+                          // dispatch(decreaseProduct({ products: orderCart }));
                         }
                       }}
                     >
                       -
                     </p>
-                    <span type="text" className="amount"  onClick={(event) => {
-                        event.stopPropagation()}}>
+                    <span
+                      type="text"
+                      className="amount"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                      }}
+                    >
                       {productQty}
                     </span>
                     <p
@@ -144,8 +197,8 @@ const NewOrder = () => {
                       onClick={(event) => {
                         event.stopPropagation();
                         if (selectedProduct.quantity > 0) {
-                          console.log("check",orderCart.products.some(element => element._id === selectedProduct._id))
                           handleQuantity('inc');
+
                           dispatch(
                             addProduct({
                               ...selectedProduct,
@@ -183,7 +236,7 @@ const NewOrder = () => {
             {selectedId.length > 0 && <InfoProduct info={selectedProduct} />}
           </div>
           {/* <div className="right">
-==== shopping car increase or decrease amount product
+==== shopping car increase or decrease amount current
             <Chart
               aspect={3 / 1}
               title={`sales ${dataType} ( Last 6 Months)`}
