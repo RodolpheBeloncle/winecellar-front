@@ -4,8 +4,8 @@ import '../../components/datatable/datatable.scss';
 import { useContext, useEffect, useState } from 'react';
 import {
   addProduct,
-  decreaseProduct,
-  increaseQuantityProduct,
+  decreaseQtyProduct,
+  increaseQtyProduct,
   resetCartProduct,
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,14 +23,8 @@ const NewOrder = () => {
   const [orderCartList, setOrderCartList] = useState([]);
   const { wineData, setWineData } = useContext(WinesContext);
   const [selectedId, setSelectedId] = useState([]);
-  const [prevSelectedId, setPrevSelectedId] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
-  const [initQty, setInitQty] = useState({});
   const [productQty, setProductQty] = useState(0);
-
-  const handleDelete = (id) => {
-    wineData.filter((item) => item._id !== id);
-  };
 
   const initialQty = async () => {
     const { data } = await publicRequest.get('/products/');
@@ -43,16 +37,16 @@ const NewOrder = () => {
       });
   };
 
-  const checkInitialQty = async () => {
-    const { data } = await publicRequest.get('/products/');
-    data
-      .filter((element) => {
-        return element._id === selectedId[0];
-      })
-      .map((item) => {
-        setInitQty(item);
-      });
-  };
+  // const checkInitialQty = async () => {
+  //   const { data } = await publicRequest.get('/products/');
+  //   data
+  //     .filter((element) => {
+  //       return element._id === selectedId[0];
+  //     })
+  //     .map((item) => {
+  //       setInitQty(item);
+  //     });
+  // };
 
   const backToInitialStock = () => {
     initialQty();
@@ -107,11 +101,19 @@ const NewOrder = () => {
       newOrders[findIdx].quantity += 1;
 
       setOrderCartList(newOrders);
+      dispatch(increaseQtyProduct({orderCartList : orderCartList}));
     } else {
       const newOrder = {
         ...selectedProduct,
         quantity: 1,
       };
+
+      dispatch(
+        addProduct({
+          ...selectedProduct,
+          quantity: 1,
+        })
+      );
 
       const newOrders = [...orderCartList, newOrder];
 
@@ -153,7 +155,6 @@ const NewOrder = () => {
         setProductQty(item.quantity);
       });
 
-    checkInitialQty();
     console.log('orderCartList', orderCartList);
   }, [selectedId, orderCartList]);
 
@@ -163,7 +164,6 @@ const NewOrder = () => {
       headerName: 'Action',
       width: 200,
       renderCell: (params) => {
-        setPrevSelectedId(params.row._id);
         return (
           <div className="cellAction">
             {selectedId[0] === params.row._id && (
@@ -174,7 +174,6 @@ const NewOrder = () => {
                       className="minus"
                       onClick={(event) => {
                         event.stopPropagation();
-
                         if (selectedProduct.quantity >= 0 && productQty > 0) {
                           handleQuantity('dec');
                           // dispatch(decreaseProduct({ products: orderCart }));
@@ -198,13 +197,6 @@ const NewOrder = () => {
                         event.stopPropagation();
                         if (selectedProduct.quantity > 0) {
                           handleQuantity('inc');
-
-                          dispatch(
-                            addProduct({
-                              ...selectedProduct,
-                              quantity: productQty + 1,
-                            })
-                          );
                         }
                       }}
                     >
@@ -216,6 +208,7 @@ const NewOrder = () => {
                   <RotateLeftIcon
                     onClick={() => {
                       backToInitialStock();
+
                       dispatch(resetCartProduct());
                     }}
                   />

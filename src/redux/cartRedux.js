@@ -9,18 +9,22 @@ const cartSlice = createSlice({
 
   reducers: {
     addProduct: (state, action) => {
-      state.quantity += 1
-      state.products.push(action.payload);
-    },
-    increaseQuantityProduct: (state, action) => {
-      console.log('action.payload', action.payload);
+      console.log('action.payload type', action.type, action);
       state.quantity += 1;
       state.products.push(action.payload);
     },
+    increaseQtyProduct: (state, action) => {
+      console.log('ACTION', action);
+    
+      console.log('updatedProducts', action.payload.orderCartList);
+      state.quantity += 1;
+      state.products = action.payload.orderCartList
+    },
 
-    decreaseProduct: (state, action) => {
+    decreaseQtyProduct: (state, action) => {
+      console.log('action.payload minus', action.payload);
       state.quantity -= 1;
-      state.products = action.payload.products;
+      state.products = action.payload;
     },
 
     resetCartProduct: (state) => {
@@ -32,8 +36,8 @@ const cartSlice = createSlice({
 
 export const {
   addProduct,
-  decreaseProduct,
+  decreaseQtyProduct,
   resetCartProduct,
-  increaseQuantityProduct,
+  increaseQtyProduct,
 } = cartSlice.actions;
 export default cartSlice.reducer;
