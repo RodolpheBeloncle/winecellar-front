@@ -2,42 +2,42 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: {
-    products: [],
-    quantity: 0,
-  },
-
+  initialState: [],
   reducers: {
-    addProduct: (state, action) => {
-      console.log('action.payload type', action.type, action);
-      state.quantity += 1;
-      state.products.push(action.payload);
+    addItemToCart: (state, action) => {
+      console.log('addItemToCart', action.payload);
+      state.push(action.payload);
     },
-    increaseQtyProduct: (state, action) => {
-      console.log('ACTION', action);
-    
-      console.log('updatedProducts', action.payload.orderCartList);
-      state.quantity += 1;
-      state.products = action.payload.orderCartList
+    removeItemFromCart: (state,action) => {
+      console.log("removeItemFromCart",state,action)
+      // From here we can take action only at this "counter" state
+      // But, as we have taken care of this particular "logout" action
+      // in rootReducer, we can use it to CLEAR the complete Redux Store's state
     },
 
-    decreaseQtyProduct: (state, action) => {
-      console.log('action.payload minus', action.payload);
-      state.quantity -= 1;
-      state.products = action.payload;
+    addQuantityToItem: (state, action) => {
+      console.log('addQuantityToItem', action.payload);
+      state.forEach((item) => {
+        if (item._id === action.payload._id) {
+          item.quantity += 1;
+        }
+      });
     },
-
-    resetCartProduct: (state) => {
-      state.products = [];
-      state.quantity = 0;
+    subtractQuantityFromItem: (state, action) => {
+      console.log(' subtractQuantityFromItem', action.payload);
+      state.forEach((item) => {
+        if (item._id === action.payload) {
+          item.quantity -= 1;
+        }
+      });
     },
   },
 });
 
 export const {
-  addProduct,
-  decreaseQtyProduct,
-  resetCartProduct,
-  increaseQtyProduct,
+  addItemToCart,
+  removeItemFromCart,
+  addQuantityToItem,
+  subtractQuantityFromItem,
 } = cartSlice.actions;
 export default cartSlice.reducer;

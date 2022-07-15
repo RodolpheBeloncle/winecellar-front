@@ -1,6 +1,6 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userReducer from "./userRedux";
-import cartReducer from "./cartRedux";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import userReducer from './userRedux';
+import cartReducer from './cartRedux';
 import {
   persistStore,
   persistReducer,
@@ -10,19 +10,26 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
-  key: "globalState",
+  key: 'globalState',
   version: 1,
   storage,
 };
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
   user: userReducer,
-  cart: cartReducer
+  cart: cartReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'cart/removeItemFromCart') {
+    state.cart = undefined;
+  }
+  return combinedReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

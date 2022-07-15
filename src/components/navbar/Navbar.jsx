@@ -17,8 +17,8 @@ import { useContext } from 'react';
 const Navbar = () => {
   const dispatcher = useDispatch();
   const navigate = useNavigate();
-  const quantity = useSelector((state) => state.cart.quantity);
-  const productsOrdered = useSelector((state) => state.cart.products);
+  const quantity = useSelector((state) => state.cart.numberOfOrderedProduct);
+  const productsOrdered = useSelector((state) => state.cart.orderedList);
   const userAuth = useSelector((state) => state.user.currentUser);
   const { dispatch } = useContext(DarkModeContext);
 

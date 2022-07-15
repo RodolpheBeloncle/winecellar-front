@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './newOrder.scss';
 import '../../components/datatable/datatable.scss';
-import { useContext, useEffect, useState } from 'react';
+
 import {
-  addProduct,
-  decreaseQtyProduct,
-  increaseQtyProduct,
-  resetCartProduct,
+  addItemToCart,
+  removeItemFromCart,
+  addQuantityToItem,
+  subtractQuantityFromItem,
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
@@ -19,22 +19,26 @@ import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
   const dispatch = useDispatch();
-  const orderCart = useSelector((state) => state.cart.products);
-  const [orderCartList, setOrderCartList] = useState([]);
+  const orderedList = useSelector((state) => state.cart);
+  // const [orderCartList, setOrderCartList] = useState([]);
   const { wineData, setWineData } = useContext(WinesContext);
   const [selectedId, setSelectedId] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [productQty, setProductQty] = useState(0);
 
+  const isOrdered = (id) => {
+    let data = orderedList.find((item) => id === item._id);
+    if (data) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const initialQty = async () => {
     const { data } = await publicRequest.get('/products/');
-    data
-      .filter((element) => {
-        return element._id === selectedId[0];
-      })
-      .map((item) => {
-        setSelectedProduct(item);
-      });
+    setWineData(data);
+    dispatch(removeItemFromCart());
   };
 
   // const checkInitialQty = async () => {
@@ -62,24 +66,24 @@ const NewOrder = () => {
 
   const handleQuantity = (type) => {
     if (type === 'dec') {
+      setProductQty((prevState) => prevState - 1);
       wineData
         .filter((element) => {
           return element._id === selectedId[0];
         })
         .map((item) => {
-          setProductQty((prevState) => prevState - 1);
           item.quantity += 1;
-          handleQuantityDecrease();
+          // handleQuantityDecrease();
         });
     } else {
+      setProductQty((prevState) => prevState + 1);
       wineData
         .filter((element) => {
           return element._id === selectedId[0];
         })
         .map((item) => {
-          setProductQty((prevState) => prevState + 1);
           item.quantity -= 1;
-          handleQuantityIncrease();
+          // handleQuantityIncrease();
         });
     }
   };
@@ -91,72 +95,69 @@ const NewOrder = () => {
   // };
   // ============TEST=================
 
-  const handleQuantityIncrease = () => {
-    const newOrders = [...orderCartList];
-    if (newOrders.some((product) => product._id === selectedProduct._id)) {
-      const findIdx = newOrders.findIndex((product) => {
-        return product._id === selectedProduct._id;
-      });
+  // const handleQuantityIncrease = () => {
+  //   const newOrders = [...orderCartList];
+  //   if (newOrders.some((product) => product._id === selectedProduct._id)) {
+  //     // const findIdx = newOrders.findIndex((product) => {
+  //     //   return product._id === selectedProduct._id;
+  //     // });
+  //     newOrders
+  //       .filter((product) => product._id === selectedProduct._id)
+  //       .map((product) => [
+  //         ...newOrders,
+  //         { ...product, quantity: (product.quantity += 1) },
+  //       ]);
 
-      newOrders[findIdx].quantity += 1;
+  //     // newOrders[findIdx].quantity += 1;
 
-      setOrderCartList(newOrders);
-      dispatch(increaseQtyProduct({orderCartList : orderCartList}));
-    } else {
-      const newOrder = {
-        ...selectedProduct,
-        quantity: 1,
-      };
+  //     setOrderCartList(newOrders);
+  //     dispatch(increaseQtyProduct({ orderCartList: orderCartList }));
+  //   } else {
+  //     const newOrder = {
+  //       ...selectedProduct,
+  //       quantity: 1,
+  //     };
 
-      dispatch(
-        addProduct({
-          ...selectedProduct,
-          quantity: 1,
-        })
-      );
+  //     dispatch(
+  //       addProduct({
+  //         ...selectedProduct,
+  //         quantity: 1,
+  //       })
+  //     );
 
-      const newOrders = [...orderCartList, newOrder];
+  //     const newOrders = [...orderCartList, newOrder];
 
-      setOrderCartList(newOrders);
-    }
-  };
+  //     setOrderCartList(newOrders);
+  //   }
+  // };
 
-  const handleQuantityDecrease = () => {
-    const newOrders = [...orderCartList];
+  // const handleQuantityDecrease = () => {
+  //   const newOrders = [...orderCartList];
 
-    if (newOrders.some((product) => product._id === selectedProduct._id)) {
-      const findIdx = newOrders.findIndex((product) => {
-        return product._id === selectedProduct._id;
-      });
-      newOrders[findIdx].quantity -= 1;
-    }
-    newOrders.some((product) => product.quantity === 0)
-      ? setOrderCartList(
-          orderCartList.filter((item) => item._id !== selectedId[0])
-        )
-      : setOrderCartList(newOrders);
-  };
+  //   if (newOrders.some((product) => product._id === selectedProduct._id)) {
+  //     // const findIdx = newOrders.findIndex((product) => {
+  //     //   return product._id === selectedProduct._id;
+  //     // });
+  //     // newOrders[findIdx].quantity -= 1;
+
+  //     newOrders
+  //       .filter((product) => product._id === selectedProduct._id)
+  //       .map((product) => [
+  //         ...newOrders,
+  //         { ...product, quantity: (product.quantity -= 1) },
+  //       ]);
+
+  //     dispatch(decreaseQtyProduct({ orderCartList: orderCartList }));
+  //   }
+  // };
 
   // ===========TEST===============
   useEffect(() => {
-    wineData
-      .filter((element) => {
-        return element._id === selectedId[0];
-      })
-      .map((item) => {
-        setSelectedProduct(item);
-      });
-
-    orderCartList
-      .filter((element) => {
-        return element._id === selectedId[0];
-      })
-      .map((item) => {
-        setProductQty(item.quantity);
-      });
-
-    console.log('orderCartList', orderCartList);
-  }, [selectedId, orderCartList]);
+    console.log('selectedroduct', selectedProduct);
+    console.log(' orderedList', orderedList);
+    console.log('selectedId[0]', selectedId[0]);
+    // console.log('productQuantity',productQty);
+  }, [selectedId[0], orderedList, selectedProduct]);
 
   const actionColumn = [
     {
@@ -174,10 +175,9 @@ const NewOrder = () => {
                       className="minus"
                       onClick={(event) => {
                         event.stopPropagation();
-                        if (selectedProduct.quantity >= 0 && productQty > 0) {
-                          handleQuantity('dec');
-                          // dispatch(decreaseProduct({ products: orderCart }));
-                        }
+                        handleQuantity('dec');
+                        isOrdered(selectedId[0]) &&
+                          dispatch(subtractQuantityFromItem(selectedId[0]));
                       }}
                     >
                       -
@@ -189,15 +189,21 @@ const NewOrder = () => {
                         event.stopPropagation();
                       }}
                     >
-                      {productQty}
+                      {isOrdered(selectedId[0])
+                        ? orderedList
+                            .filter((element) => element._id === selectedId[0])
+                            .map((product) => product.quantity)
+                        : productQty}
                     </span>
                     <p
                       className="plus"
                       onClick={(event) => {
                         event.stopPropagation();
-                        if (selectedProduct.quantity > 0) {
-                          handleQuantity('inc');
-                        }
+                        handleQuantity('inc');
+
+                        isOrdered(selectedId[0])
+                          ? dispatch(addQuantityToItem(selectedProduct))
+                          : dispatch(addItemToCart(selectedProduct));
                       }}
                     >
                       +
@@ -208,8 +214,6 @@ const NewOrder = () => {
                   <RotateLeftIcon
                     onClick={() => {
                       backToInitialStock();
-
-                      dispatch(resetCartProduct());
                     }}
                   />
                 </div>
@@ -247,8 +251,22 @@ const NewOrder = () => {
               pageSize={9}
               rowsPerPageOptions={[9]}
               onSelectionModelChange={(ids) => {
-                console.log(ids);
                 setSelectedId(ids);
+
+                wineData
+                  .filter((element) => {
+                    return element._id === ids[0];
+                  })
+                  .map((item) =>
+                    setSelectedProduct({
+                      price: item.price,
+                      title: item.title,
+                      img: item.img,
+                      quantity: 1,
+                      _id: item._id,
+                    })
+                  );
+
                 setProductQty(0);
               }}
               selectionModel={selectedId}
