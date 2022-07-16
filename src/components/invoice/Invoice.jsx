@@ -60,9 +60,9 @@ const Invoice = () => {
 
   useEffect(() => {
     console.log(inputs);
-    console.log('order', orderCart);
+    console.log('orderCart', orderCart);
     console.log(generateInvoiceId());
-  });
+  }, [orderCart]);
 
   const { name, receiptId, price1, price2 } = inputs;
 
@@ -77,10 +77,17 @@ const Invoice = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const totalAmount = (cart) => {
+    return cart
+      .map((item) => item.quantity * item.price)
+      .reduce((acc, value) => acc + value)
+      .toFixed(2);
+  };
   // Example data (invoice items)
   const invoiceItems = [
     {
-      qty: 1,
+      quantity: 1,
       price: 84.99,
       subtotal: 84.99,
       currency: 'USD',
@@ -88,7 +95,7 @@ const Invoice = () => {
       content: 'magnum',
     },
     {
-      qty: 2,
+      quantity: 2,
       price: 99.99,
       subtotal: 199.98,
       currency: 'USD',
@@ -96,7 +103,7 @@ const Invoice = () => {
       content: 'magnum',
     },
     {
-      qty: 1,
+      quantity: 1,
       price: 19.99,
       subtotal: 19.99,
       currency: 'USD',
@@ -104,7 +111,7 @@ const Invoice = () => {
       content: 'magnum',
     },
     {
-      qty: 5,
+      quantity: 5,
       price: 5.08,
       subtotal: 25.4,
       currency: 'USD',
@@ -112,7 +119,7 @@ const Invoice = () => {
       content: 'magnum',
     },
     {
-      qty: 3,
+      quantity: 3,
       price: 17.99,
       subtotal: 53.97,
       currency: 'USD',
@@ -120,7 +127,7 @@ const Invoice = () => {
       content: 'demi-bouteille',
     },
     {
-      qty: 1,
+      quantity: 1,
       price: 33.96,
       subtotal: 33.96,
       currency: 'USD',
@@ -128,7 +135,7 @@ const Invoice = () => {
       content: 'jeroboam',
     },
     {
-      qty: 0,
+      quantity: 0,
       price: 8.49,
       subtotal: 0,
       currency: 'USD',
@@ -136,16 +143,23 @@ const Invoice = () => {
       content: 'bouteille',
     },
     {
-      qty: 1,
+      quantity: 1,
       price: 79.99,
       subtotal: 79.99,
       currency: 'USD',
       name: 'Car Dash Cam',
       content: 'bouteille',
     },
-    { qty: 0, price: 11.44, subtotal: 0, currency: 'USD', name: 'Sunglasses',content: 'bouteille', },
     {
-      qty: 1,
+      quantity: 0,
+      price: 11.44,
+      subtotal: 0,
+      currency: 'USD',
+      name: 'Sunglasses',
+      content: 'bouteille',
+    },
+    {
+      quantity: 1,
       price: 21.99,
       subtotal: 21.99,
       currency: 'USD',
@@ -156,8 +170,8 @@ const Invoice = () => {
 
   const reducer = (acc, value) => acc + value;
 
-  console.log('header name', Object.keys(invoiceItems[0]));
-  console.log('lisa', invoiceItems.map((item) => item.name).sort());
+  // console.log('header name', Object.keys(invoiceItems[0]));
+  // console.log('lisa', invoiceItems.map((item) => item.name).sort());
 
   return (
     <Container maxWidth="md">
@@ -168,41 +182,40 @@ const Invoice = () => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>{Object.keys(invoiceItems[0])[4]}</TableCell>
+                <TableCell>{Object.keys(orderCart[0])[1]}</TableCell>
+
                 <TableCell align="right">
-                  {Object.keys(invoiceItems[0])[0]}
+                  {Object.keys(orderCart[0])[3]}
                 </TableCell>
-                <TableCell >
-                  {Object.keys(invoiceItems[0])[5]}
-                </TableCell>
+                <TableCell>{Object.keys(invoiceItems[0])[5]}</TableCell>
                 <TableCell align="right">
-                  {Object.keys(invoiceItems[0])[1]}
+                  {Object.keys(orderCart[0])[0]}
                 </TableCell>
                 <TableCell align="right">
                   {Object.keys(invoiceItems[0])[2]}
                 </TableCell>
-              
-             
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {invoiceItems
+              {orderCart
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .filter((item) => item.subtotal > 0)
-                .sort((a, b) => (a.name > b.name ? 1 : -1))
+                .filter((item) => item.quantity > 0)
+                .sort((a, b) => (a.title > b.title ? 1 : -1))
                 .map((item) => {
                   return (
-                    <TableRow key={item.name}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell align="right">{item.qty} </TableCell>
-                      <TableCell >{item.content}</TableCell>
+                    <TableRow key={item.title}>
+                      <TableCell>{item.title}</TableCell>
+                      <TableCell align="right">{item.quantity} </TableCell>
+                      <TableCell>{item.content}</TableCell>
                       <TableCell align="right">
-                        {' '}
-                        {(item.price * 0.84).toFixed(2)} €
+                        {/* {' '}
+                        {(item.price * 0.84).toFixed(2)} € */}
+                        {item.price} €
                       </TableCell>
                       <TableCell align="right">
-                        {(item.subtotal * 0.84).toFixed(2)} €
+                        {/* {(item.subtotal * 0.84).toFixed(2)} € */}
+                        {item.quantity * item.price} €
                       </TableCell>
                     </TableRow>
                   );
@@ -215,10 +228,11 @@ const Invoice = () => {
                   <strong>Total Amount in EUR</strong>
                 </TableCell>
                 <TableCell align="right">
-                  {invoiceItems
+                  {/* {invoiceItems
                     .map((item) => item.subtotal * 0.84)
                     .reduce((acc, value) => acc + value)
-                    .toFixed(2)}{' '}
+                    .toFixed(2)}{' '} */}
+                  {totalAmount(orderCart)}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -234,6 +248,7 @@ const Invoice = () => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      <button onClick={createAndDownloadPdf}>Download Invoice</button>
     </Container>
 
     // <div className="invoice-document">

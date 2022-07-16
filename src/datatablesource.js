@@ -1,4 +1,3 @@
-
 import React from 'react';
 import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
@@ -91,6 +90,11 @@ export const productColumns = [
   {
     field: 'vintage',
     headerName: 'Vintage',
+    width: 100,
+  },
+  {
+    field: 'content',
+    headerName: 'Content',
     width: 100,
   },
   {

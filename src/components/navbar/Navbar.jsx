@@ -17,8 +17,7 @@ import { useContext } from 'react';
 const Navbar = () => {
   const dispatcher = useDispatch();
   const navigate = useNavigate();
-  const quantity = useSelector((state) => state.cart.numberOfOrderedProduct);
-  const productsOrdered = useSelector((state) => state.cart.orderedList);
+  const productsOrdered = useSelector((state) => state.cart);
   const userAuth = useSelector((state) => state.user.currentUser);
   const { dispatch } = useContext(DarkModeContext);
 
@@ -28,16 +27,18 @@ const Navbar = () => {
     localStorage.removeItem('persist:globalState');
   };
 
+  const totalQuantity = () => {
+    return productsOrdered.reduce(function (accumulator, currentValue) {
+      return accumulator + currentValue.quantity;
+    }, 0);
+  };
+
   const onCart = () => {
     navigate('new/order');
   };
 
- 
   useEffect(() => {
     !userAuth && navigate('/login');
-    
-   
-    
   }, [userAuth, productsOrdered]);
 
   return (
@@ -85,7 +86,9 @@ const Navbar = () => {
               alt=""
               className="avatar"
             />
-            <div className="counter">{quantity}</div>
+            {totalQuantity() > 0 && (
+              <div className="counter">{totalQuantity()}</div>
+            )}
           </div>
           <div className="item">
             <LogoutIcon onClick={handleDisconnect} className="icon" />
