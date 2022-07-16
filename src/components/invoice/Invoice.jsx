@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { publicRequest } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { removeItemFromCart } from '../../redux/cartRedux';
 import { saveAs } from 'file-saver';
 
 import Paper from '@material-ui/core/Paper';
@@ -15,8 +17,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import { Container } from '@material-ui/core';
 
 const Invoice = () => {
+  const [isOrderSent, setOrderSent] = useState(false);
   const orderCart = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.user.userId);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const generateInvoiceId = () => {
     var d = new Date();
@@ -68,12 +73,21 @@ const Invoice = () => {
           products: products,
           amount: totalAmount(orderCart),
         })
-      );
+      )
+      .catch((error) => {
+        console.log("Invoice haven't been registered!");
+        setOrderSent(false);
+        return Promise.reject(error);
+      });
+
+    setOrderSent(true);
   };
 
   useEffect(() => {
+    isOrderSent && dispatch(removeItemFromCart());
+    isOrderSent && navigate('/orders');
     console.log('orderCart', orderCart);
-  }, [orderCart]);
+  }, [orderCart, isOrderSent]);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

@@ -27,7 +27,7 @@ const userSlice = createSlice({
     },
     loginFailure: (state, action) => {
       state.isFetching = false;
-      console.log("action.payload",action.payload)
+      console.log('action.payload', action.payload);
       state.error = action.payload;
     },
 
