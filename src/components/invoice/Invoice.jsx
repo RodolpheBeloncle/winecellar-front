@@ -22,6 +22,12 @@ const Invoice = () => {
   const userId = useSelector((state) => state.user.userId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  let optionsDate = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
 
   const generateInvoiceId = () => {
     var d = new Date();
@@ -33,11 +39,7 @@ const Invoice = () => {
     return generateId.toString();
   };
 
-  const today = new Date();
-
-  const invoiceDate = `${today.getDate()}/${
-    today.getMonth() + 1
-  }/${today.getFullYear()}`;
+  const invoiceDate = new Date().toLocaleDateString('fr-FR', optionsDate);
   const invoiceId = generateInvoiceId();
 
   const [inputs, setInputs] = useState({

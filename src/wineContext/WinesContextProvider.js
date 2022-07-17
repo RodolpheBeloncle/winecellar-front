@@ -5,6 +5,7 @@ export const WinesContext = createContext();
 
 const WinesContextProvider = ({ children }) => {
   const [wineData, setWineData] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getWineData = async () => {
@@ -12,8 +13,14 @@ const WinesContextProvider = ({ children }) => {
     setWineData(res.data);
   };
 
+  const getOrderData = async () => {
+    const res = await publicRequest.get('/orders/');
+    setOrderData(res.data);
+  };
+
   useEffect(() => {
     getWineData();
+    getOrderData();
   }, []);
 
   return (
@@ -21,6 +28,8 @@ const WinesContextProvider = ({ children }) => {
       value={{
         wineData,
         setWineData,
+        orderData,
+        setOrderData,
       }}
     >
       {children}
