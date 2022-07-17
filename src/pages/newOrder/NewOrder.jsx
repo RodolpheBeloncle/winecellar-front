@@ -11,7 +11,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 import { publicRequest } from '../../utils/api';
 import { productColumns } from '../../datatablesource';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
@@ -151,7 +150,7 @@ const NewOrder = () => {
       <div className="newOrderContainer">
         <div className="top">
           <div className="left">
-            {selectedId.length > 0 && <InfoProduct info={selectedProduct} />}
+            {selectedId.length > 0 && <InfoProduct selectedId={selectedId} wineData={wineData}/>}
           </div>
           {/* <div className="right">
 ==== shopping car increase or decrease amount current
