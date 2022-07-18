@@ -5,6 +5,9 @@ import {
   logoutStart,
   logoutSuccess,
   logoutFailure,
+  updateProfilStart,
+  updateProfilSuccess,
+  updateProfilFailure,
 } from './userRedux';
 import { publicRequest, userRequest } from '../utils/api';
 
@@ -29,5 +32,15 @@ export const logout = async (dispatch, user) => {
   } catch (err) {
     dispatch(logoutFailure());
     console.log('redux', err);
+  }
+};
+
+export const updateProfil = async (dispatch, userId, form) => {
+  dispatch(updateProfilStart());
+  try {
+    const res = await userRequest.post(`/users/updateProfil/${userId}`, form);
+    dispatch(updateProfilSuccess(res.data));
+  } catch (err) {
+    dispatch(updateProfilFailure());
   }
 };

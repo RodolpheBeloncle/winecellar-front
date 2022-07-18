@@ -9,6 +9,7 @@ import Single from './pages/single/Single';
 import NewProduct from './pages/newProduct/NewProduct';
 import NewOrder from './pages/newOrder/NewOrder';
 import NewCustomer from './pages/newCustomer/NewCustomer';
+import Profil from './pages/profil/Profil';
 import OrderInvoice from './pages/orderInvoice/OrderInvoice';
 import OrderTable from './components/orderTable/OrderTable';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -25,6 +26,9 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="/" element={<PrivateRoutes />}>
             <Route index element={<Home />} />
+            <Route path="/profil" element={<Profil />} />
+
+            
 
             <Route path="customers">
               <Route index element={<List dataType={'customer'} />} />

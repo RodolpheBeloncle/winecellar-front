@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
@@ -19,7 +20,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const productsOrdered = useSelector((state) => state.cart);
   const userAuth = useSelector((state) => state.user.currentUser);
-  const { dispatch } = useContext(DarkModeContext);
+  const username = useSelector((state) => state.user.username);
+  const profilPic = useSelector((state) => state.user.img);
+  const PF = `http://localhost:8000/`;
+  const { dispatch, darkMode } = useContext(DarkModeContext);
 
   const handleDisconnect = () => {
     console.log('user is authenticated after logout', userAuth);
@@ -37,9 +41,19 @@ const Navbar = () => {
     navigate('new/order');
   };
 
+  const onProfil = () => {
+    navigate('profil');
+  };
+
+  const onDashboard = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
+    console.log('darkmode', darkMode);
+
     !userAuth && navigate('/login');
-  }, [userAuth, productsOrdered]);
+  }, [userAuth, productsOrdered, darkMode]);
 
   return (
     <div className="navbar">
@@ -49,33 +63,41 @@ const Navbar = () => {
           <SearchOutlinedIcon />
         </div>
         <div className="items">
-          <div className="item">
+          {/* <div className="item">
             <LanguageOutlinedIcon className="icon" />
             English
-          </div>
+          </div> */}
           <div className="item">
-            <DarkModeOutlinedIcon
-              className="icon"
-              onClick={() => dispatch({ type: 'TOGGLE' })}
-            />
+            {darkMode ? (
+              <LightModeOutlinedIcon
+                className="icon"
+                onClick={() => dispatch({ type: 'TOGGLE' })}
+              />
+            ) : (
+              <DarkModeOutlinedIcon
+                className="icon"
+                onClick={() => dispatch({ type: 'TOGGLE' })}
+              />
+            )}
           </div>
-          <div className="item">
+          {/* <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
-          </div>
-          <div className="item">
+          </div> */}
+          {/* <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />
             <div className="counter">1</div>
-          </div>
+          </div> */}
           <div className="item">
-            <ChatBubbleOutlineOutlinedIcon className="icon" />
-            <div className="counter">2</div>
+            <ListOutlinedIcon className="icon" onClick={onDashboard} />
           </div>
-          <div className="item">
-            <ListOutlinedIcon className="icon" />
-          </div>
-          <div className="item">
+          <div className="item">Welcome {username}</div>
+          <div className="item" onClick={onProfil}>
             <img
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              src={
+                profilPic
+                  ? `${PF}${profilPic}`
+                  : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+              }
               alt=""
               className="avatar"
             />

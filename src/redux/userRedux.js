@@ -8,7 +8,7 @@ const userSlice = createSlice({
     currentUser: false,
     userId: '',
     username: '',
-    profilPic: '',
+    img: '',
     isAdmin: '',
   },
   reducers: {
@@ -22,7 +22,7 @@ const userSlice = createSlice({
       state.currentUser = action.payload.currentUser;
       state.userId = action.payload.userId;
       state.username = action.payload.username;
-      state.profilPic = action.payload.profilPic;
+      state.img = action.payload.img;
       state.isAdmin = action.payload.isAdmin;
     },
     loginFailure: (state, action) => {
@@ -40,13 +40,26 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
       state.userId = '';
       state.username = '';
-      state.profilPic = '';
+      state.img = '';
     },
 
     logoutFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
+     // update profil
+     updateProfilStart: (state) => {
+      state.isFetching = true;
+    },
+    updateProfilSuccess: (state, action) => {
+      state.isFetching = false;
+      state.img = action.payload.img;
+      state.username = action.payload.username;
+    },
+    updateProfilFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    }
   },
 });
 
@@ -57,6 +70,9 @@ export const {
   logoutStart,
   logoutSuccess,
   logoutFailure,
+  updateProfilStart,
+  updateProfilSuccess,
+  updateProfilFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;

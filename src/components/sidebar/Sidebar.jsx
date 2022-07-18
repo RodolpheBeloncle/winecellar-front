@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './sidebar.scss';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -12,12 +12,29 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSystemDaydreamOutlined';
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DarkModeContext } from '../../context/darkModeContext';
+import { logout } from '../../redux/apiCalls';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+  const dispatcher = useDispatch();
+  const navigate = useNavigate();
+  const userAuth = useSelector((state) => state.user.currentUser);
+
+  const handleDisconnect = () => {
+    console.log('user is authenticated after logout', userAuth);
+    logout(dispatcher, userAuth);
+    localStorage.removeItem('persist:globalState');
+  };
+
+  useEffect(() => {
+    !userAuth && navigate('/login');
+  }, [userAuth]);
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -82,11 +99,13 @@ const Sidebar = () => {
             <span>Settings</span>
           </li>
           <p className="title">USER</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
-          <li>
+          <Link to="/profil" style={{ textDecoration: 'none' }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
+          </Link>
+          <li onClick={handleDisconnect}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>

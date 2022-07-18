@@ -1,0 +1,208 @@
+$font-1: 'font-1', sans-serif;
+$font-2: 'font-2', serif;
+$font-3: 'font-3', serif;
+
+$color-1: #ff7b77;
+$color-2: #ffd0c4;
+$color-3: rgb(0, 22, 44);
+$color-4: #fdeeee;
+$color-5: rgb(251, 251, 255);
+$black: rgb(40, 40, 40);
+$white: rgb(253, 253, 253);
+$shadow: rgb(219, 218, 218);
+
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+//   list-style-type: none;
+//   outline: none;
+//   border: none;
+//   text-decoration: none;
+
+//   &::selection {
+//     background: $color-1;
+//   }
+// }
+// a,
+// a:visited {
+//   color: $color-3;
+// }
+// input,
+// textarea {
+//   resize: none;
+//   border-radius: 20px;
+//   width: 270px;
+//   font-family: $font-1;
+//   background: $white;
+// }
+// textarea {
+//   &:focus {
+//     box-shadow: 0 0 4px rgba(0, 22, 44, 0.1);
+//   }
+// }
+
+// button,
+// input {
+//   background: $color-2;
+//   color: $color-1;
+//   font-family: $font-3;
+//   cursor: pointer;
+//   transition: 0.2s;
+//   margin: 0;
+//   padding: 10px 20px;
+//   font-size: 1.1rem;
+//   border-radius: 20px 6px 20px 20px;
+
+//   &:hover {
+//     background: $color-1;
+//     color: $color-2;
+//   }
+// }
+
+.profil-page {
+  max-width: 1200px;
+  height: 600px;
+  flex: 10;
+  box-sizing: border-box;
+  position: relative;
+
+  .update-container {
+    .formContainer {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      font-family: 'Roboto';
+      width: 600px;
+      margin: 30px auto 0;
+      background: $color-5;
+      padding: 10px 50px 50px;
+      border-radius: 50px;
+
+      @include for-phone-only {
+        width: 80%;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 10px 0 6px;
+      }
+
+      img {
+        height: 180px;
+        width: 180px;
+        border-radius: 46px;
+        object-fit: cover;
+        margin-bottom: 30px;
+        box-shadow: 0 0 6px rgba(51, 51, 51, 0.363);
+
+        @include for-phone-only {
+          height: 100px;
+          width: 120px;
+        }
+      }
+
+      h1 {
+        padding: 2vh;
+      }
+
+      .inputs-container {
+        .input-content {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 20px;
+
+          input {
+            text-align: center;
+            border: 1px solid $color-3;
+
+            @include for-phone-only {
+              width: 120px;
+              font-size: 15px;
+            }
+          }
+
+          label {
+            text-align: center;
+            position: absolute;
+            transform: translate(0%, -60%);
+            width: 270px;
+            background: $color-3;
+            color: $color-2;
+            border-radius: 20px;
+            display: inline-block;
+            // padding: 9px 0;
+            transition: 0.2s;
+            z-index: 10;
+            cursor: pointer;
+            margin-top: 20px;
+
+            @include for-phone-only {
+              width: 120px;
+              font-size: 15px;
+            }
+          }
+        }
+
+        input[type='file'] {
+          position: absolute;
+          opacity: 0;
+          transform: translate(-3px, -50%);
+          cursor: pointer;
+          padding: 10px 20px;
+        }
+
+        input[type='text']::placeholder {
+          color: grey;
+          font-family: 'Roboto', sans-serif;
+        }
+
+        input[type='submit'] {
+          background: $color-1;
+          width: 100%;
+          padding: 2vh;
+          border: none;
+          cursor: pointer;
+          border-radius: 50px;
+        }
+      }
+    }
+  }
+}
