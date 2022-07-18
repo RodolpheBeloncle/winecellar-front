@@ -181,7 +181,7 @@ const NewOrder = () => {
             <DataGrid
               className="datagrid"
               getRowId={(r) => r._id}
-              rows={wineData.filter((item) => item.quantity > 0)}
+              rows={wineData}
               columns={productColumns.concat(actionColumn)}
               pageSize={9}
               rowsPerPageOptions={[9]}

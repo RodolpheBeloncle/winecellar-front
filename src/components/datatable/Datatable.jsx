@@ -1,18 +1,19 @@
 import React from 'react';
 import './datatable.scss';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 
-const Datatable = ({ headersColumns, nestedData, title }) => {
-
-  const handleDelete = (id) => {
-    nestedData.filter((item) => item._id !== id);
-  };
-
+const Datatable = ({
+  headersColumns,
+  nestedData,
+  title,
+  handleDelete,
+  refreshData,
+}) => {
   useEffect(() => {
+    refreshData();
     console.log('customlistdata', nestedData);
-   
   }, []);
 
   const actionColumn = [

@@ -2,7 +2,7 @@ import React from 'react';
 import './list.scss';
 import { useContext, useEffect } from 'react';
 import Datatable from '../../components/datatable/Datatable';
-import { publicRequest } from '../../utils/api';
+import { publicRequest, userRequest } from '../../utils/api';
 import {
   productColumns,
   customerData,
@@ -14,13 +14,23 @@ const List = ({ dataType }) => {
   const { wineData, setWineData } = useContext(WinesContext);
 
   const getWineData = async () => {
-    const res = await publicRequest.get('/products/');
-    setWineData(res.data);
+    try {
+      const res = await publicRequest.get('/products/');
+      setWineData(res.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  useEffect(() => {
-    getWineData();
-  }, []);
+  const handleDelete = async (id) => {
+    try {
+      await userRequest.delete(`/products/${id}`);
+      getWineData();
+      alert(`product deleted`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   let data;
 
@@ -42,6 +52,8 @@ const List = ({ dataType }) => {
           <Datatable
             headersColumns={productColumns}
             nestedData={wineData}
+            refreshData={getWineData}
+            handleDelete={handleDelete}
             title={dataType}
           />
         ),
