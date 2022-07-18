@@ -17,14 +17,12 @@ const cartSlice = createSlice({
 
     removeOneItem: (state, action) => {
       console.log('remove OneItem', action.payload);
-      let newState = state
-      newState.splice(action.payload, 1);
-      console.log("newstate",newState,state)
-      state = newState;
+
+      // state.splice(action.payload, 1);
+      state.splice(state.findIndex((arrow) => arrow._id === action.payload), 1);
 
       // you receive you inputIndex from the payload
       // and you use it to splice the desired item off the array
-    
     },
 
     addQuantityToItem: (state, action) => {

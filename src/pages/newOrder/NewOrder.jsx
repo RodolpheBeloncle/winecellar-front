@@ -83,6 +83,7 @@ const NewOrder = () => {
       .filter((item) => !item.quantity > 0)
       .map((item) => {
         dispatch(removeOneItem(item._id));
+
         console.log('removedId', item._id);
       });
 
