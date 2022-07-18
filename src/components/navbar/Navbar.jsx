@@ -80,16 +80,18 @@ const Navbar = () => {
               className="avatar"
             />
           </div>
-          <div className="item" onClick={onCart}>
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1007/1007908.png"
-              alt=""
-              className="avatar"
-            />
-            {totalQuantity() > 0 && (
-              <div className="counter">{totalQuantity()}</div>
-            )}
-          </div>
+          {totalQuantity() > 0 && (
+            <div className="item" onClick={onCart}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1007/1007908.png"
+                alt=""
+                className="avatar"
+              />
+              {totalQuantity() > 0 && (
+                <div className="counter">{totalQuantity()}</div>
+              )}
+            </div>
+          )}
           <div className="item">
             <LogoutIcon onClick={handleDisconnect} className="icon" />
           </div>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { publicRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItemFromCart } from '../../redux/cartRedux';
+import { removeAllFromCart } from '../../redux/cartRedux';
 import { saveAs } from 'file-saver';
 
 import Paper from '@material-ui/core/Paper';
@@ -20,6 +21,7 @@ const Invoice = () => {
   const [isOrderSent, setOrderSent] = useState(false);
   const orderCart = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.user.userId);
+  const { wineData } = useContext(WinesContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let optionsDate = {
@@ -27,6 +29,10 @@ const Invoice = () => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+  };
+
+  const stockToUpdate = () => {
+    return wineData.map(({ _id, quantity }) => ({ _id, quantity }));
   };
 
   const generateInvoiceId = () => {
@@ -53,10 +59,13 @@ const Invoice = () => {
   };
 
   const createAndDownloadPdf = () => {
+    let productToUpdate = stockToUpdate();
     let { name } = inputs;
-    let products = orderCart.map((item) => ({
-      productId: item._id,
-      quantity: item.quantity,
+    let products = orderCart.map(({ _id, quantity, price, title }) => ({
+      productId: _id,
+      title: title,
+      price: price,
+      quantity: quantity,
     }));
 
     publicRequest
@@ -76,6 +85,9 @@ const Invoice = () => {
           amount: totalAmount(orderCart),
         })
       )
+      .then(() => {
+        publicRequest.post('/products/many', { updates: productToUpdate });
+      })
       .catch((error) => {
         console.log("Invoice haven't been registered!");
         setOrderSent(false);
@@ -86,9 +98,10 @@ const Invoice = () => {
   };
 
   useEffect(() => {
-    isOrderSent && dispatch(removeItemFromCart());
+    isOrderSent && dispatch(removeAllFromCart());
     isOrderSent && navigate('/orders');
-    console.log('orderCart', orderCart);
+
+    console.log('stockToUpdate', stockToUpdate());
   }, [orderCart, isOrderSent]);
 
   const [page, setPage] = React.useState(0);

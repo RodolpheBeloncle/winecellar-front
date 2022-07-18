@@ -22,7 +22,7 @@ export const customerColumns = [
       return (
         <div className="cellWithImg">
           <img className="cellImg" src={params.row.img} alt="avatar" />
-          {params.row.username}
+          {params.row.customer}
         </div>
       );
     },
@@ -57,8 +57,8 @@ export const customerColumns = [
 export const productColumns = [
   { field: '_id', headerName: 'ID', width: 70 },
   {
-    field: 'product',
-    headerName: 'Product',
+    field: 'title',
+    headerName: 'Title',
     width: 230,
     renderCell: (params) => {
       return (
@@ -144,7 +144,7 @@ export const productColumns = [
 export const customerData = [
   {
     _id: 1,
-    username: 'Snow',
+    customer: 'Snow',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     status: 'active',
     email: '1snow@gmail.com',
@@ -152,7 +152,7 @@ export const customerData = [
   },
   {
     _id: 2,
-    username: 'Jamie Lannister',
+    customer: 'Jamie Lannister',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '2snow@gmail.com',
     status: 'passive',
@@ -160,7 +160,7 @@ export const customerData = [
   },
   {
     _id: 3,
-    username: 'Lannister',
+    customer: 'Lannister',
     img: '',
     email: '3snow@gmail.com',
     status: 'pending',
@@ -168,7 +168,7 @@ export const customerData = [
   },
   {
     _id: 4,
-    username: 'Stark',
+    customer: 'Stark',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '4snow@gmail.com',
     status: 'active',
@@ -176,7 +176,7 @@ export const customerData = [
   },
   {
     _id: 5,
-    username: 'Targaryen',
+    customer: 'Targaryen',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '5snow@gmail.com',
     status: 'passive',
@@ -184,7 +184,7 @@ export const customerData = [
   },
   {
     _id: 6,
-    username: 'Melisandre',
+    customer: 'Melisandre',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '6snow@gmail.com',
     status: 'active',
@@ -192,7 +192,7 @@ export const customerData = [
   },
   {
     _id: 7,
-    username: 'Clifford',
+    customer: 'Clifford',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '7snow@gmail.com',
     status: 'passive',
@@ -200,7 +200,7 @@ export const customerData = [
   },
   {
     _id: 8,
-    username: 'Frances',
+    customer: 'Frances',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '8snow@gmail.com',
     status: 'active',
@@ -208,7 +208,7 @@ export const customerData = [
   },
   {
     _id: 9,
-    username: 'Roxie',
+    customer: 'Roxie',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: 'snow@gmail.com',
     status: 'pending',
@@ -216,7 +216,7 @@ export const customerData = [
   },
   {
     _id: 10,
-    username: 'Roxie',
+    customer: 'Roxie',
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: 'snow@gmail.com',
     status: 'active',

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import { publicRequest } from '../../utils/api';
+import { formatDate } from '../../utils/formatDate';
 import './orderTable.scss';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -110,10 +111,7 @@ const List = () => {
                 </TableCell>
                 <TableCell className="tableCell">{row.customer}</TableCell>
                 <TableCell className="tableCell">
-                  {new Date(row.createdAt).toLocaleDateString(
-                    'fr-FR',
-                    optionsDate
-                  )}
+                  {formatDate(row.createdAt)}
                 </TableCell>
                 <TableCell className="tableCell">{row.amount}</TableCell>
                 {/* <TableCell className="tableCell">{row.method}</TableCell> */}

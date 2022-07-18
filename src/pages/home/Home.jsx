@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './home.scss';
 import Widget from '../../components/widget/Widget';
 import Featured from '../../components/featured/Featured';
+import { customerData } from '../../datatablesource';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 import Chart from '../../components/chart/Chart';
 import Table from '../../components/table/Table';
 import { useEffect, useState } from 'react';
 import { userRequest } from '../../utils/api';
 
 const Home = () => {
+  const { latestOrders } = useContext(WinesContext);
   const [nbCustomers, setNbCustomers] = useState([]);
   const [customersStat, setCustomersStat] = useState(null);
 
@@ -18,27 +21,22 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const getAllUsers = async () => {
-      try {
-        const res = await userRequest.get(`/users`);
-        setNbCustomers(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     const getUserStats = async () => {
       try {
         const res = await userRequest.get(`/users/stats`);
-        let customersStats = diffStatCustomers(res.data[0].total,res.data[1].total)
+        let customersStats = diffStatCustomers(
+          res.data[0].total,
+          res.data[1].total
+        );
         setCustomersStat(customersStats);
       } catch (err) {
         console.log(err);
       }
     };
 
-    getAllUsers();
     getUserStats();
-  }, []);
+    console.log('LATESORDERS', latestOrders);
+  }, [latestOrders]);
 
   return (
     <div className="home">
@@ -46,7 +44,7 @@ const Home = () => {
         <div className="widgets">
           <Widget
             type="customer"
-            nbCustomers={nbCustomers.length}
+            nbCustomers={customerData.length}
             diff={customersStat}
           />
           <Widget type="order" />
@@ -59,7 +57,7 @@ const Home = () => {
         </div>
         <div className="listContainer">
           <div className="listTitle">Latest Transactions</div>
-          <Table />
+          <Table latestOrders={latestOrders} />
         </div>
       </div>
     </div>

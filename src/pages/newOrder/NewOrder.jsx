@@ -4,8 +4,9 @@ import '../../components/datatable/datatable.scss';
 
 import {
   addItemToCart,
-  removeItemFromCart,
+  removeAllFromCart,
   addQuantityToItem,
+  removeOneItem,
   subtractQuantityFromItem,
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,9 +35,13 @@ const NewOrder = () => {
   };
 
   const initialQty = async () => {
-    const { data } = await publicRequest.get('/products/');
-    setWineData(data);
-    dispatch(removeItemFromCart());
+    try {
+      const { data } = await publicRequest.get('/products/');
+
+      setWineData(data);
+    } catch {}
+
+    dispatch(removeAllFromCart());
   };
 
   const backToInitialStock = () => {
@@ -74,10 +79,17 @@ const NewOrder = () => {
   };
 
   useEffect(() => {
+    orderedList
+      .filter((item) => !item.quantity > 0)
+      .map((item) => {
+        dispatch(removeOneItem(item._id));
+        console.log('removedId', item._id);
+      });
+
     console.log('selectedroduct', selectedProduct);
     console.log(' orderedList', orderedList);
     console.log('selectedId[0]', selectedId[0]);
-  }, [selectedId[0], orderedList, selectedProduct]);
+  }, [selectedId[0], orderedList, selectedProduct, wineData]);
 
   const actionColumn = [
     {
@@ -150,7 +162,9 @@ const NewOrder = () => {
       <div className="newOrderContainer">
         <div className="top">
           <div className="left">
-            {selectedId.length > 0 && <InfoProduct selectedId={selectedId} wineData={wineData}/>}
+            {selectedId.length > 0 && (
+              <InfoProduct selectedId={selectedId} wineData={wineData} />
+            )}
           </div>
           {/* <div className="right">
 ==== shopping car increase or decrease amount current

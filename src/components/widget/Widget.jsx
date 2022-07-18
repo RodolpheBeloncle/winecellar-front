@@ -1,6 +1,7 @@
-import React,{ useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import './widget.scss';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
@@ -9,11 +10,15 @@ import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlin
 import { Link } from 'react-router-dom';
 
 const Widget = ({ type, nbCustomers, diff }) => {
+  const { orderData } = useContext(WinesContext);
   let data;
 
   //temporary
   const amount = 100;
+  const OrderAmount = orderData.length;
   // const diff = 20;
+
+  useEffect(() => {}, [orderData]);
 
   switch (type) {
     case 'customer':
@@ -23,8 +28,8 @@ const Widget = ({ type, nbCustomers, diff }) => {
         amount: nbCustomers,
         isMoney: false,
         link: (
-          <Link to="/users" style={{ textDecoration: 'none' }}>
-            See all users
+          <Link to="/customers" style={{ textDecoration: 'none' }}>
+            View all customers
           </Link>
         ),
         icon: (
@@ -41,9 +46,13 @@ const Widget = ({ type, nbCustomers, diff }) => {
     case 'order':
       data = {
         title: 'ORDERS',
-        amount: amount,
+        amount: OrderAmount,
         isMoney: false,
-        link: 'View all orders',
+        link: (
+          <Link to="/orders" style={{ textDecoration: 'none' }}>
+            View all orders
+          </Link>
+        ),
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -60,7 +69,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
         title: 'EARNINGS',
         amount: amount,
         isMoney: true,
-        link: 'View net earnings',
+        // link: 'View net earnings',
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -74,7 +83,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
         title: 'BALANCE',
         amount: amount,
         isMoney: true,
-        link: 'See details',
+        // link: 'See details',
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -89,7 +98,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
     default:
       break;
   }
-  
+
   useEffect(() => [nbCustomers, diff]);
 
   return (

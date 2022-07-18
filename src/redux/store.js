@@ -25,7 +25,7 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === 'cart/removeItemFromCart') {
+  if (action.type === 'cart/removeAllFromCart') {
     state.cart = undefined;
   }
   return combinedReducer(state, action);

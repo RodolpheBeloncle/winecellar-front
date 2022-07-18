@@ -8,11 +8,23 @@ const cartSlice = createSlice({
       console.log('addItemToCart', action.payload);
       state.push(action.payload);
     },
-    removeItemFromCart: (state,action) => {
-      console.log("removeItemFromCart",state,action)
+    removeAllFromCart: (state, action) => {
+      console.log('removeAllFromCart', action.payload);
       // From here we can take action only at this "counter" state
       // But, as we have taken care of this particular "logout" action
       // in rootReducer, we can use it to CLEAR the complete Redux Store's state
+    },
+
+    removeOneItem: (state, action) => {
+      console.log('remove OneItem', action.payload);
+      let newState = state
+      newState.splice(action.payload, 1);
+      console.log("newstate",newState,state)
+      state = newState;
+
+      // you receive you inputIndex from the payload
+      // and you use it to splice the desired item off the array
+    
     },
 
     addQuantityToItem: (state, action) => {
@@ -36,8 +48,9 @@ const cartSlice = createSlice({
 
 export const {
   addItemToCart,
-  removeItemFromCart,
+  removeAllFromCart,
   addQuantityToItem,
+  removeOneItem,
   subtractQuantityFromItem,
 } = cartSlice.actions;
 export default cartSlice.reducer;
