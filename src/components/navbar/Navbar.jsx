@@ -51,9 +51,10 @@ const Navbar = () => {
 
   useEffect(() => {
     console.log('darkmode', darkMode);
+    console.log('profilpic', profilPic);
 
     !userAuth && navigate('/login');
-  }, [userAuth, productsOrdered, darkMode]);
+  }, [userAuth, productsOrdered, darkMode, profilPic]);
 
   return (
     <div className="navbar">
