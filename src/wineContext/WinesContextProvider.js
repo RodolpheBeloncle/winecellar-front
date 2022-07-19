@@ -1,12 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { publicRequest } from '../utils/api';
+import { customerData } from '../datatablesource';
 
 export const WinesContext = createContext();
 
 const WinesContextProvider = ({ children }) => {
   const [wineData, setWineData] = useState([]);
   const [orderData, setOrderData] = useState([]);
+  const [customersList, setCustomersList] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const userId = useSelector((state) => state.user.userId);
@@ -28,6 +30,11 @@ const WinesContextProvider = ({ children }) => {
     } catch (err) {}
   };
 
+  const getCustomerData = () => {
+    // const res = await publicRequest.get('/orders/');
+    setCustomersList(customerData);
+  };
+
   const getLatestOrders = async () => {
     setLoading(true);
     try {
@@ -43,6 +50,7 @@ const WinesContextProvider = ({ children }) => {
     getWineData();
     getOrderData();
     getLatestOrders();
+    getCustomerData();
   }, [userId]);
 
   return (
@@ -54,6 +62,8 @@ const WinesContextProvider = ({ children }) => {
         setOrderData,
         latestOrders,
         setLatestOrders,
+        customersList,
+        setCustomersList,
       }}
     >
       {children}

@@ -1,38 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import "./single.scss"
 
-const InfoCustomer = ({info}) => {
-    return (
-        <div>
-        <div className="editButton">Edit</div>
-        <h1 className="title">Information</h1>
-        <div className="item">
-          <img
-            src={`http://localhost:8000/${info.img}`}
-            alt="productImg"
-            className="itemImg"
-          />
-          <div className="details">
-            <h1 className="itemTitle">customer</h1>
-            <div className="detailItem">
-              <span className="itemKey">Email:</span>
-              <span className="itemValue">janedoe@gmail.com</span>
-            </div>
+const InfoCustomer = ({ info }) => {
+  useEffect(() => [info]);
+  return (
+    <div>
+      <div className="editButton">Edit</div>
+      <h1 className="title">Information</h1>
+      <div className="item">
+        <img src={info.img} alt="productImg" className="itemImg" />
+        <div className="details">
+          <h1 className="itemTitle">{info.customer}</h1>
+          <div className="detailItem">
+            <span className="itemKey">Email:</span>
+            <span className="itemValue">{info.email}</span>
+          </div>
+          {info.phone && (
             <div className="detailItem">
               <span className="itemKey">Phone:</span>
-              <span className="itemValue">+1 2345 67 89</span>
+              <span className="itemValue">{info.phone}</span>
             </div>
+          )}
+          {info.adress && (
             <div className="detailItem">
               <span className="itemKey">Address:</span>
-              <span className="itemValue">Elton St. 234 Garden Yd. NewYork</span>
+              <span className="itemValue">{info.adress}</span>
             </div>
+          )}
+          {info.country && (
             <div className="detailItem">
               <span className="itemKey">Country:</span>
-              <span className="itemValue">USA</span>
+              <span className="itemValue">{info.country}</span>
             </div>
-          </div>
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default InfoCustomer;

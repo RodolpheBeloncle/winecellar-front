@@ -168,7 +168,7 @@ const NewOrder = () => {
             )}
           </div>
           {/* <div className="right">
-==== shopping car increase or decrease amount current
+          ==== shopping car increase or decrease amount current
             <Chart
               aspect={3 / 1}
               title={`sales ${dataType} ( Last 6 Months)`}

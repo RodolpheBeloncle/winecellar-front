@@ -5,13 +5,12 @@ import Datatable from '../../components/datatable/Datatable';
 import { publicRequest, userRequest } from '../../utils/api';
 import {
   productColumns,
-  customerData,
   customerColumns,
 } from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const List = ({ dataType }) => {
-  const { wineData, setWineData } = useContext(WinesContext);
+  const { wineData, setWineData,customersList } = useContext(WinesContext);
 
   const getWineData = async () => {
     try {
@@ -34,7 +33,7 @@ const List = ({ dataType }) => {
 
   const handleRemoveCustomer = (id) => {
     console.log(`remove customer ${id}`);
-    return customerData.filter((customer) => customer._id !== id);
+    return customersList.filter((customer) => customer._id !== id);
 
     // await userRequest.delete(`/products/${id}`);
     // getWineData();
@@ -49,12 +48,13 @@ const List = ({ dataType }) => {
         customList: (
           <Datatable
             headersColumns={customerColumns}
-            nestedData={customerData}
+            nestedData={customersList}
             handleDelete={handleRemoveCustomer}
             refreshData={getWineData}
             title={dataType}
           />
         ),
+        
       };
       break;
     case 'product':

@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import './home.scss';
 import Widget from '../../components/widget/Widget';
 import Featured from '../../components/featured/Featured';
-import { customerData } from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import Chart from '../../components/chart/Chart';
 import Table from '../../components/table/Table';
@@ -10,8 +9,7 @@ import { useEffect, useState } from 'react';
 import { userRequest } from '../../utils/api';
 
 const Home = () => {
-  const { latestOrders } = useContext(WinesContext);
-  const [nbCustomers, setNbCustomers] = useState([]);
+  const { latestOrders,customersList } = useContext(WinesContext);
   const [customersStat, setCustomersStat] = useState(null);
 
   // Calculate users % range betwwen last 2 months
@@ -44,7 +42,7 @@ const Home = () => {
         <div className="widgets">
           <Widget
             type="customer"
-            nbCustomers={customerData.length}
+            nbCustomers={customersList.length}
             diff={customersStat}
           />
           <Widget type="order" />

@@ -5,7 +5,8 @@ import Login from './pages/login/Login';
 import List from './pages/list/List';
 import NotFound from './pages/notFound/NotFound';
 import PrivateRoutes from './components/privateRoutes/PrivateRoutes';
-import Single from './pages/single/Single';
+import ProductInfo from './components/singleInfo/ProductInfo';
+import InfoCustomer from './components/singleInfo/InfoCustomer';
 import NewProduct from './pages/newProduct/NewProduct';
 import NewOrder from './pages/newOrder/NewOrder';
 import NewCustomer from './pages/newCustomer/NewCustomer';
@@ -32,19 +33,19 @@ function App() {
               <Route index element={<List dataType={'customer'} />} />
               <Route
                 path=":customerId"
-                element={<Single dataType={'customer'} />}
+                element={<InfoCustomer dataType={'customer'} />}
               />
-              {/* <Route
+              <Route
                 path="new"
                 element={<NewProduct inputs={userInputs} title="Add NewCustomer" />}
-              /> */}
+              />
             </Route>
 
             <Route path="products">
               <Route index element={<List dataType={'product'} />} />
               <Route
                 path=":productId"
-                element={<Single dataType={'product'} />}
+                element={<ProductInfo dataType={'product'} />}
               />
               <Route
                 path="new"
