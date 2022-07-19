@@ -28,8 +28,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/profil" element={<Profil />} />
 
-            
-
             <Route path="customers">
               <Route index element={<List dataType={'customer'} />} />
               <Route

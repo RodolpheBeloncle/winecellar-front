@@ -32,6 +32,15 @@ const List = ({ dataType }) => {
     }
   };
 
+  const handleRemoveCustomer = (id) => {
+    console.log(`remove customer ${id}`);
+    return customerData.filter((customer) => customer._id !== id);
+
+    // await userRequest.delete(`/products/${id}`);
+    // getWineData();
+    // alert(`customer removed`);
+  };
+
   let data;
 
   switch (dataType) {
@@ -41,6 +50,8 @@ const List = ({ dataType }) => {
           <Datatable
             headersColumns={customerColumns}
             nestedData={customerData}
+            handleDelete={handleRemoveCustomer}
+            refreshData={getWineData}
             title={dataType}
           />
         ),

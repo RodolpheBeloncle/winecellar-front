@@ -1,0 +1,25 @@
+.searchPage {
+  display: 'flex';
+  align-self: 'center';
+  justify-content: 'center';
+  flex-direction: 'column';
+  padding: 20;
+}
+
+.box-container {
+    margin: 10px 0;
+  }
+  
+  .box {
+    width: 300px;
+    margin: 10px;
+    padding: 10px;
+    line-height: 25px;
+    float: left;
+    border-radius: 4px;
+    border: 1px solid #999;
+  }
+  
+  .clearboth {
+    clear: both;
+  }
