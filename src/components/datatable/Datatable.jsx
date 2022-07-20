@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
 import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 
 const Datatable = ({
@@ -51,7 +52,8 @@ const Datatable = ({
     {
       field: 'action',
       headerName: 'Action',
-      width: 200,
+      width: 100,
+      minWidth: 50,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -102,22 +104,24 @@ const Datatable = ({
           </div>
         </div>
       </div>
-      <DataGrid
-        className="datagrid"
-        getRowId={(r) => r._id}
-        rows={nestedData}
-        columns={headersColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        onSelectionModelChange={(ids) => {
-          nestedData
-            .filter((element) => {
-              return element._id === ids[0];
-            })
-            .map((item) => setSelectedData(item._id));
-        }}
-        selectionModel={selectedData}
-      />
+      <Box sx={{ height: 600, width: '100%' }}>
+        <DataGrid
+          className="datagrid"
+          getRowId={(r) => r._id}
+          rows={nestedData}
+          columns={headersColumns.concat(actionColumn)}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          onSelectionModelChange={(ids) => {
+            nestedData
+              .filter((element) => {
+                return element._id === ids[0];
+              })
+              .map((item) => setSelectedData(item._id));
+          }}
+          selectionModel={selectedData}
+        />
+      </Box>
     </div>
   );
 };

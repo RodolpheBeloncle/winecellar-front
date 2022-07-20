@@ -11,7 +11,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+
+const styles = (theme) => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+});
 
 const List = () => {
   let optionsDate = {
@@ -106,4 +118,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default withStyles(styles)(List);

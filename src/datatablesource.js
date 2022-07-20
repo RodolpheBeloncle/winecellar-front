@@ -17,11 +17,21 @@ export const customerColumns = [
   {
     field: 'customer',
     headerName: 'Customer',
-    width: 230,
+    width: 210,
+    maxwidth: 210,
+    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          <img className="cellImg" src={params.row.img} alt="avatar" />
+          <img
+            className="cellImg"
+            src={
+              params.row.img
+                ? params.row.img
+                : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+            }
+            alt="avatar"
+          />
           {params.row.customer}
         </div>
       );
@@ -30,18 +40,23 @@ export const customerColumns = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 230,
+    width: 210,
+    minWidth: 50,
   },
 
   {
-    field: 'age',
-    headerName: 'Age',
+    field: 'phone',
+    headerName: 'Phone',
     width: 100,
+    maxwidth: 100,
+    minWidth: 50,
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 160,
+    width: 100,
+    maxwidth: 100,
+    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className={`cellWithStatus ${params.row.status}`}>
@@ -60,6 +75,7 @@ export const productColumns = [
     field: 'title',
     headerName: 'Title',
     width: 230,
+    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -86,26 +102,31 @@ export const productColumns = [
     field: 'type',
     headerName: 'Type',
     width: 100,
+    minWidth: 50,
   },
   {
     field: 'vintage',
     headerName: 'Vintage',
     width: 100,
+    minWidth: 50,
   },
   {
     field: 'content',
     headerName: 'Content',
     width: 100,
+    minWidth: 50,
   },
   {
     field: 'price',
     headerName: 'Price',
     width: 100,
+    minWidth: 50,
   },
   {
     field: 'quantity',
     headerName: 'Quantity',
     width: 160,
+    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -148,7 +169,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     status: 'active',
     email: '1snow@gmail.com',
-    age: 35,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 2,
@@ -156,7 +177,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '2snow@gmail.com',
     status: 'passive',
-    age: 42,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 3,
@@ -164,7 +185,7 @@ export const customerData = [
     img: '',
     email: '3snow@gmail.com',
     status: 'pending',
-    age: 45,
+  phone: '06-90-14-16-89',
   },
   {
     _id: 4,
@@ -172,7 +193,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '4snow@gmail.com',
     status: 'active',
-    age: 16,
+  phone: '06-90-14-16-89',
   },
   {
     _id: 5,
@@ -180,7 +201,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '5snow@gmail.com',
     status: 'passive',
-    age: 22,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 6,
@@ -188,7 +209,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '6snow@gmail.com',
     status: 'active',
-    age: 15,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 7,
@@ -196,7 +217,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '7snow@gmail.com',
     status: 'passive',
-    age: 44,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 8,
@@ -204,7 +225,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '8snow@gmail.com',
     status: 'active',
-    age: 36,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 9,
@@ -212,7 +233,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: 'snow@gmail.com',
     status: 'pending',
-    age: 65,
+    phone: '06-90-14-16-89',
   },
   {
     _id: 10,
@@ -220,6 +241,6 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: 'snow@gmail.com',
     status: 'active',
-    age: 65,
+    phone: '06-90-14-16-89',
   },
 ];

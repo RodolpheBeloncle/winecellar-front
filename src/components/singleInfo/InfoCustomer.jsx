@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import "./single.scss"
+import './single.scss';
 
 const InfoCustomer = ({ info }) => {
   useEffect(() => [info]);
@@ -8,7 +8,15 @@ const InfoCustomer = ({ info }) => {
       <div className="editButton">Edit</div>
       <h1 className="title">Information</h1>
       <div className="item">
-        <img src={info.img} alt="productImg" className="itemImg" />
+        <img
+          src={
+            info.img
+              ? info.img
+              : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+          }
+          alt="productImg"
+          className="itemImg"
+        />
         <div className="details">
           <h1 className="itemTitle">{info.customer}</h1>
           <div className="detailItem">

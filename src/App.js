@@ -37,7 +37,7 @@ function App() {
               />
               <Route
                 path="new"
-                element={<NewProduct inputs={userInputs} title="Add NewCustomer" />}
+                element={<NewCustomer inputs={userInputs} title="Add NewCustomer" />}
               />
             </Route>
 

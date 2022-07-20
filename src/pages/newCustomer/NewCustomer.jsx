@@ -6,26 +6,20 @@ import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const NewCustomer = ({ inputs, title }) => {
+const NewCustomer = ({ inputs, name }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
-    title: '',
-    desc: '',
-    vintage: '',
-    price: '',
-    quantity: '',
-    type: '',
-    size: '',
+    name: '',
+    email: '',
+    phone: '',
+    adress: '',
+    country: '',
   });
 
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-
-    if (e.target.name === 'type' || e.target.name === 'size') {
-      setInputsValue((prevState) => ({ ...prevState, [name]: value }));
-    }
 
     setInputsValue((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -35,15 +29,12 @@ const NewCustomer = ({ inputs, title }) => {
 
     const data = new FormData();
 
-    const { title, desc, vintage, price, quantity, type, size } =
-      inputsValue;
-    data.append('title', title);
-    data.append('desc', desc);
-    data.append('vintage', vintage);
-    data.append('quantity', quantity);
-    data.append('price', price);
-    data.append('size', size);
-    data.append('type', type);
+    const { name, email, adress, country, phone } = inputsValue;
+    data.append('name', name);
+    data.append('email', email);
+    data.append('adress', adress);
+    data.append('phone', phone);
+    data.append('country', country);
 
     if (file) {
       try {
@@ -56,7 +47,7 @@ const NewCustomer = ({ inputs, title }) => {
     try {
       await userRequest.post(`/products/`, data).then(({ data }) => {
         console.log('response', data);
-        alert(`your ${inputsValue.title} is in stock`);
+        alert(`your ${inputsValue.name} is in stock`);
 
         navigate('/products');
       });
@@ -71,9 +62,9 @@ const NewCustomer = ({ inputs, title }) => {
 
   return (
     <div className="newCustomer">
-      <div className="newOrderContainer">
+      <div className="newCustomerContainer">
         <div className="top">
-          <h1>{title}</h1>
+          <h1>{name}</h1>
         </div>
         <div className="bottom">
           <div className="left">
@@ -114,30 +105,6 @@ const NewCustomer = ({ inputs, title }) => {
                   />
                 </div>
               ))}
-              <div className="formInput">
-                <label>Type</label>
-                <select
-                  name="type"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                >
-                  {typeSelection.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-                <label>Content</label>
-                <select
-                  name="size"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                >
-                  {sizeSelection.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-              </div>
               <button onClick={(e) => handleSubmit(e)}>create</button>
             </form>
           </div>
@@ -147,5 +114,4 @@ const NewCustomer = ({ inputs, title }) => {
   );
 };
 
-export default NewCustomer
-;
+export default NewCustomer;
