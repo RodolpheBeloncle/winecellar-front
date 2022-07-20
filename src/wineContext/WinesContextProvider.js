@@ -30,9 +30,15 @@ const WinesContextProvider = ({ children }) => {
     } catch (err) {}
   };
 
-  const getCustomerData = () => {
-    // const res = await publicRequest.get('/orders/');
-    setCustomersList(customerData);
+  const getCustomerData = async () => {
+    setLoading(true);
+    try {
+      const res = await publicRequest.get(`/customers`);
+      setCustomersList(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getLatestOrders = async () => {

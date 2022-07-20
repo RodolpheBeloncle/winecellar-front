@@ -3,14 +3,12 @@ import './list.scss';
 import { useContext, useEffect } from 'react';
 import Datatable from '../../components/datatable/Datatable';
 import { publicRequest, userRequest } from '../../utils/api';
-import {
-  productColumns,
-  customerColumns,
-} from '../../datatablesource';
+import { productColumns, customerColumns } from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const List = ({ dataType }) => {
-  const { wineData, setWineData,customersList } = useContext(WinesContext);
+  const { wineData, setCustomersList, customersList, setWineData } =
+    useContext(WinesContext);
 
   const getWineData = async () => {
     try {
@@ -21,23 +19,33 @@ const List = ({ dataType }) => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const getCustomerData = async () => {
+    try {
+      const res = await publicRequest.get('/customers/');
+      setCustomersList(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleRemoveProduct = async (id) => {
     try {
       await userRequest.delete(`/products/${id}`);
-      getWineData();
+    
       alert(`product deleted`);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleRemoveCustomer = (id) => {
-    console.log(`remove customer ${id}`);
-    return customersList.filter((customer) => customer._id !== id);
-
-    // await userRequest.delete(`/products/${id}`);
-    // getWineData();
-    // alert(`customer removed`);
+  const handleRemoveCustomer = async (id) => {
+    try {
+      await userRequest.delete(`/customers/${id}`);
+  
+      alert(`customer deleted`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   let data;
@@ -49,12 +57,11 @@ const List = ({ dataType }) => {
           <Datatable
             headersColumns={customerColumns}
             nestedData={customersList}
-            handleDelete={handleRemoveCustomer}
-            refreshData={getWineData}
+            handleRemove={handleRemoveCustomer}
+            refreshData={getCustomerData}
             title={dataType}
           />
         ),
-        
       };
       break;
     case 'product':
@@ -63,8 +70,8 @@ const List = ({ dataType }) => {
           <Datatable
             headersColumns={productColumns}
             nestedData={wineData}
+            handleRemove={handleRemoveProduct}
             refreshData={getWineData}
-            handleDelete={handleDelete}
             title={dataType}
           />
         ),

@@ -11,10 +11,10 @@ const InfoCustomer = ({ info }) => {
         <img
           src={
             info.img
-              ? info.img
+              ? `http://localhost:8000/${info.img}`
               : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
           }
-          alt="productImg"
+          alt="CustomerImg"
           className="itemImg"
         />
         <div className="details">

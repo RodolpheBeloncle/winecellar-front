@@ -27,7 +27,7 @@ export const customerColumns = [
             className="cellImg"
             src={
               params.row.img
-                ? params.row.img
+                ? `http://localhost:8000/${params.row.img}`
                 : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
             }
             alt="avatar"
@@ -185,7 +185,7 @@ export const customerData = [
     img: '',
     email: '3snow@gmail.com',
     status: 'pending',
-  phone: '06-90-14-16-89',
+    phone: '06-90-14-16-89',
   },
   {
     _id: 4,
@@ -193,7 +193,7 @@ export const customerData = [
     img: 'https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     email: '4snow@gmail.com',
     status: 'active',
-  phone: '06-90-14-16-89',
+    phone: '06-90-14-16-89',
   },
   {
     _id: 5,

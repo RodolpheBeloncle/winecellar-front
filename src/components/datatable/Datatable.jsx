@@ -11,7 +11,7 @@ const Datatable = ({
   headersColumns,
   nestedData,
   title,
-  handleDelete,
+  handleRemove,
   refreshData,
 }) => {
   const [selectedData, setSelectedData] = useState([]);
@@ -43,7 +43,7 @@ const Datatable = ({
     nestedData
       .filter((element) => element._id === selectedData)
       .map((info) => console.log(info));
-    refreshData();
+      refreshData()
     // console.log('customlistdata', nestedData);
     // console.log('dataType', title);
   }, [selectedData, title]);
@@ -59,7 +59,7 @@ const Datatable = ({
           <div className="cellAction">
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => handleRemove(params.row._id)}
             >
               Delete
             </div>

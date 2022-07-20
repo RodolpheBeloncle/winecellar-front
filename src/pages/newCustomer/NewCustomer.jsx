@@ -10,7 +10,7 @@ const NewCustomer = ({ inputs, name }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
-    name: '',
+    customerName: '',
     email: '',
     phone: '',
     adress: '',
@@ -29,8 +29,8 @@ const NewCustomer = ({ inputs, name }) => {
 
     const data = new FormData();
 
-    const { name, email, adress, country, phone } = inputsValue;
-    data.append('name', name);
+    const { customerName, email, adress, country, phone } = inputsValue;
+    data.append('customerName', customerName);
     data.append('email', email);
     data.append('adress', adress);
     data.append('phone', phone);
@@ -45,11 +45,10 @@ const NewCustomer = ({ inputs, name }) => {
     }
 
     try {
-      await userRequest.post(`/products/`, data).then(({ data }) => {
+      await userRequest.post(`/customers/new`, data).then(({ data }) => {
         console.log('response', data);
-        alert(`your ${inputsValue.name} is in stock`);
-
-        navigate('/products');
+        alert(`Customer ${customerName} is recorded`);
+        navigate('/customers');
       });
     } catch (err) {
       alert(err);
