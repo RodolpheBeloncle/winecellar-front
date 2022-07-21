@@ -27,12 +27,12 @@ export const customerColumns = [
             className="cellImg"
             src={
               params.row.img
-                ? `http://localhost:8000/${params.row.img}`
+                ? params.row.img
                 : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
             }
             alt="avatar"
           />
-          {params.row.customer}
+          {params.row.customerName}
         </div>
       );
     },
@@ -86,11 +86,7 @@ export const productColumns = [
             </>
           ) : (
             <>
-              <img
-                className="cellImg"
-                src={`http://localhost:8000/${params.row.img}`}
-                alt="label"
-              />
+              <img className="cellImg" src={params.row.img} alt="label" />
               {params.row.title}
             </>
           )}

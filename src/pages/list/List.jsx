@@ -31,7 +31,7 @@ const List = ({ dataType }) => {
   const handleRemoveProduct = async (id) => {
     try {
       await userRequest.delete(`/products/${id}`);
-    
+      getWineData();
       alert(`product deleted`);
     } catch (err) {
       console.log(err);
@@ -41,7 +41,7 @@ const List = ({ dataType }) => {
   const handleRemoveCustomer = async (id) => {
     try {
       await userRequest.delete(`/customers/${id}`);
-  
+      getCustomerData();
       alert(`customer deleted`);
     } catch (err) {
       console.log(err);

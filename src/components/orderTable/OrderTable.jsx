@@ -71,9 +71,9 @@ const List = () => {
     <>
       <TableContainer component={Paper} className="table">
         <div className="datatableTitle">
-          Create New Order
+          Orders
           <Link to={`/orders/new`} className="link">
-            Create New
+           New Order
           </Link>
         </div>
         <Search

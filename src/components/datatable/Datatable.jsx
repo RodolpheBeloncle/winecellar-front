@@ -43,7 +43,7 @@ const Datatable = ({
     nestedData
       .filter((element) => element._id === selectedData)
       .map((info) => console.log(info));
-      refreshData()
+    refreshData();
     // console.log('customlistdata', nestedData);
     // console.log('dataType', title);
   }, [selectedData, title]);
@@ -71,9 +71,9 @@ const Datatable = ({
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New {title}
+        {title}s
         <Link to={`/${title}s/new`} className="link">
-          Add New
+          New {title}
         </Link>
       </div>
 
