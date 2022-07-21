@@ -10,11 +10,12 @@ const WinesContextProvider = ({ children }) => {
   const [orderData, setOrderData] = useState([]);
   const [customersList, setCustomersList] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const userId = useSelector((state) => state.user.userId);
 
   const getWineData = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const res = await publicRequest.get('/products/');
       setWineData(res.data);
@@ -22,31 +23,31 @@ const WinesContextProvider = ({ children }) => {
   };
 
   const getOrderData = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const res = await publicRequest.get('/orders/');
       setOrderData(res.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {}
   };
 
   const getCustomerData = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const res = await publicRequest.get(`/customers`);
       setCustomersList(res.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
 
   const getLatestOrders = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const res = await publicRequest.get(`/orders/latest/${userId}`);
       setLatestOrders(res.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -59,6 +60,8 @@ const WinesContextProvider = ({ children }) => {
     getCustomerData();
   }, [userId]);
 
+
+
   return (
     <WinesContext.Provider
       value={{
@@ -70,6 +73,9 @@ const WinesContextProvider = ({ children }) => {
         setLatestOrders,
         customersList,
         setCustomersList,
+        isLoading,
+        setIsLoading,
+        errorMessage, setErrorMessage
       }}
     >
       {children}

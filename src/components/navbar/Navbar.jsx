@@ -1,5 +1,5 @@
 import './navbar.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -13,7 +13,6 @@ import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logout } from '../../redux/apiCalls';
 import { DarkModeContext } from '../../context/darkModeContext';
-import { useContext } from 'react';
 
 const Navbar = () => {
   const dispatcher = useDispatch();
@@ -95,7 +94,7 @@ const Navbar = () => {
             <img
               src={
                 profilPic
-                  ? profilPic 
+                  ? profilPic
                   : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
               }
               alt=""
