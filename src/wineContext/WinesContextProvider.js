@@ -11,7 +11,7 @@ const WinesContextProvider = ({ children }) => {
   const [customersList, setCustomersList] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const userId = useSelector((state) => state.user.userId);
 
   const getWineData = async () => {
@@ -19,6 +19,7 @@ const WinesContextProvider = ({ children }) => {
     try {
       const res = await publicRequest.get('/products/');
       setWineData(res.data);
+      setIsLoading(false);
     } catch (err) {}
   };
 
@@ -60,8 +61,6 @@ const WinesContextProvider = ({ children }) => {
     getCustomerData();
   }, [userId]);
 
-
-
   return (
     <WinesContext.Provider
       value={{
@@ -75,7 +74,8 @@ const WinesContextProvider = ({ children }) => {
         setCustomersList,
         isLoading,
         setIsLoading,
-        errorMessage, setErrorMessage
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

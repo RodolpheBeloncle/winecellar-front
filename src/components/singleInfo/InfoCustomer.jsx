@@ -11,7 +11,7 @@ const InfoCustomer = ({ info }) => {
         <img
           src={
             info.img
-              ? `http://localhost:8000/${info.img}`
+              ? info.img
               : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
           }
           alt="CustomerImg"

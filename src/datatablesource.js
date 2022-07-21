@@ -3,6 +3,7 @@ import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
 import cautionStock from './img/caution.png';
 import warningStock from './img/warning.png';
+import { GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 export const stockStatus = {
   outOfStock: 'outOfStock',
@@ -18,8 +19,6 @@ export const customerColumns = [
     field: 'customer',
     headerName: 'Customer',
     width: 210,
-    maxwidth: 210,
-    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -41,22 +40,17 @@ export const customerColumns = [
     field: 'email',
     headerName: 'Email',
     width: 210,
-    minWidth: 50,
   },
 
   {
     field: 'phone',
     headerName: 'Phone',
     width: 100,
-    maxwidth: 100,
-    minWidth: 50,
   },
   {
     field: 'status',
     headerName: 'Status',
     width: 100,
-    maxwidth: 100,
-    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className={`cellWithStatus ${params.row.status}`}>
@@ -75,7 +69,6 @@ export const productColumns = [
     field: 'title',
     headerName: 'Title',
     width: 230,
-    minWidth: 50,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -97,32 +90,27 @@ export const productColumns = [
   {
     field: 'type',
     headerName: 'Type',
-    width: 100,
-    minWidth: 50,
+    width: 90,
   },
   {
     field: 'vintage',
     headerName: 'Vintage',
-    width: 100,
-    minWidth: 50,
+    width: 90,
   },
   {
     field: 'content',
     headerName: 'Content',
-    width: 100,
-    minWidth: 50,
+    width: 90,
   },
   {
     field: 'price',
     headerName: 'Price',
-    width: 100,
-    minWidth: 50,
+    width: 90,
   },
   {
     field: 'quantity',
     headerName: 'Quantity',
-    width: 160,
-    minWidth: 50,
+    width: 120,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">

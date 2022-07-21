@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './newProduct.scss';
-import { useState, useEffect } from 'react';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { sizeSelection, typeSelection } from '../../formSource';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Swal from 'sweetalert2';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const NewProduct = ({ inputs, title }) => {
+  const { isLoading, setIsLoading } = useContext(WinesContext);
   const navigate = useNavigate();
   const [file, setFile] = useState('');
   const [inputsValue, setInputsValue] = useState({
@@ -33,6 +37,7 @@ const NewProduct = ({ inputs, title }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const data = new FormData();
 
@@ -51,25 +56,39 @@ const NewProduct = ({ inputs, title }) => {
       try {
         data.append('img', file);
       } catch (err) {
-        alert(`something went wrong with this file`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong with the file`,
+        });
       }
     }
 
     try {
-      await userRequest.post(`/products/`, data).then(({ data }) => {
-        console.log('response', data);
-        alert(`your ${inputsValue.title} is in stock`);
+      await userRequest.post(`/products/`, data).then(() => {
+        setIsLoading(false);
+        Swal.fire({
+          title: `wine ${title} is recorded`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
 
         navigate('/products');
       });
     } catch (err) {
-      alert(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Something went wrong!${err}`,
+      });
     }
   };
 
-  useEffect(() => {
-    console.log('inputField', inputsValue);
-  }, [inputsValue]);
+  useEffect(() => [inputsValue, isLoading]);
 
   return (
     <div className="newProduct">
@@ -148,7 +167,14 @@ const NewProduct = ({ inputs, title }) => {
                   ))}
                 </select>
               </div>
-              <button onClick={(e) => handleSubmit(e)}>create</button>
+
+              {isLoading ? (
+                <Box>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <button onClick={(e) => handleSubmit(e)}>create</button>
+              )}
             </form>
           </div>
         </div>

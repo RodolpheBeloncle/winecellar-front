@@ -13,8 +13,12 @@ const InfoProduct = ({ selectedId, wineData }) => {
             <h1 className="title">Information</h1>
             <div className="item">
               <img
-                src={`http://localhost:8000/${info.img}`}
-                alt="productImg"
+                src={
+                  info.img
+                    ? info.img
+                    : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+                }
+                alt="ProductImg"
                 className="itemImg"
               />
               <div className="details">

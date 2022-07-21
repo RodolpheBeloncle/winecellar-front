@@ -5,7 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeAllFromCart } from '../../redux/cartRedux';
 import { saveAs } from 'file-saver';
-
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import { blue } from '@mui/material/colors';
+import Button from '@mui/material/Button';
+import Fab from '@mui/material/Fab';
+import CheckIcon from '@mui/icons-material/Check';
+import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,14 +21,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
+import { withStyles } from '@material-ui/core/styles';
 
 import { Container } from '@material-ui/core';
 
-const Invoice = () => {
+const Invoice = (props) => {
   const [isOrderSent, setOrderSent] = useState(false);
   const orderCart = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.user.userId);
-  const { wineData } = useContext(WinesContext);
+  const { wineData, isLoading, setIsLoading } = useContext(WinesContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let optionsDate = {
@@ -29,6 +37,17 @@ const Invoice = () => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+  };
+
+  const { classes } = props;
+
+  const buttonSx = {
+    ...(isLoading && {
+      bgcolor: blue[500],
+      '&:hover': {
+        bgcolor: blue[700],
+      },
+    }),
   };
 
   const stockToUpdate = () => {
@@ -59,6 +78,7 @@ const Invoice = () => {
   };
 
   const createAndDownloadPdf = () => {
+    setIsLoading(true);
     let productToUpdate = stockToUpdate();
     let { name } = inputs;
     let products = orderCart.map(({ _id, quantity, price, title }) => ({
@@ -88,8 +108,25 @@ const Invoice = () => {
       .then(() => {
         publicRequest.post('/products/many', { updates: productToUpdate });
       })
+      .then(() => {
+        setIsLoading(false);
+        Swal.fire({
+          title: `Invoice N° ${invoiceId} is registered!`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
+      })
       .catch((error) => {
-        console.log("Invoice haven't been registered!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${error}`,
+          // footer: '<a href="">Why do I have this issue?</a>',
+        });
         setOrderSent(false);
         return Promise.reject(error);
       });
@@ -204,7 +241,66 @@ const Invoice = () => {
         onChange={handleChange}
       />
 
-      <button onClick={createAndDownloadPdf}>Download Invoice</button>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ m: 1, position: 'relative' }}>
+          <Fab
+            aria-label="save"
+            color="primary"
+            sx={buttonSx}
+            onClick={createAndDownloadPdf}
+          >
+            {isLoading ? <CheckIcon /> : <SaveIcon />}
+          </Fab>
+          {isLoading && (
+            <CircularProgress
+              size={68}
+              sx={{
+                color: blue[500],
+                position: 'absolute',
+                top: -6,
+                left: -6,
+                zIndex: 1,
+              }}
+            />
+          )}
+        </Box>
+        <Box sx={{ m: 1, position: 'relative' }}>
+          <Button
+            classes={{
+              root: {
+                background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                borderRadius: 3,
+                border: 0,
+                color: 'white',
+                height: 480,
+                padding: '0 30px',
+                boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+              },
+            }}
+            variant="contained"
+            sx={buttonSx}
+            disabled={isLoading}
+            onClick={createAndDownloadPdf}
+          >
+            Accept terms
+          </Button>
+          {isLoading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: blue[500],
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginTop: '-12px',
+                marginLeft: '-12px',
+              }}
+            />
+          )}
+        </Box>
+      </Box>
+
+      {/* <button onClick={createAndDownloadPdf}>Download Invoice</button> */}
     </Container>
   );
 };

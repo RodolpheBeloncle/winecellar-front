@@ -6,18 +6,21 @@ import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import WinesContextProvider from './wineContext/WinesContextProvider';
 import { DarkModeContextProvider } from './context/darkModeContext';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <WinesContextProvider>
-        <DarkModeContextProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-          </PersistGate>
-        </DarkModeContextProvider>
-      </WinesContextProvider>
-    </Provider>
+    <StyledEngineProvider injectFirst>
+      <Provider store={store}>
+        <WinesContextProvider>
+          <DarkModeContextProvider>
+            <PersistGate loading={null} persistor={persistor}>
+              <App />
+            </PersistGate>
+          </DarkModeContextProvider>
+        </WinesContextProvider>
+      </Provider>
+    </StyledEngineProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

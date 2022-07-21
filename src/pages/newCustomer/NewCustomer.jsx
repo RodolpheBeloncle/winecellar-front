@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './newCustomer.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import { WinesContext } from '../../wineContext/WinesContextProvider';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Swal from 'sweetalert2';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 const NewCustomer = ({ inputs, name }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState('');
+  const { isLoading, setIsLoading } = useContext(WinesContext);
   const [inputsValue, setInputsValue] = useState({
     customerName: '',
     email: '',
@@ -25,7 +29,7 @@ const NewCustomer = ({ inputs, name }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = new FormData();
 
     const { customerName, email, adress, country, phone } = inputsValue;
@@ -39,24 +43,38 @@ const NewCustomer = ({ inputs, name }) => {
       try {
         data.append('img', file);
       } catch (err) {
-        alert(`something went wrong with this file`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong with the file`,
+        });
       }
     }
 
     try {
-      await userRequest.post(`/customers/new`, data).then(({ data }) => {
-        console.log('response', data);
-        alert(`Customer ${customerName} is recorded`);
+      await userRequest.post(`/customers/new`, data).then(() => {
+        setIsLoading(false);
+        Swal.fire({
+          title: `Customer ${customerName} is recorded`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
         navigate('/customers');
       });
     } catch (err) {
-      alert(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Something went wrong!${err}`,
+      });
     }
   };
 
-  useEffect(() => {
-    console.log('inputField', inputsValue);
-  }, [inputsValue]);
+  useEffect(() => [inputsValue, isLoading]);
 
   return (
     <div className="newCustomer">
@@ -103,7 +121,14 @@ const NewCustomer = ({ inputs, name }) => {
                   />
                 </div>
               ))}
-              <button onClick={(e) => handleSubmit(e)}>create</button>
+
+              {isLoading ? (
+                <Box>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <button onClick={(e) => handleSubmit(e)}>create</button>
+              )}
             </form>
           </div>
         </div>

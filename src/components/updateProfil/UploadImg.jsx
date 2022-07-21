@@ -1,5 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
+import Swal from 'sweetalert2';
+import './uploadImg.scss';
 import { updateProfil } from '../../redux/apiCalls';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,7 +15,6 @@ const UploadImg = ({
   userId,
 }) => {
   const dispatch = useDispatch();
-  const isFetching = useSelector((state) => state.isFetching);
   const { isLoading, setIsLoading, errorMessage, setErrorMessage } =
     useContext(WinesContext);
 
@@ -30,13 +31,34 @@ const UploadImg = ({
       try {
         form.append('img', file);
       } catch (err) {
-        alert(`something went wrong with this file`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong!${err}`,
+          // footer: `<a href="">Why do I have this issue?</a>`
+        });
+        // s('Oops!', 'Something went wrong!', `${errorMessage}`);
       }
     }
     updateProfil(dispatch, userId, form)
       .then(() => setIsLoading(false))
+      .then(() =>
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Profil have been updated',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      )
       .catch(() => {
         setErrorMessage('Unable to update profil');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${errorMessage}`,
+          // footer: '<a href="">Why do I have this issue?</a>',
+        });
         setIsLoading(false);
       });
   };

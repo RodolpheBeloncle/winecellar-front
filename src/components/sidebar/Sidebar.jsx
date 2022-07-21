@@ -72,11 +72,11 @@ const Sidebar = () => {
               <span>Orders</span>
             </li>
           </Link>
-          <li>
+          {/* <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
-          </li>
-          <p className="title">USEFUL</p>
+          </li> */}
+          {/* <p className="title">USEFUL</p>
           <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
@@ -85,19 +85,19 @@ const Sidebar = () => {
             <NotificationsNoneIcon className="icon" />
             <span>Notifications</span>
           </li>
-          <p className="title">SERVICE</p>
-          <li>
+          <p className="title">SERVICE</p> */}
+          {/* <li>
             <SettingsSystemDaydreamOutlinedIcon className="icon" />
             <span>System Health</span>
           </li>
           <li>
             <PsychologyOutlinedIcon className="icon" />
             <span>Logs</span>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
-          </li>
+          </li> */}
           <p className="title">USER</p>
           <Link to="/profil" style={{ textDecoration: 'none' }}>
             <li>
