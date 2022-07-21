@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
+import Register from './pages/register/Register';
 import List from './pages/list/List';
 import NotFound from './pages/notFound/NotFound';
 import PrivateRoutes from './components/privateRoutes/PrivateRoutes';
@@ -25,6 +26,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoutes />}>
             <Route index element={<Home />} />
             <Route path="/profil" element={<Profil />} />

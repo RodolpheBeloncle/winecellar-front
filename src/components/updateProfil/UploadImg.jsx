@@ -13,17 +13,23 @@ const UploadImg = ({
 
   const handleUpdateProfil = async (e) => {
     e.preventDefault();
+
     // necessary built object packages to send data pic
     const form = new FormData();
-    form.append('profilPic', file);
-    form.append('username', inputUserName);
-    //=========================
 
+    form.append('username', inputUserName);
+    if (file) {
+      try {
+        form.append('img', file);
+      } catch (err) {
+        alert(`something went wrong with this file`);
+      }
+    }
     updateProfil(dispatch, userId, form);
   };
 
   useEffect(() => {
-    console.log(inputUserName);
+    console.log(inputUserName, file);
   }, [file, inputUserName]);
 
   return (

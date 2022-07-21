@@ -39,6 +39,7 @@ export const updateProfil = async (dispatch, userId, form) => {
   dispatch(updateProfilStart());
   try {
     const res = await userRequest.post(`/users/updateProfil/${userId}`, form);
+
     dispatch(updateProfilSuccess(res.data));
   } catch (err) {
     dispatch(updateProfilFailure());

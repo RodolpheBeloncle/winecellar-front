@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+// import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+// import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
+// import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+// import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logout } from '../../redux/apiCalls';
@@ -22,7 +22,6 @@ const Navbar = () => {
   const userAuth = useSelector((state) => state.user.currentUser);
   const username = useSelector((state) => state.user.username);
   const profilPic = useSelector((state) => state.user.img);
-  const PF = `http://localhost:8000/`;
   const { dispatch, darkMode } = useContext(DarkModeContext);
 
   const handleDisconnect = () => {
@@ -96,7 +95,7 @@ const Navbar = () => {
             <img
               src={
                 profilPic
-                  ? `${PF}${profilPic}`
+                  ? profilPic 
                   : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
               }
               alt=""

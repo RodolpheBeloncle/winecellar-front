@@ -8,15 +8,14 @@ const UpdateProfil = () => {
   const username = useSelector((state) => state.user.username);
   const userId = useSelector((state) => state.user.userId);
   const [inputUserName, setInputUserName] = useState(username);
-  const PF = 'http://localhost:8000/';
-
+  
   return (
     <div className="profil-container">
       <div className="update-container">
         <div className="formContainer">
           <h1>{username}</h1>
           <img
-            src={file ? URL.createObjectURL(file) : `${PF + profilPic}`}
+            src={file ? URL.createObjectURL(file) : profilPic}
             alt=""
           />
           <UpLoadImg

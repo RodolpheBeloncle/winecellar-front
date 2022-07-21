@@ -9,7 +9,9 @@ const userSlice = createSlice({
     userId: '',
     username: '',
     img: '',
+    publicId:'',
     isAdmin: '',
+    
   },
   reducers: {
     // login/logout
@@ -24,6 +26,7 @@ const userSlice = createSlice({
       state.username = action.payload.username;
       state.img = action.payload.img;
       state.isAdmin = action.payload.isAdmin;
+      state.publicId = action.payload.publicId;
     },
     loginFailure: (state, action) => {
       state.isFetching = false;
@@ -41,6 +44,8 @@ const userSlice = createSlice({
       state.userId = '';
       state.username = '';
       state.img = '';
+      state.publicId = '';
+
     },
 
     logoutFailure: (state) => {

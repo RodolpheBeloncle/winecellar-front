@@ -1,7 +1,6 @@
 import React from 'react';
 import './newCustomer.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import { sizeSelection, typeSelection } from '../../formSource';
 import { userRequest } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
