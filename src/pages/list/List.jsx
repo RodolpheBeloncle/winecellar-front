@@ -1,14 +1,21 @@
 import React from 'react';
 import './list.scss';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Datatable from '../../components/datatable/Datatable';
 import { publicRequest, userRequest } from '../../utils/api';
 import { productColumns, customerColumns } from '../../datatablesource';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
+import Swal from 'sweetalert2';
 
 const List = ({ dataType }) => {
-  const { wineData, setCustomersList, customersList, setWineData } =
-    useContext(WinesContext);
+  const {
+    wineData,
+    setCustomersList,
+    customersList,
+    setWineData,
+    isLoading,
+    setIsLoading,
+  } = useContext(WinesContext);
 
   const getWineData = async () => {
     try {
@@ -29,22 +36,54 @@ const List = ({ dataType }) => {
   };
 
   const handleRemoveProduct = async (id) => {
+    setIsLoading(true);
     try {
-      await userRequest.delete(`/products/${id}`);
-      getWineData();
-      alert(`product deleted`);
+      await userRequest.delete(`/products/${id}`).then(() => {
+        getWineData();
+        setIsLoading(false);
+        Swal.fire({
+          title: `product removed`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
+      });
     } catch (err) {
-      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${err}`,
+        // footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   };
 
   const handleRemoveCustomer = async (id) => {
+    setIsLoading(true);
     try {
-      await userRequest.delete(`/customers/${id}`);
-      getCustomerData();
-      alert(`customer deleted`);
+      await userRequest.delete(`/customers/${id}`).then(() => {
+        getCustomerData();
+        setIsLoading(false);
+        Swal.fire({
+          title: `customer removed`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
+      });
     } catch (err) {
-      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${err}`,
+        // footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   };
 
@@ -55,6 +94,7 @@ const List = ({ dataType }) => {
       data = {
         customList: (
           <Datatable
+            isLoading={isLoading}
             headersColumns={customerColumns}
             nestedData={customersList}
             handleRemove={handleRemoveCustomer}

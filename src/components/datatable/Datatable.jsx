@@ -1,6 +1,8 @@
 import React from 'react';
 import './datatable.scss';
 import { useEffect, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
 import { DataGrid } from '@mui/x-data-grid';
@@ -13,6 +15,7 @@ const Datatable = ({
   title,
   handleRemove,
   refreshData,
+  isLoading,
 }) => {
   const [selectedData, setSelectedData] = useState([]);
 
@@ -46,7 +49,7 @@ const Datatable = ({
     refreshData();
     // console.log('customlistdata', nestedData);
     // console.log('dataType', title);
-  }, [selectedData, title]);
+  }, [selectedData, title, isLoading]);
 
   const actionColumn = [
     {
@@ -57,12 +60,18 @@ const Datatable = ({
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <div
-              className="deleteButton"
-              onClick={() => handleRemove(params.row._id)}
-            >
-              Delete
-            </div>
+            {isLoading ? (
+              <Box>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <div
+                className="deleteButton"
+                onClick={() => handleRemove(params.row._id)}
+              >
+                Delete
+              </div>
+            )}
           </div>
         );
       },
@@ -104,24 +113,26 @@ const Datatable = ({
           </div>
         </div>
       </div>
-      <Box sx={{ height: 600, width: '100%' }}>
-        <DataGrid
-          className="datagrid"
-          getRowId={(r) => r._id}
-          rows={nestedData}
-          columns={headersColumns.concat(actionColumn)}
-          pageSize={9}
-          rowsPerPageOptions={[9]}
-          onSelectionModelChange={(ids) => {
-            nestedData
-              .filter((element) => {
-                return element._id === ids[0];
-              })
-              .map((item) => setSelectedData(item._id));
-          }}
-          selectionModel={selectedData}
-        />
-      </Box>
+      {selectedData && (
+        <Box sx={{ height: 600, width: '100%' }}>
+          <DataGrid
+            className="datagrid"
+            getRowId={(r) => r._id}
+            rows={nestedData}
+            columns={headersColumns.concat(actionColumn)}
+            pageSize={9}
+            rowsPerPageOptions={[9]}
+            onSelectionModelChange={(ids) => {
+              nestedData
+                .filter((element) => {
+                  return element._id === ids[0];
+                })
+                .map((item) => setSelectedData(item._id));
+            }}
+            selectionModel={selectedData}
+          />
+        </Box>
+      )}
     </div>
   );
 };

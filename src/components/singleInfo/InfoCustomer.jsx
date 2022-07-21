@@ -5,7 +5,7 @@ const InfoCustomer = ({ info }) => {
   useEffect(() => [info]);
   return (
     <div>
-      <div className="editButton">Edit</div>
+      <div className="editButton">Update</div>
       <h1 className="title">Information</h1>
       <div className="item">
         <img

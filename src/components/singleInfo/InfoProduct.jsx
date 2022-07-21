@@ -9,7 +9,7 @@ const InfoProduct = ({ selectedId, wineData }) => {
         .filter((element) => element._id === selectedId[0])
         .map((info) => (
           <>
-            <div className="editButton">update</div>
+            <div className="editButton">Update</div>
             <h1 className="title">Information</h1>
             <div className="item">
               <img

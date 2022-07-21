@@ -21,7 +21,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
-import { withStyles } from '@material-ui/core/styles';
 
 import { Container } from '@material-ui/core';
 
@@ -37,17 +36,6 @@ const Invoice = (props) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  };
-
-  const { classes } = props;
-
-  const buttonSx = {
-    ...(isLoading && {
-      bgcolor: blue[500],
-      '&:hover': {
-        bgcolor: blue[700],
-      },
-    }),
   };
 
   const stockToUpdate = () => {
@@ -244,9 +232,12 @@ const Invoice = (props) => {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box sx={{ m: 1, position: 'relative' }}>
           <Fab
+            style={{
+              borderRadius: '50px',
+              backgroundColor: ' #7451f8',
+              color: 'white',
+            }}
             aria-label="save"
-            color="primary"
-            sx={buttonSx}
             onClick={createAndDownloadPdf}
           >
             {isLoading ? <CheckIcon /> : <SaveIcon />}
@@ -266,41 +257,23 @@ const Invoice = (props) => {
         </Box>
         <Box sx={{ m: 1, position: 'relative' }}>
           <Button
-            classes={{
-              root: {
-                background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-                borderRadius: 3,
-                border: 0,
-                color: 'white',
-                height: 480,
-                padding: '0 30px',
-                boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-              },
+            style={{
+              background: '#7451f8',
+              borderRadius: 3,
+              border: 0,
+              color: 'white',
+              height: 40,
+              padding: '0 30px',
+              boxShadow: '#7451f8',
             }}
             variant="contained"
-            sx={buttonSx}
             disabled={isLoading}
             onClick={createAndDownloadPdf}
           >
-            Accept terms
+            Download Invoice
           </Button>
-          {isLoading && (
-            <CircularProgress
-              size={24}
-              sx={{
-                color: blue[500],
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-12px',
-                marginLeft: '-12px',
-              }}
-            />
-          )}
         </Box>
       </Box>
-
-      {/* <button onClick={createAndDownloadPdf}>Download Invoice</button> */}
     </Container>
   );
 };

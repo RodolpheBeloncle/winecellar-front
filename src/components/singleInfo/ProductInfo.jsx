@@ -7,7 +7,7 @@ const ProductInfo = ({ info }) => {
   return (
     <div>
       <>
-        <div className="editButton">update</div>
+        <div className="editButton">Update</div>
         <h1 className="title">Information</h1>
         <div className="item">
           <img
