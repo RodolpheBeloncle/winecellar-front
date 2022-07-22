@@ -18,7 +18,11 @@ const Widget = ({ type, nbCustomers, diff }) => {
   const OrderAmount = orderData.length;
   // const diff = 20;
 
-  useEffect(() => {}, [orderData]);
+  useEffect(() => {
+    console.log("OrderData",orderData);
+
+
+  }, [orderData]);
 
   switch (type) {
     case 'customer':
