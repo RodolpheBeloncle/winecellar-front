@@ -2,7 +2,6 @@ import React from 'react';
 import './datatable.scss';
 import { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
 import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
 import { DataGrid } from '@mui/x-data-grid';

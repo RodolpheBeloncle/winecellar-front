@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './single.scss';
 
 const InfoCustomer = ({ info }) => {
   useEffect(() => [info]);
   return (
     <div>
-      <div className="editButton">Update</div>
+      <div className="editButton">
+        <Link to={`/customers/update/${info._id}`} state={info}>
+          <span>Update</span>
+        </Link>
+      </div>
       <h1 className="title">Information</h1>
       <div className="item">
         <img

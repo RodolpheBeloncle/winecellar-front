@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './single.scss';
 
 const ProductInfo = ({ info }) => {
@@ -6,8 +7,12 @@ const ProductInfo = ({ info }) => {
 
   return (
     <div>
-      <>
-        <div className="editButton">Update</div>
+      <div key={info._id}>
+        <div className="editButton">
+          <Link to={`/products/update/${info._id}`} state={info}>
+            <span>Update</span>
+          </Link>
+        </div>
         <h1 className="title">Information</h1>
         <div className="item">
           <img
@@ -65,7 +70,7 @@ const ProductInfo = ({ info }) => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     </div>
   );
 };

@@ -14,8 +14,9 @@ import NewCustomer from './pages/newCustomer/NewCustomer';
 import Profil from './pages/profil/Profil';
 import OrderInvoice from './pages/orderInvoice/OrderInvoice';
 import OrderTable from './components/orderTable/OrderTable';
+import UpdateSelection from './pages/update/UpdateSelection';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { productInputs, userInputs } from './formSource';
+import { productInputs, customerInputs } from './formSource';
 import './style/dark.scss';
 import { DarkModeContext } from './context/darkModeContext';
 
@@ -39,7 +40,21 @@ function App() {
               />
               <Route
                 path="new"
-                element={<NewCustomer inputs={userInputs} title="Add NewCustomer" />}
+                element={
+                  <NewCustomer
+                    inputs={customerInputs}
+                    title="Add NewCustomer"
+                  />
+                }
+              />
+              <Route
+                path="update/:selectedId"
+                element={
+                  <UpdateSelection
+                    dataType={'customer'}
+                    title="Update Customer"
+                  />
+                }
               />
             </Route>
 
@@ -53,6 +68,15 @@ function App() {
                 path="new"
                 element={
                   <NewProduct inputs={productInputs} title="Add NewProduct " />
+                }
+              />
+              <Route
+                path="update/:selectedId"
+                element={
+                  <UpdateSelection
+                    dataType={'product'}
+                    title="Update Product"
+                  />
                 }
               />
             </Route>

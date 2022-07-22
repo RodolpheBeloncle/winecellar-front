@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const InfoProduct = ({ selectedId, wineData }) => {
   useEffect(() => [selectedId[0]]);
@@ -8,8 +9,12 @@ const InfoProduct = ({ selectedId, wineData }) => {
       {wineData
         .filter((element) => element._id === selectedId[0])
         .map((info) => (
-          <>
-            <div className="editButton">Update</div>
+          <div key={info._id}>
+            <div className="editButton">
+              <Link to={`/products/update/${info._id}`} state={info}>
+                <span>Update</span>
+              </Link>
+            </div>
             <h1 className="title">Information</h1>
             <div className="item">
               <img
@@ -67,7 +72,7 @@ const InfoProduct = ({ selectedId, wineData }) => {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ))}
     </div>
   );

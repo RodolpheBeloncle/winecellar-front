@@ -1,4 +1,4 @@
-export const userInputs = [
+export const customerInputs = [
   
   {
     id: 1,
