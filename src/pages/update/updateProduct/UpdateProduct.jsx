@@ -69,7 +69,7 @@ const UpdateProduct = ({ info }) => {
           </div>
         </div>
       </div>
-    </div><ProductInputs selection={info.title} /></>
+    </div><ProductInputs selection={info} /></>
                
 
   );

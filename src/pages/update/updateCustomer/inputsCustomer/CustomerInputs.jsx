@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CustomerInputs = ({ selection }) => {
   const navigate = useNavigate();
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const [inputsValue, setInputsValue] = useState({
     customerName: '',
@@ -40,33 +40,37 @@ const CustomerInputs = ({ selection }) => {
     data.append('phone', phone);
     data.append('country', country);
 
-    if (file) {
-      try {
-        data.append('img', file);
-      } catch (err) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `Something went wrong with the file`,
-        });
-      }
-    }
-
     try {
-      await userRequest.post(`/customers/new`, data).then(() => {
-        setIsLoading(false);
-        Swal.fire({
-          title: `Customer ${customerName} is recorded`,
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
+      if (file) {
+        try {
+          data.append('img', file);
+        } catch (err) {
+          setIsLoading(false);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Something went wrong with the file`,
+          });
+        }
+      } 
+
+      await userRequest
+        .post(`/customers/update/${selection._id}`, data)
+        .then(() => {
+          setIsLoading(false);
+          Swal.fire({
+            title: `Customer is updated`,
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp',
+            },
+          });
+          navigate('/customers');
         });
-        navigate('/customers');
-      });
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -75,22 +79,18 @@ const CustomerInputs = ({ selection }) => {
     }
   };
 
-  useEffect(() => [inputsValue, isLoading]);
+  useEffect(() => {console.log(file)},[inputsValue, isLoading, selection,file]);
 
   return (
     <div className="customerInputs">
       <div className="customerInputsContainer">
         <div className="top">
-          <h1>Update {selection}</h1>
+          <h1>Update {selection.title}</h1>
         </div>
         <div className="bottom">
           <div className="left">
             <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
-              }
+              src={file ? URL.createObjectURL(file) : selection.img}
               alt=""
             />
           </div>

@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const NewProduct = ({ inputs, title }) => {
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const navigate = useNavigate();
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [inputsValue, setInputsValue] = useState({
     title: '',
     desc: '',
@@ -56,6 +56,7 @@ const NewProduct = ({ inputs, title }) => {
       try {
         data.append('img', file);
       } catch (err) {
+        setIsLoading(false);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -65,10 +66,10 @@ const NewProduct = ({ inputs, title }) => {
     }
 
     try {
-      await userRequest.post(`/products/`, data).then(() => {
+      await userRequest.post(`/products/new`, data).then(() => {
         setIsLoading(false);
         Swal.fire({
-          title: `wine ${title} is recorded`,
+          title: `wine is recorded`,
           showClass: {
             popup: 'animate__animated animate__fadeInDown',
           },
@@ -80,6 +81,7 @@ const NewProduct = ({ inputs, title }) => {
         navigate('/products');
       });
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

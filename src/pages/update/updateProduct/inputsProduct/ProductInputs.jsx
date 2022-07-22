@@ -11,13 +11,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
-import { userRequest } from '../../../../utils/api';
+import { userRequest ,publicRequest} from '../../../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const ProductInputs = ({ selection }) => {
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const navigate = useNavigate();
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [inputsValue, setInputsValue] = useState({
     title: '',
     desc: '',
@@ -61,30 +61,37 @@ const ProductInputs = ({ selection }) => {
       try {
         data.append('img', file);
       } catch (err) {
+        setIsLoading(false);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: `Something went wrong with the file`,
         });
       }
+    }else{
+      data.append('img', selection.img);
+
     }
 
     try {
-      await userRequest.post(`/products/`, data).then(() => {
-        setIsLoading(false);
-        Swal.fire({
-          title: `wine ${title} is recorded`,
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
+      await publicRequest
+        .post(`/products/update/${selection._id}`, data)
+        .then(() => {
+          setIsLoading(false);
+          Swal.fire({
+            title: `wine  is updated`,
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown',
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp',
+            },
+          });
 
-        navigate('/products');
-      });
+          navigate('/products');
+        });
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -93,22 +100,18 @@ const ProductInputs = ({ selection }) => {
     }
   };
 
-  useEffect(() => [inputsValue, isLoading]);
+  useEffect(() => [inputsValue, isLoading,selection]);
 
   return (
     <div className="productInputs">
       <div className="productInputsContainer">
         <div className="top">
-          <h1>Update {selection}</h1>
+          <h1>Update {selection.title}</h1>
         </div>
         <div className="bottom">
           <div className="left">
             <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
-              }
+              src={file ? URL.createObjectURL(file) : selection.img}
               alt=""
             />
           </div>

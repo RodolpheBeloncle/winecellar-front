@@ -52,7 +52,7 @@ const UpdateCustomer = ({ info }) => {
           </div>
         </div>
       </div>
-      <CustomerInputs selection={info.customerName} />
+      <CustomerInputs selection={info} />
     </>
   );
 };

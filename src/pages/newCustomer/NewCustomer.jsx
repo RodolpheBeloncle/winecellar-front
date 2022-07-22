@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NewCustomer = ({ inputs, name }) => {
   const navigate = useNavigate();
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const [inputsValue, setInputsValue] = useState({
     customerName: '',
@@ -43,6 +43,7 @@ const NewCustomer = ({ inputs, name }) => {
       try {
         data.append('img', file);
       } catch (err) {
+        setIsLoading(false);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -55,7 +56,7 @@ const NewCustomer = ({ inputs, name }) => {
       await userRequest.post(`/customers/new`, data).then(() => {
         setIsLoading(false);
         Swal.fire({
-          title: `Customer ${customerName} is recorded`,
+          title: `Customer is recorded`,
           showClass: {
             popup: 'animate__animated animate__fadeInDown',
           },
@@ -66,6 +67,7 @@ const NewCustomer = ({ inputs, name }) => {
         navigate('/customers');
       });
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
