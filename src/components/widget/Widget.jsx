@@ -9,26 +9,41 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import { Link } from 'react-router-dom';
 
-const Widget = ({ type, nbCustomers, diff }) => {
-  const { orderData } = useContext(WinesContext);
+const Widget = ({ type, nbCustomers}) => {
+  const { orderData, wineData } = useContext(WinesContext);
   let data;
 
-  //temporary
-  const amount = 100;
-  const OrderAmount = orderData.length;
-  // const diff = 20;
+  const totalSales = () => {
+    if (orderData.length > 0) {
+      return orderData
+        .map((sale) => sale.amount)
+        .reduce((acc, value) => acc + value)
+        .toFixed();
+    }
+    return;
+  };
+
+  const totalStockValue = () => {
+    if (wineData.length > 0) {
+      return wineData
+        .map((item) => item.quantity * item.price)
+        .reduce((acc, value) => acc + value)
+        .toFixed();
+    }
+    return;
+  };
+
+  let orderAmount = orderData.length;
 
   useEffect(() => {
-    console.log("OrderData",orderData);
-
-
-  }, [orderData]);
+    console.log('OrderData', orderData);
+  }, []);
 
   switch (type) {
     case 'customer':
       data = {
         title: 'CUSTOMERS',
-        diffStat: diff,
+        // diffStat: diff,
         amount: nbCustomers,
         isMoney: false,
         link: (
@@ -50,7 +65,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
     case 'order':
       data = {
         title: 'ORDERS',
-        amount: OrderAmount,
+        amount: orderAmount,
         isMoney: false,
         link: (
           <Link to="/orders" style={{ textDecoration: 'none' }}>
@@ -70,8 +85,8 @@ const Widget = ({ type, nbCustomers, diff }) => {
       break;
     case 'earning':
       data = {
-        title: 'EARNINGS',
-        amount: amount,
+        title: 'SALES',
+        amount: totalSales(),
         isMoney: true,
         // link: 'View net earnings',
         icon: (
@@ -85,7 +100,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
     case 'balance':
       data = {
         title: 'BALANCE',
-        amount: amount,
+        amount: totalStockValue() - totalSales(),
         isMoney: true,
         // link: 'See details',
         icon: (
@@ -103,7 +118,7 @@ const Widget = ({ type, nbCustomers, diff }) => {
       break;
   }
 
-  useEffect(() => [nbCustomers, diff]);
+  useEffect(() => [nbCustomers]);
 
   return (
     <div className="widget">

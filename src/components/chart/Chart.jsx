@@ -13,18 +13,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// const dummyData = [
-//   { name: "January", Total: 1200 },
-//   { name: "February", Total: 2100 },
-//   { name: "March", Total: 800 },
-//   { name: "April", Total: 1600 },
-//   { name: "May", Total: 900 },
-//   { name: "June", Total: 1700 },
-// ];
-
-const Chart = ({ aspect, title }) => {
+const Chart = ({ aspect, title, month }) => {
   const userId = useSelector((state) => state.user.userId);
-  const [data, setdata] = useState([]);
+  const [dataChart, setDataChart] = useState([]);
   const MONTHS = useMemo(
     () => [
       'Jan',
@@ -52,8 +43,9 @@ const Chart = ({ aspect, title }) => {
         const list = res.data.sort((a, b) => {
           return a._id - b._id;
         });
+
         list.map((item) =>
-          setdata((prev) => [
+          setDataChart((prev) => [
             ...prev,
             { name: MONTHS[item._id - 1], Total: item.Total },
           ])
@@ -64,7 +56,9 @@ const Chart = ({ aspect, title }) => {
     };
 
     getStats();
+    
   }, [MONTHS]);
+  console.log("dataChart",dataChart);
 
   return (
     <div className="chart">
@@ -73,7 +67,7 @@ const Chart = ({ aspect, title }) => {
         <AreaChart
           width={730}
           height={250}
-          data={data}
+          data={dataChart}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>

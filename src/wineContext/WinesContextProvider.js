@@ -20,7 +20,9 @@ const WinesContextProvider = ({ children }) => {
       const res = await publicRequest.get('/products/');
       setWineData(res.data);
       setIsLoading(false);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   const getOrderData = async () => {
@@ -29,7 +31,10 @@ const WinesContextProvider = ({ children }) => {
       const res = await publicRequest.get('/orders/');
       setOrderData(res.data);
       setIsLoading(false);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+
+    }
   };
 
   const getCustomerData = async () => {
