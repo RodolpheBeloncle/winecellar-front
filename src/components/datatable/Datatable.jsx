@@ -43,7 +43,7 @@ const Datatable = ({
 
   const useStyles = makeStyles(theme => ({
     root: {
-      height: '80vh',
+      height: '50vh',
       // backgroundColor: 'blue',
       [theme.breakpoints.up('sm')]: {
         // backgroundColor: 'red',
