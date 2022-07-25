@@ -3,7 +3,6 @@ import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
 import cautionStock from './img/caution.png';
 import warningStock from './img/warning.png';
-import { GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 export const stockStatus = {
   outOfStock: 'outOfStock',
@@ -14,7 +13,6 @@ export const stockStatus = {
 // customer headers
 
 export const customerColumns = [
-  { field: '_id', headerName: 'ID', flex: 1 },
   {
     field: 'customer',
     headerName: 'Customer',
@@ -42,33 +40,32 @@ export const customerColumns = [
     flex: 1,
   },
 
-  {
-    field: 'phone',
-    headerName: 'Phone',
-    flex: 1,
-  },
-  {
-    field: 'status',
-    headerName: 'Status',
-    flex: 1,
-    renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
-        </div>
-      );
-    },
-  },
+  // {
+  //   field: 'phone',
+  //   headerName: 'Phone',
+  //   flex: 1,
+  // },
+  // {
+  //   field: 'status',
+  //   headerName: 'Status',
+  //   flex: 1,
+  //   renderCell: (params) => {
+  //     return (
+  //       <div className={`cellWithStatus ${params.row.status}`}>
+  //         {params.row.status}
+  //       </div>
+  //     );
+  //   },
+  // },
 ];
 
 // product headers
 
 export const productColumns = [
-  { field: '_id', headerName: 'ID', flex: 1 },
   {
     field: 'title',
     headerName: 'Title',
-    flex: 1,
+    flex: 2,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -87,21 +84,7 @@ export const productColumns = [
       );
     },
   },
-  {
-    field: 'type',
-    headerName: 'Type',
-    flex: 1,
-  },
-  {
-    field: 'vintage',
-    headerName: 'Vintage',
-    flex: 1,
-  },
-  {
-    field: 'content',
-    headerName: 'Content',
-    flex: 1,
-  },
+
   {
     field: 'price',
     headerName: 'Price',
