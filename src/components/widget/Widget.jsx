@@ -88,7 +88,11 @@ const Widget = ({ type, nbCustomers}) => {
         title: 'SALES',
         amount: totalSales() ? totalSales() : 0,
         isMoney: true,
-        // link: 'View net earnings',
+        link: (
+          <Link to="/products" className="widget-link">
+            View products
+          </Link>
+        ),
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"

@@ -85,7 +85,7 @@ const NewProduct = ({ inputs, title }) => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `Something went wrong!${err}`,
+        text: `Please provide a wine picture !`,
       });
     }
   };

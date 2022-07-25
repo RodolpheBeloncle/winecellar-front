@@ -71,7 +71,7 @@ const NewCustomer = ({ inputs, name }) => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `Something went wrong!${err}`,
+        text: `Please provide customer image`,
       });
     }
   };

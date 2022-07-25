@@ -14,11 +14,11 @@ export const stockStatus = {
 // customer headers
 
 export const customerColumns = [
-  { field: '_id', headerName: 'ID', width: 70 },
+  { field: '_id', headerName: 'ID', flex: 1 },
   {
     field: 'customer',
     headerName: 'Customer',
-    width: 210,
+    flex: 1,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -39,18 +39,18 @@ export const customerColumns = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 210,
+    flex: 1,
   },
 
   {
     field: 'phone',
     headerName: 'Phone',
-    width: 100,
+    flex: 1,
   },
   {
     field: 'status',
     headerName: 'Status',
-    width: 100,
+    flex: 1,
     renderCell: (params) => {
       return (
         <div className={`cellWithStatus ${params.row.status}`}>
@@ -64,11 +64,11 @@ export const customerColumns = [
 // product headers
 
 export const productColumns = [
-  { field: '_id', headerName: 'ID', width: 70 },
+  { field: '_id', headerName: 'ID', flex: 1 },
   {
     field: 'title',
     headerName: 'Title',
-    width: 230,
+    flex: 1,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
@@ -90,27 +90,27 @@ export const productColumns = [
   {
     field: 'type',
     headerName: 'Type',
-    width: 90,
+    flex: 1,
   },
   {
     field: 'vintage',
     headerName: 'Vintage',
-    width: 90,
+    flex: 1,
   },
   {
     field: 'content',
     headerName: 'Content',
-    width: 90,
+    flex: 1,
   },
   {
     field: 'price',
     headerName: 'Price',
-    width: 90,
+    flex: 1,
   },
   {
     field: 'quantity',
     headerName: 'Quantity',
-    width: 120,
+    flex: 1,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">

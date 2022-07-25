@@ -1,6 +1,7 @@
 import React from 'react';
 import './datatable.scss';
 import { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core';
 import CircularProgress from '@mui/material/CircularProgress';
 import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
@@ -40,6 +41,27 @@ const Datatable = ({
       break;
   }
 
+  const useStyles = makeStyles(theme => ({
+    root: {
+      height: '50vh',
+      // backgroundColor: 'blue',
+      [theme.breakpoints.up('sm')]: {
+        // backgroundColor: 'red',
+      },
+      [theme.breakpoints.up('md')]: {
+        // backgroundColor: 'green',
+      },
+      [theme.breakpoints.up('lg')]: {
+        // backgroundColor: 'orange',
+      },
+      [theme.breakpoints.up('xl')]: {
+        // backgroundColor: 'cyan',
+      },
+    },
+  }));
+
+  const classes = useStyles();
+
   useEffect(() => {
     console.log('data selection', data.selected);
     nestedData
@@ -54,8 +76,7 @@ const Datatable = ({
     {
       field: 'action',
       headerName: 'Action',
-      width: 100,
-      minWidth: 50,
+      flex:1,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -113,7 +134,8 @@ const Datatable = ({
         </div>
       </div>
       {selectedData && (
-        <Box sx={{ height: 600, width: '100%' }}>
+        <div className={classes.root}>
+    
           <DataGrid
             className="datagrid"
             getRowId={(r) => r._id}
@@ -130,7 +152,8 @@ const Datatable = ({
             }}
             selectionModel={selectedData}
           />
-        </Box>
+    
+        </div>
       )}
     </div>
   );
