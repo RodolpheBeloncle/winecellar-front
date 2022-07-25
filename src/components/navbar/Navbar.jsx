@@ -2,6 +2,8 @@ import './navbar.scss';
 import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { userRequest } from '../../utils/api';
+
 // import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 // import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -21,12 +23,21 @@ const Navbar = () => {
   const userAuth = useSelector((state) => state.user.currentUser);
   const username = useSelector((state) => state.user.username);
   const profilPic = useSelector((state) => state.user.img);
+  const userId = useSelector((state) => state.user.userId);
   const { dispatch, darkMode } = useContext(DarkModeContext);
 
   const handleDisconnect = () => {
     console.log('user is authenticated after logout', userAuth);
     logout(dispatcher, userAuth);
     localStorage.removeItem('persist:globalState');
+  };
+
+  const updateDarkMode = async (darkMode) => {
+    try {
+      await userRequest.post(`/users/switchDarkMode/${userId}`, darkMode);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const totalQuantity = () => {
@@ -48,7 +59,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log('darkmode', darkMode);
+    updateDarkMode(darkMode);
+    console.log('darkmode context', darkMode);
     console.log('profilpic', profilPic);
 
     !userAuth && navigate('/login');

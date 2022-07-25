@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import Search from '../search/Search';
 import { publicRequest, userRequest } from '../../utils/api';
+import { useSelector } from 'react-redux';
 import { formatDate } from '../../utils/formatDate';
 import './orderTable.scss';
 import Table from '@mui/material/Table';
@@ -28,15 +29,10 @@ const styles = (theme) => ({
 });
 
 const List = () => {
-  let optionsDate = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
+  const userId = useSelector((state) => state.user.userId);
 
   const getOrderData = async () => {
-    const res = await publicRequest.get('/orders/');
+    const res = await publicRequest.get(`/orders/${userId}`);
     setOrderData(res.data);
   };
 
@@ -91,9 +87,8 @@ const List = () => {
 
   useEffect(() => {
     filterData(searchText);
-    getOrderData();
 
-    console.log('orderData', orderData);
+    console.log('orderTable', orderData);
   }, [searchText]);
 
   return (

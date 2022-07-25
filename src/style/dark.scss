@@ -6,11 +6,30 @@
     stroke: rgba(228, 228, 228, 0.219);
   }
 
+  .widget-link {
+    color: white;
+  }
+
+  .editButton {
+    background-color: white;
+    a:-webkit-any-link {
+      color: black;
+    }
+  }
+
   .table {
     background-color: #111;
 
     .tableCell {
-      color: gray;
+      color: white;
+
+      .MuiSvgIcon-root {
+        fill: #f78686;
+      }
+    }
+
+    .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+      color: white;
     }
   }
 
@@ -51,20 +70,22 @@
 
   .datatable {
     .datagrid {
-      color: gray;
+      color: white;
       border: none;
 
       .viewButton,
       .deleteButton,
       .cellWithStatus {
-        color: gray;
-        border: none;
+        .deleteButton {
+          border: 1px dashed red;
+          color: red;
+        }
       }
     }
   }
 
-  input{
-      background-color: transparent;
-      color: white;
+  input {
+    background-color: transparent;
+    color: white;
   }
 }

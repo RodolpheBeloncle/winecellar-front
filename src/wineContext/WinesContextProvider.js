@@ -21,19 +21,18 @@ const WinesContextProvider = ({ children }) => {
       setWineData(res.data);
       setIsLoading(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   const getOrderData = async () => {
     setIsLoading(true);
     try {
-      const res = await publicRequest.get('/orders/');
+      const res = await publicRequest.get(`/orders/${userId}`);
       setOrderData(res.data);
       setIsLoading(false);
     } catch (err) {
-      console.log(err)
-
+      console.log(err);
     }
   };
 
@@ -60,10 +59,13 @@ const WinesContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getWineData();
-    getOrderData();
-    getLatestOrders();
-    getCustomerData();
+    if (userId) {
+      getOrderData();
+      getLatestOrders();
+      getCustomerData();
+      getWineData();
+    }
+    console.log(orderData);
   }, [userId]);
 
   return (

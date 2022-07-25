@@ -63,7 +63,9 @@ const Chart = ({ aspect, title, month }) => {
   return (
     <div className="chart">
       <div className="title">{title}</div>
+      
       <ResponsiveContainer width="100%" aspect={aspect}>
+      {dataChart.length > 0 ?
         <AreaChart
           width={730}
           height={250}
@@ -86,9 +88,9 @@ const Chart = ({ aspect, title, month }) => {
             fillOpacity={1}
             fill="url(#total)"
           />
-        </AreaChart>
+        </AreaChart> : <p>No data stat to show</p>}
       </ResponsiveContainer>
-    </div>
+    </div> 
   );
 };
 

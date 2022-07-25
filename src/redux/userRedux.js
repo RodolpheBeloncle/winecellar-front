@@ -9,9 +9,9 @@ const userSlice = createSlice({
     userId: '',
     username: '',
     img: '',
-    publicId:'',
+    publicId: '',
     isAdmin: '',
-    
+    isDarkMode: '',
   },
   reducers: {
     // login/logout
@@ -27,6 +27,7 @@ const userSlice = createSlice({
       state.img = action.payload.img;
       state.isAdmin = action.payload.isAdmin;
       state.publicId = action.payload.publicId;
+      state.isDarkMode = action.payload.isDarkMode;
     },
     loginFailure: (state, action) => {
       state.isFetching = false;
@@ -45,15 +46,15 @@ const userSlice = createSlice({
       state.username = '';
       state.img = '';
       state.publicId = '';
-
+      state.isDarkMode = '';
     },
 
     logoutFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
-     // update profil
-     updateProfilStart: (state) => {
+    // update profil
+    updateProfilStart: (state) => {
       state.isFetching = true;
     },
     updateProfilSuccess: (state, action) => {
@@ -64,7 +65,7 @@ const userSlice = createSlice({
     updateProfilFailure: (state) => {
       state.isFetching = false;
       state.error = true;
-    }
+    },
   },
 });
 

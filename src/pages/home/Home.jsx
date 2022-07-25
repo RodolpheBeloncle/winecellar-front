@@ -17,7 +17,7 @@ const Home = () => {
   const userId = useSelector((state) => state.user.userId);
 
   const totalSales = () => {
-    if (orderData.length > 0) {
+    if (orderData?.length > 0) {
       return orderData
         .map((sale) => sale.amount)
         .reduce((acc, value) => acc + value)
@@ -27,7 +27,7 @@ const Home = () => {
   };
 
   const totalStockValue = () => {
-    if (wineData.length > 0) {
+    if (wineData?.length > 0) {
       return wineData
         .map((item) => item.quantity * item.price)
         .reduce((acc, value) => acc + value)
@@ -37,7 +37,7 @@ const Home = () => {
   };
 
   const averageBottlePrice = () => {
-    if (wineData.length > 0) {
+    if (wineData?.length > 0) {
       return (
         wineData
           .map((item) => item.price)
@@ -63,13 +63,13 @@ const Home = () => {
   let diffPercentageTargetProfit = Math.round(
     100 * (actualTargetProfit / targetProfit)
   );
-  console.log(diffPercentageTargetProfit);
+  console.log('diffPercentageTargetProfit', diffPercentageTargetProfit);
 
   const getStats = async () => {
     try {
       const res = await userRequest.get(`/orders/find/${userId}`);
 
-      const list = res.data.sort((a, b) => {
+      const list = res.data?.sort((a, b) => {
         return a._id - b._id;
       });
 
@@ -103,7 +103,7 @@ const Home = () => {
           <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">Latest Transactions</div>
+         {latestOrders.length > 0 ? <div className="listTitle">Latest Transactions</div> : <div className="listTitle">No transactions to show</div>}
           <Table latestOrders={latestOrders} />
         </div>
       </div>

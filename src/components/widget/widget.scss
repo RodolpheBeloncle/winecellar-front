@@ -8,6 +8,10 @@
   border-radius: 10px;
   height: 100px;
 
+  .widget-link{
+    text-decoration: none;
+  }
+
   .left,
   .right {
     display: flex;

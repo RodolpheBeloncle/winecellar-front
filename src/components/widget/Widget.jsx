@@ -47,8 +47,8 @@ const Widget = ({ type, nbCustomers}) => {
         amount: nbCustomers,
         isMoney: false,
         link: (
-          <Link to="/customers" style={{ textDecoration: 'none' }}>
-            View all customers
+          <Link to="/customers" className="widget-link">
+            View customers
           </Link>
         ),
         icon: (
@@ -68,8 +68,8 @@ const Widget = ({ type, nbCustomers}) => {
         amount: orderAmount,
         isMoney: false,
         link: (
-          <Link to="/orders" style={{ textDecoration: 'none' }}>
-            View all orders
+          <Link to="/orders" className="widget-link">
+            View orders
           </Link>
         ),
         icon: (
@@ -86,7 +86,7 @@ const Widget = ({ type, nbCustomers}) => {
     case 'earning':
       data = {
         title: 'SALES',
-        amount: totalSales(),
+        amount: totalSales() ? totalSales() : 0,
         isMoney: true,
         // link: 'View net earnings',
         icon: (
@@ -100,7 +100,7 @@ const Widget = ({ type, nbCustomers}) => {
     case 'balance':
       data = {
         title: 'BALANCE',
-        amount: totalStockValue() - totalSales(),
+        amount: totalSales() ? totalStockValue() - totalSales() : 0,
         isMoney: true,
         // link: 'See details',
         icon: (

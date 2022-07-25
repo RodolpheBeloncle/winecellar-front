@@ -5,14 +5,14 @@ import './single.scss';
 const InfoCustomer = ({ info }) => {
   useEffect(() => [info]);
   return (
-    <div>
+    <div >
       <div className="editButton">
         <Link to={`/customers/update/${info._id}`} state={info}>
           <span>Update</span>
         </Link>
       </div>
       <h1 className="title">Information</h1>
-      <div className="item">
+      <div className="item" key={info._id}>
         <img
           src={
             info.img
