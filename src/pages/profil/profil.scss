@@ -1,97 +1,7 @@
-$font-1: 'font-1', sans-serif;
-$font-2: 'font-2', serif;
-$font-3: 'font-3', serif;
-
-$color-1: #ff7b77;
-$color-2: #ffd0c4;
-$color-3: rgb(0, 22, 44);
-$color-4: #fdeeee;
-$color-5: rgb(251, 251, 255);
-$black: rgb(40, 40, 40);
-$white: rgb(253, 253, 253);
-$shadow: rgb(219, 218, 218);
-
-@mixin for-phone-only {
-  @media (max-width: 599px) {
-    @content;
-  }
-}
-@mixin for-tablet-portrait-up {
-  @media (min-width: 600px) {
-    @content;
-  }
-}
-@mixin for-tablet-landscape-up {
-  @media (min-width: 900px) {
-    @content;
-  }
-}
-@mixin for-desktop-up {
-  @media (min-width: 1200px) {
-    @content;
-  }
-}
-@mixin for-big-desktop-up {
-  @media (min-width: 1800px) {
-    @content;
-  }
-}
-
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   list-style-type: none;
-//   outline: none;
-//   border: none;
-//   text-decoration: none;
-
-//   &::selection {
-//     background: $color-1;
-//   }
-// }
-// a,
-// a:visited {
-//   color: $color-3;
-// }
-// input,
-// textarea {
-//   resize: none;
-//   border-radius: 20px;
-//   width: 270px;
-//   font-family: $font-1;
-//   background: $white;
-// }
-// textarea {
-//   &:focus {
-//     box-shadow: 0 0 4px rgba(0, 22, 44, 0.1);
-//   }
-// }
-
-// button,
-// input {
-//   background: $color-2;
-//   color: $color-1;
-//   font-family: $font-3;
-//   cursor: pointer;
-//   transition: 0.2s;
-//   margin: 0;
-//   padding: 10px 20px;
-//   font-size: 1.1rem;
-//   border-radius: 20px 6px 20px 20px;
-
-//   &:hover {
-//     background: $color-1;
-//     color: $color-2;
-//   }
-// }
+@import '../.././style/index.scss';
 
 .profil-page {
-  max-width: 1200px;
-  height: 600px;
-  flex: 10;
-  box-sizing: border-box;
-  position: relative;
+  font-size: 31px;
 
   .update-container {
     .formContainer {
@@ -101,7 +11,6 @@ $shadow: rgb(219, 218, 218);
       justify-content: center;
       align-items: center;
       align-content: center;
-      font-family: 'Roboto';
       width: 600px;
       margin: 30px auto 0;
       background: $color-5;
@@ -143,20 +52,22 @@ $shadow: rgb(219, 218, 218);
       }
 
       .inputs-container {
+        margin-top: 30px;
         .input-content {
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-top: 20px;
+          margin-top: 30px;
 
           input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid black;
+            -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+            -moz-box-sizing: border-box; /* Firefox, other Gecko */
+            box-sizing: border-box; /* Opera/IE 8+ */
             text-align: center;
             border: 1px solid $color-3;
-
-            @include for-phone-only {
-              width: 120px;
-              font-size: 15px;
-            }
           }
 
           label {
@@ -189,9 +100,16 @@ $shadow: rgb(219, 218, 218);
           padding: 10px 20px;
         }
 
+        input[type='text'] {
+          height: 26px;
+          border: none;
+          border: #83bbd9 1px solid;
+          width: 100%;
+        }
+
         input[type='text']::placeholder {
           color: grey;
-          font-family: 'Roboto', sans-serif;
+          font-size: 18px;
         }
 
         input[type='submit'] {
@@ -200,6 +118,7 @@ $shadow: rgb(219, 218, 218);
           padding: 2vh;
           border: none;
           cursor: pointer;
+          font-size: 18px;
           border-radius: 50px;
         }
       }

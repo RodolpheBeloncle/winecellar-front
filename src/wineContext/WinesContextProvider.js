@@ -11,6 +11,7 @@ const WinesContextProvider = ({ children }) => {
   const [customersList, setCustomersList] = useState([]);
   const [latestOrders, setLatestOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenBarMenu, setIsOpenBarMenu] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const userId = useSelector((state) => state.user.userId);
 
@@ -83,6 +84,7 @@ const WinesContextProvider = ({ children }) => {
         setIsLoading,
         errorMessage,
         setErrorMessage,
+        isOpenBarMenu, setIsOpenBarMenu
       }}
     >
       {children}

@@ -1,0 +1,42 @@
+$font-1: 'font-1', sans-serif;
+$font-2: 'font-2', serif;
+$font-3: 'font-3', serif;
+
+$color-1: #ff7b77;
+$color-2: #ffd0c4;
+$color-3: rgb(0, 22, 44);
+$color-4: #fdeeee;
+$color-5: rgb(251, 251, 255);
+$black: rgb(40, 40, 40);
+$white: rgb(253, 253, 253);
+$shadow: rgb(219, 218, 218);
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}

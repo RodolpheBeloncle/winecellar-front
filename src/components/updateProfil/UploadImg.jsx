@@ -1,35 +1,30 @@
 import React, { useEffect, useContext } from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import './uploadImg.scss';
 import { updateProfil } from '../../redux/apiCalls';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { userRequest } from '../../utils/api';
 
-const UploadImg = ({
-  inputUserName,
-  setInputUserName,
-  file,
-  setFile,
-  userId,
-}) => {
+const UploadImg = ({ inputsValue, handleChange, userId }) => {
   const dispatch = useDispatch();
   const { isLoading, setIsLoading, errorMessage, setErrorMessage } =
     useContext(WinesContext);
 
   const handleUpdateProfil = async (e) => {
     setIsLoading(true);
-
     e.preventDefault();
+
     // necessary built object packages to send data pic
     //   Optional code to simulate delay
 
     const form = new FormData();
-    form.append('username', inputUserName);
-    if (file) {
+    form.append('username', inputsValue.username);
+    if (inputsValue.file) {
       try {
-        form.append('img', file);
+        form.append('img', inputsValue.file);
       } catch (err) {
         Swal.fire({
           icon: 'error',
@@ -40,33 +35,49 @@ const UploadImg = ({
         // s('Oops!', 'Something went wrong!', `${errorMessage}`);
       }
     }
-    updateProfil(dispatch, userId, form)
-      .then(() => setIsLoading(false))
-      .then(() =>
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Profil have been updated',
-          showConfirmButton: false,
-          timer: 1500,
+    try {
+      await userRequest
+        .post(`/users/updateProfil/${userId}`, form)
+        .then((response) => {
+          updateProfil(dispatch, response.data);
         })
-      )
-      .catch(() => {
-        setErrorMessage('Unable to update profil');
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `${errorMessage}`,
-          // footer: '<a href="">Why do I have this issue?</a>',
+        .then(() => {
+          setIsLoading(false);
+
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Profil have been updated',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch(() => {
+          setErrorMessage('Unable to update profil');
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${errorMessage}`,
+            // footer: '<a href="">Why do I have this issue?</a>',
+          });
+          setIsLoading(false);
         });
-        setIsLoading(false);
+    } catch (err) {
+      setErrorMessage('Unable to update profil');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${errorMessage}`,
+        // footer: '<a href="">Why do I have this issue?</a>',
       });
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     console.log('isfetching', isLoading);
-    console.log(inputUserName, file);
-  }, [file, inputUserName, isLoading]);
+    console.log(inputsValue);
+  }, [inputsValue, isLoading]);
 
   return (
     <form action="" onSubmit={(e) => handleUpdateProfil(e)}>
@@ -78,16 +89,16 @@ const UploadImg = ({
             id="file"
             name="file"
             accept=".jpg,.jpeg,.png"
-            onChange={(e) => setFile(e.target.files[0])}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="input-content">
           <input
             type="text"
             name="username"
-            placeholder={inputUserName}
+            placeholder={inputsValue.username}
             onChange={(e) => {
-              setInputUserName(e.target.value);
+              handleChange(e);
             }}
           />
         </div>

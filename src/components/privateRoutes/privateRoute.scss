@@ -1,4 +1,6 @@
-.container{
-    display: flex;
-    margin-top: 10px;
+.main-container {
+  /*Styling for the root container*/
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
 }

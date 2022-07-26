@@ -35,12 +35,11 @@ export const logout = async (dispatch, user) => {
   }
 };
 
-export const updateProfil = async (dispatch, userId, form) => {
+export const updateProfil = async (dispatch, profil) => {
   dispatch(updateProfilStart());
+  
   try {
-    const res = await userRequest.post(`/users/updateProfil/${userId}`, form);
-
-    dispatch(updateProfilSuccess(res.data));
+    dispatch(updateProfilSuccess(profil));
   } catch (err) {
     dispatch(updateProfilFailure());
   }

@@ -4,10 +4,6 @@
   min-height: 100vh;
   background-color: white;
 
-  @media (max-width: 768px) {
-    display: none;
-  }
-
   .top {
     height: 50px;
     display: flex;
@@ -15,7 +11,7 @@
     justify-content: center;
 
     .logo {
-      font-size: 20px;
+      font-size: 34px;
       font-weight: bold;
       color: #6439ff;
     }
@@ -35,7 +31,7 @@
       padding: 0;
 
       .title {
-        font-size: 10px;
+        font-size: 21px;
         font-weight: bold;
         color: #999;
         margin-top: 15px;
@@ -58,7 +54,7 @@
         }
 
         span {
-          font-size: 13px;
+          font-size: 16px;
           font-weight: 600;
           color: #888;
           margin-left: 10px;

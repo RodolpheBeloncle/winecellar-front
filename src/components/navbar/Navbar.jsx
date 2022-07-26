@@ -70,14 +70,14 @@ const Navbar = () => {
     <div className="navbar">
       <div className="wrapper">
         {/* <div className="search">
-          <input type="text" placeholder="Search..." />
-          <SearchOutlinedIcon />
-        </div> */}
+      <input type="text" placeholder="Search..." />
+      <SearchOutlinedIcon />
+    </div> */}
         <div className="items">
           {/* <div className="item">
-            <LanguageOutlinedIcon className="icon" />
-            English
-          </div> */}
+      <LanguageOutlinedIcon className="icon" />
+      English
+    </div> */}
           <div className="item">
             {darkMode ? (
               <LightModeOutlinedIcon
@@ -92,16 +92,16 @@ const Navbar = () => {
             )}
           </div>
           {/* <div className="item">
-            <FullscreenExitOutlinedIcon className="icon" />
-          </div> */}
+      <FullscreenExitOutlinedIcon className="icon" />
+    </div> */}
           {/* <div className="item">
-            <NotificationsNoneOutlinedIcon className="icon" />
-            <div className="counter">1</div>
-          </div> */}
+      <NotificationsNoneOutlinedIcon className="icon" />
+      <div className="counter">1</div>
+    </div> */}
           <div className="item">
             <ListOutlinedIcon className="icon" onClick={onDashboard} />
           </div>
-          <div className="item">Welcome {username}</div>
+          {username && <div className="item">Welcome {username}</div>}
           <div className="item" onClick={onProfil}>
             <img
               src={
