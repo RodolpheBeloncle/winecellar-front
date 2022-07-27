@@ -1,14 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import './uploadImg.scss';
+import './formInput.scss';
 import { updateProfil } from '../../redux/apiCalls';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { userRequest } from '../../utils/api';
 
-const UploadImg = ({ inputsValue, handleChange, userId }) => {
+const FormInput = ({ inputsValue, handleChange, userId }) => {
   const dispatch = useDispatch();
   const { isLoading, setIsLoading, errorMessage, setErrorMessage } =
     useContext(WinesContext);
@@ -117,4 +117,4 @@ const UploadImg = ({ inputsValue, handleChange, userId }) => {
   );
 };
 
-export default UploadImg;
+export default FormInput;

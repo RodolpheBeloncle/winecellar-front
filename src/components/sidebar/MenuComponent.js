@@ -9,7 +9,7 @@ const getMenuStyles = () => ({
     height: 20,
     left: 30,
     top: 20,
-    // zIndex: 19,
+    zIndex: 19,
   },
   bmBurgerBars: {
     background: '#6439ff',
@@ -27,7 +27,7 @@ const getMenuStyles = () => ({
     position: 'fixed',
     height: '100%',
     width: 200,
-    // zIndex: 30,
+    zIndex: 30,
   },
   bmMenu: {
     background: '#6439ff',
@@ -43,7 +43,7 @@ const getMenuStyles = () => ({
   },
   bmOverlay: {
     background: 'rgba(0, 0, 0, 0.3)',
-    // zIndex: 20,
+    zIndex: 20,
   },
 });
 

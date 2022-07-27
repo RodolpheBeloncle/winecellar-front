@@ -1,4 +1,3 @@
-import './navbar.scss';
 import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

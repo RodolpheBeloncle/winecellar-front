@@ -11,8 +11,16 @@ import { makeStyles, Grid } from '@material-ui/core';
 import { userRequest } from '../../utils/api';
 
 const useStyles = makeStyles((theme) => ({
+  containerAlt: {
+    paddingLeft: '40px',
+    paddingRight: '10px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center',
+    },
+  },
   container: {
-    border: '3px solid purple',
     padding: '10px',
     display: 'flex',
     justifyContent: 'center',
@@ -24,15 +32,22 @@ const useStyles = makeStyles((theme) => ({
     padding: '25px',
     border: '1px solid lightblue',
   },
+
+  TableContainer: {
+    border: '1px solid lightblue',
+    padding: '10px',
+    display: 'flex',
+    alignItems: 'column',
+    justifyContent: 'flex-start',
+  },
   tableItem: {
-    padding: '25px',
     border: '1px solid lightblue',
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const { latestOrders, customersList, orderData, wineData } =
+  const { latestOrders, customersList, orderData, wineData, isOpenBarMenu } =
     useContext(WinesContext);
   const [monthSales, setMonthSales] = useState(0);
   const userId = useSelector((state) => state.user.userId);
@@ -105,10 +120,14 @@ const Home = () => {
     averageBottlePrice();
     console.log('LATESORDERS', latestOrders);
     console.log('Customerlist', customersList);
-  }, [latestOrders]);
+  }, [latestOrders, isOpenBarMenu]);
 
   return (
-    <Grid container spacing={3} className={classes.container}>
+    <Grid
+      container
+      spacing={3}
+      className={`${isOpenBarMenu ? classes.containerAlt : classes.container}`}
+    >
       <Grid item xs={5} className={classes.item}>
         <Widget type="customer" nbCustomers={customersList.length} />
         <Widget type="order" />
@@ -125,13 +144,15 @@ const Home = () => {
         <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
       </Grid>
 
-      <Grid tableItem xs={7} className={classes.item}>
-        {latestOrders.length > 0 ? (
-          <div className="listTitle">Latest Transactions</div>
-        ) : (
-          <div className="listTitle">No transactions to show</div>
-        )}
-        <Table latestOrders={latestOrders} />
+      <Grid container xs={10}  className={classes.TableContainer}>
+        <Grid tableItem xs className={classes.tableItem}>
+          {latestOrders.length > 0 ? (
+            <div className="listTitle">Latest Transactions</div>
+          ) : (
+            <div className="listTitle">No transactions to show</div>
+          )}
+          <Table latestOrders={latestOrders} />
+        </Grid>
       </Grid>
     </Grid>
   );

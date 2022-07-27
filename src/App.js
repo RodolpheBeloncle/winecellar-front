@@ -17,8 +17,6 @@ import OrderTable from './components/orderTable/OrderTable';
 import UpdateSelection from './pages/update/UpdateSelection';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { productInputs, customerInputs } from './formSource';
-import './style/dark.scss';
-import './style/index.scss';
 import { DarkModeContext } from './context/darkModeContext';
 
 function App() {
