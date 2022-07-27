@@ -6,6 +6,7 @@ import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 
 const Datatable = ({
@@ -75,7 +76,7 @@ const Datatable = ({
     {
       field: 'action',
       headerName: 'Action',
-      flex:1,
+    
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -88,7 +89,7 @@ const Datatable = ({
                 className="deleteButton"
                 onClick={() => handleRemove(params.row._id)}
               >
-                Delete
+                <DeleteIcon/>
               </div>
             )}
           </div>

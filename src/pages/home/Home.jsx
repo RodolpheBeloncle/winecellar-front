@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     padding: '25px',
-    maxWidth: '500px',
     border: '1px solid lightblue',
   },
 
@@ -123,7 +122,7 @@ const Home = () => {
   return (
     <Grid container spacing={3} xs className={classes.container}>
       <Grid container md direction="column">
-        <Grid item xs>
+        <Grid container xs className={classes.item} direction="row">
           <Widget type="customer" nbCustomers={customersList.length} />
           <Widget type="order" />
           <Widget type="earning" />

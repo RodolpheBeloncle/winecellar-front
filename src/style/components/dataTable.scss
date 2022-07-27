@@ -1,5 +1,5 @@
 .datatable {
-  padding: 20px;
+  // padding: 20px;
   height: 100vh;
 
   .datatableTitle {
@@ -7,12 +7,14 @@
     font-size: 24px;
     color: gray;
     margin-bottom: 10px;
+    padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 
     @include mediaQueryForMobile {
       justify-content: space-around;
+      margin-top: 10px;
      
     }
 
