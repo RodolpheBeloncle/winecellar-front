@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from "@material-ui/core/styles";
 import './newOrder.scss';
-import '../../components/datatable/datatable.scss';
 
 import {
   addItemToCart,
@@ -12,7 +10,7 @@ import {
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
-import { DataGrid , GridRowsProp, GridColDef} from '@mui/x-data-grid';
+import { DataGrid} from '@mui/x-data-grid';
 import { publicRequest } from '../../utils/api';
 import { productColumns } from '../../datatablesource';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';

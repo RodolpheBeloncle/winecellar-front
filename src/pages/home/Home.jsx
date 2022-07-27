@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     padding: '25px',
+    maxWidth: '500px',
     border: '1px solid lightblue',
   },
 
@@ -40,14 +41,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'column',
     justifyContent: 'flex-start',
   },
-  tableItem: {
-    border: '1px solid lightblue',
-  },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const { latestOrders, customersList, orderData, wineData, isOpenBarMenu } =
+  const { latestOrders, customersList, orderData, wineData } =
     useContext(WinesContext);
   const [monthSales, setMonthSales] = useState(0);
   const userId = useSelector((state) => state.user.userId);
@@ -120,39 +118,35 @@ const Home = () => {
     averageBottlePrice();
     console.log('LATESORDERS', latestOrders);
     console.log('Customerlist', customersList);
-  }, [latestOrders, isOpenBarMenu]);
+  }, [latestOrders]);
 
   return (
-    <Grid
-      container
-      spacing={3}
-      className={`${isOpenBarMenu ? classes.containerAlt : classes.container}`}
-    >
-      <Grid item xs={5} className={classes.item}>
-        <Widget type="customer" nbCustomers={customersList.length} />
-        <Widget type="order" />
-        <Widget type="earning" />
-        <Widget type="balance" />
-      </Grid>
-
-      <Grid item xs={5} className={classes.item}>
-        <Featured
-          monthSales={monthSales}
-          targetPercentage={diffPercentageTargetProfit}
-        />
-
-        <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
-      </Grid>
-
-      <Grid container xs={10}  className={classes.TableContainer}>
-        <Grid tableItem xs className={classes.tableItem}>
-          {latestOrders.length > 0 ? (
-            <div className="listTitle">Latest Transactions</div>
-          ) : (
-            <div className="listTitle">No transactions to show</div>
-          )}
-          <Table latestOrders={latestOrders} />
+    <Grid container spacing={3} xs className={classes.container}>
+      <Grid container md direction="column">
+        <Grid item xs>
+          <Widget type="customer" nbCustomers={customersList.length} />
+          <Widget type="order" />
+          <Widget type="earning" />
+          <Widget type="balance" />
         </Grid>
+
+        <Grid item xs>
+          <Featured
+            monthSales={monthSales}
+            targetPercentage={diffPercentageTargetProfit}
+          />
+
+          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+        </Grid>
+      </Grid>
+
+      <Grid container xs className={classes.TableContainer}>
+        {latestOrders.length > 0 ? (
+          <div className="listTitle">Latest Transactions</div>
+        ) : (
+          <div className="listTitle">No transactions to show</div>
+        )}
+        <Table latestOrders={latestOrders} />
       </Grid>
     </Grid>
   );

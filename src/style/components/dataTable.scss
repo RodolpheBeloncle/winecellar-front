@@ -11,6 +11,11 @@
     align-items: center;
     justify-content: space-between;
 
+    @include mediaQueryForMobile {
+      justify-content: space-around;
+     
+    }
+
     .link {
       text-decoration: none;
       color: green;

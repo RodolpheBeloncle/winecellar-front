@@ -1,5 +1,4 @@
 .table {
- 
   .cellWrapper {
     display: flex;
     align-items: center;
@@ -21,6 +20,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    @include mediaQueryForMobile {
+      justify-content: space-around;
+    }
 
     .link {
       text-decoration: none;

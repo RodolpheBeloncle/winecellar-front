@@ -4,7 +4,6 @@ import Search from '../search/Search';
 import { publicRequest, userRequest } from '../../utils/api';
 import { useSelector } from 'react-redux';
 import { formatDate } from '../../utils/formatDate';
-import './orderTable.scss';
 import Table from '@mui/material/Table';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TableBody from '@mui/material/TableBody';

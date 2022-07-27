@@ -12,6 +12,7 @@ $shadow: rgb(219, 218, 218);
 
 * {
   font-family: 'Nunito', sans-serif;
+
 }
 
 // For mobile devices: 320px to 480px
@@ -22,10 +23,9 @@ $shadow: rgb(219, 218, 218);
 // designing your website for smaller devices first then set your initial breakpoints with min-width, whereas,
 //  if you are designing for larger devices first then use max-width
 
-
 // media query for Mobile
 @mixin mediaQueryForMobile {
-  @media (min-width: 430px) {
+  @media (max-width: 490px) {
     @content;
   }
 }

@@ -79,15 +79,12 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  
-
   const handleLogin = (e) => {
     e.preventDefault();
     login(dispatch, {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     });
-   
   };
 
   useEffect(() => {

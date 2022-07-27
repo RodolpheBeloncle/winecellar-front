@@ -80,12 +80,12 @@ const Navbar = () => {
           <div className="item">
             {darkMode ? (
               <LightModeOutlinedIcon
-                className="icon"
+                className="darkModeIcon"
                 onClick={() => dispatch({ type: 'TOGGLE' })}
               />
             ) : (
               <DarkModeOutlinedIcon
-                className="icon"
+                className="darkModeIcon"
                 onClick={() => dispatch({ type: 'TOGGLE' })}
               />
             )}
@@ -98,7 +98,7 @@ const Navbar = () => {
       <div className="counter">1</div>
     </div> */}
           <div className="item">
-            <ListOutlinedIcon className="icon" onClick={onDashboard} />
+            <ListOutlinedIcon className="dashboardIcon" onClick={onDashboard} />
           </div>
           {username && <div className="item">Welcome {username}</div>}
           <div className="item" onClick={onProfil}>

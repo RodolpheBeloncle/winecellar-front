@@ -26,23 +26,20 @@ const UpdateProfil = () => {
   };
 
   return (
-    <div className="update-container">
-      <div className="formContainer">
-        <h1>{username}</h1>
+    <div className="formContainer">
+      <h1>{username}</h1>
+      <img
+        src={
+          inputsValue.file ? URL.createObjectURL(inputsValue.file) : profilPic
+        }
+        alt=""
+      />
 
-        <img
-          src={
-            inputsValue.file ? URL.createObjectURL(inputsValue.file) : profilPic
-          }
-          alt=""
-        />
-
-        <FormInput
-          inputsValue={inputsValue}
-          handleChange={handleChange}
-          userId={userId}
-        />
-      </div>
+      <FormInput
+        inputsValue={inputsValue}
+        handleChange={handleChange}
+        userId={userId}
+      />
     </div>
   );
 };

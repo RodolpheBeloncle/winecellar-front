@@ -1,5 +1,4 @@
 import React from 'react';
-import './datatable.scss';
 import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import CircularProgress from '@mui/material/CircularProgress';
