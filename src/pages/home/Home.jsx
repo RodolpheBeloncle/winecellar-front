@@ -11,19 +11,9 @@ import { makeStyles, Grid } from '@material-ui/core';
 import { userRequest } from '../../utils/api';
 
 const useStyles = makeStyles((theme) => ({
-  containerAlt: {
-    paddingLeft: '40px',
-    paddingRight: '10px',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'center',
-    },
-  },
   container: {
     padding: '10px',
     display: 'flex',
-    justifyContent: 'center',
     [theme.breakpoints.down('md')]: {
       textAlign: 'center',
     },
@@ -38,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px',
     display: 'flex',
     alignItems: 'column',
-    justifyContent: 'flex-start',
   },
 }));
 
@@ -110,19 +99,24 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
+    return;
   };
 
   useEffect(() => {
     getStats();
-    averageBottlePrice();
     console.log('LATESORDERS', latestOrders);
     console.log('Customerlist', customersList);
   }, [latestOrders]);
 
   return (
-    <Grid container spacing={3} xs className={classes.container}>
-      <Grid container md direction="column">
-        <Grid container xs className={classes.item} direction="row">
+    <Grid
+      container
+      spacing={3}
+      justifyContent="center"
+      className={classes.container}
+    >
+      <Grid container direction="column">
+        <Grid container className={classes.item} direction="row">
           <Widget type="customer" nbCustomers={customersList.length} />
           <Widget type="order" />
           <Widget type="earning" />
@@ -139,7 +133,11 @@ const Home = () => {
         </Grid>
       </Grid>
 
-      <Grid container xs className={classes.TableContainer}>
+      <Grid
+        container
+        justifyContent="flex-start"
+        className={classes.TableContainer}
+      >
         {latestOrders.length > 0 ? (
           <div className="listTitle">Latest Transactions</div>
         ) : (

@@ -3,7 +3,6 @@ import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
 import cautionStock from './img/caution.png';
 import warningStock from './img/warning.png';
-import { GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 export const stockStatus = {
   outOfStock: 'outOfStock',

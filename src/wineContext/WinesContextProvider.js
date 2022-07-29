@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { publicRequest } from '../utils/api';
-import { customerData } from '../datatablesource';
 
 export const WinesContext = createContext();
 

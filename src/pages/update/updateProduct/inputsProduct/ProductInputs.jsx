@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
-import { userRequest ,publicRequest} from '../../../../utils/api';
+import { userRequest } from '../../../../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const ProductInputs = ({ selection }) => {
@@ -74,7 +74,7 @@ const ProductInputs = ({ selection }) => {
     }
 
     try {
-      await publicRequest
+      await userRequest
         .post(`/products/update/${selection._id}`, data)
         .then(() => {
           setIsLoading(false);

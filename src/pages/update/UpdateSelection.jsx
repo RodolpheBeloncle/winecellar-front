@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import UpdateProduct from './updateProduct/UpdateProduct';
 import UpdateCustomer from './updateCustomer/UpdateCustomer';
-import { userRequest } from '../../utils/api';
-import { WinesContext } from '../../wineContext/WinesContextProvider';
-import Swal from 'sweetalert2';
 
-const UpdateSelection = ({ dataType, title }) => {
-  const { wineData, customersList, isLoading, setIsLoading } =
-    useContext(WinesContext);
+const UpdateSelection = ({ dataType}) => {
+ 
   let { state } = useLocation();
   let data;
 
@@ -27,8 +23,6 @@ const UpdateSelection = ({ dataType, title }) => {
     default:
       break;
   }
-
-  useEffect(() => {}, []);
 
   return (
     <div className="list">

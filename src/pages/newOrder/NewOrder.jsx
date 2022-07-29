@@ -10,14 +10,13 @@ import {
 } from '../../redux/cartRedux';
 import { useDispatch, useSelector } from 'react-redux';
 import InfoProduct from '../../components/singleInfo/InfoProduct';
-import { DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { publicRequest } from '../../utils/api';
 import { productColumns } from '../../datatablesource';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 
 const NewOrder = () => {
-
   const dispatch = useDispatch();
   const orderedList = useSelector((state) => state.cart);
   const { wineData, setWineData } = useContext(WinesContext);
@@ -53,6 +52,7 @@ const NewOrder = () => {
       .map((item) => {
         item.quantity = selectedProduct.quantity;
         setProductQty(0);
+        return item;
       });
   };
 
@@ -65,6 +65,7 @@ const NewOrder = () => {
         })
         .map((item) => {
           item.quantity += 1;
+          return item;
         });
     } else {
       setProductQty((prevState) => prevState + 1);
@@ -74,6 +75,7 @@ const NewOrder = () => {
         })
         .map((item) => {
           item.quantity -= 1;
+          return item;
         });
     }
   };
@@ -83,21 +85,21 @@ const NewOrder = () => {
       .filter((item) => !item.quantity > 0)
       .map((item) => {
         dispatch(removeOneItem(item._id));
-
         console.log('removedId', item._id);
+        return item;
       });
 
     // console.log('selectedroduct', selectedProduct);
     // console.log(' orderedList', orderedList);
     // console.log('selectedId[0]', selectedId[0]);
     // console.log("winedata",wineData)
-  }, [ orderedList, selectedId, selectedProduct, wineData]);
+  }, [orderedList, selectedId, selectedProduct, wineData]);
 
   const actionColumn = [
     {
       field: 'action',
       headerName: 'Action',
-      flex:3,
+      flex: 3,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -179,37 +181,36 @@ const NewOrder = () => {
         <div className="bottom">
           <h1 className="title">Create Order</h1>
           <div className="datatable">
-          <div style={{ height: 300, width: "100%" }}>
-            <DataGrid
-              className="datagrid"
-              getRowId={(r) => r._id}
-              rows={wineData}
-              columns={productColumns.concat(actionColumn)}
-              pageSize={9}
-              rowsPerPageOptions={[9]}
-              // className={classes.dataGrid}
-              onSelectionModelChange={(ids) => {
-                setSelectedId(ids);
+            <div style={{ height: 300, width: '100%' }}>
+              <DataGrid
+                className="datagrid"
+                getRowId={(r) => r._id}
+                rows={wineData}
+                columns={productColumns.concat(actionColumn)}
+                pageSize={9}
+                rowsPerPageOptions={[9]}
+                onSelectionModelChange={(ids) => {
+                  setSelectedId(ids);
 
-                wineData
-                  .filter((element) => {
-                    return element._id === ids[0];
-                  })
-                  .map((item) =>
-                    setSelectedProduct({
-                      price: item.price,
-                      title: item.title,
-                      content: item.content,
-                      img: item.img,
-                      quantity: 1,
-                      _id: item._id,
+                  wineData
+                    .filter((element) => {
+                      return element._id === ids[0];
                     })
-                  );
+                    .map((item) =>
+                      setSelectedProduct({
+                        price: item.price,
+                        title: item.title,
+                        content: item.content,
+                        img: item.img,
+                        quantity: 1,
+                        _id: item._id,
+                      })
+                    );
 
-                setProductQty(0);
-              }}
-              selectionModel={selectedId}
-            />
+                  setProductQty(0);
+                }}
+                selectionModel={selectedId}
+              />
             </div>
           </div>
         </div>

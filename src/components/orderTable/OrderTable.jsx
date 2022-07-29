@@ -125,7 +125,7 @@ const List = () => {
         {orderData.length === 0 ? (
           <span>No Order provided yet</span>
         ) : (
-          <Grid container xs className={classes.container} direction="row">
+          <Grid container className={classes.container} direction="row">
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
