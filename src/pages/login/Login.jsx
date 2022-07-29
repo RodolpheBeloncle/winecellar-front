@@ -99,12 +99,6 @@ const Login = () => {
         <Form onSubmit={(e) => handleLogin(e)}>
           <Input type="email" placeholder="email" ref={emailRef} />
           <Input type="password" placeholder="password" ref={passwordRef} />
-          <>
-            <br />
-            <span style={{ color: 'red' }}>Something went wrong</span>
-            <br />
-          </>
-
           <Button type="submit">Connect</Button>
           {/* {error && <Error> Something went wrong </Error>} */}
           <LinkTo>Forgotten password ?</LinkTo>
