@@ -74,7 +74,6 @@ const LinkTo = styled.a`
 const Login = () => {
   const dispatch = useDispatch();
   const userAuth = useSelector((state) => state.user.currentUser);
-  const errorState = useSelector((state) => state.user.error.message);
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -102,7 +101,7 @@ const Login = () => {
           <Input type="password" placeholder="password" ref={passwordRef} />
           <>
             <br />
-            <span style={{ color: 'red' }}>{errorState}</span>
+            <span style={{ color: 'red' }}>Something went wrong</span>
             <br />
           </>
 
