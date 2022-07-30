@@ -1,21 +1,15 @@
 import axios from 'axios';
 
-const BASE_URL =  'https://api.rodolphebeloncle.com/api/';
+const BASE_URL = 'https://api.rodolphebeloncle.com/api/';
 
 export const publicRequest = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-		'Accept': 'application/json',
-  },
   withCredentials: true,
+  baseURL: BASE_URL,
+  headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
 });
 
 export const userRequest = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-		'Accept': 'application/json',
-  },
   withCredentials: true,
+  baseURL: BASE_URL,
+  headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
 });
