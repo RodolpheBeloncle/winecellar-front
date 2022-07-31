@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
-import { publicRequest } from '../../utils/api';
+import { userRequest} from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeAllFromCart } from '../../redux/cartRedux';
@@ -76,9 +76,9 @@ const Invoice = (props) => {
       quantity: quantity,
     }));
 
-    publicRequest
+    userRequest
       .post('/create-pdf', inputs)
-      .then(() => publicRequest.get('/fetch-pdf', { responseType: 'blob' }))
+      .then(() => userRequest.get('/fetch-pdf', { responseType: 'blob' }))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
 
@@ -86,7 +86,7 @@ const Invoice = (props) => {
         saveAs(pdfBlob, `newInvoice ID:${invoiceId}.pdf`);
       })
       .then(() =>
-        publicRequest.post('/orders', {
+      userRequest.post('/orders', {
           userId: userId,
           customer: name,
           products: products,

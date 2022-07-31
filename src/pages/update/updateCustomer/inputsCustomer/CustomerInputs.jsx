@@ -128,7 +128,7 @@ const CustomerInputs = ({ selection }) => {
                   <CircularProgress />
                 </Box>
               ) : (
-                <button onClick={(e) => handleSubmit(e)}>create</button>
+                <button onClick={(e) => handleSubmit(e)}>update</button>
               )}
             </form>
           </div>
