@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.87a2428f.css",
-    "main.js": "/static/js/main.055e8986.js",
+    "main.js": "/static/js/main.1c57896e.js",
     "static/media/wine-bottle.png": "/static/media/wine-bottle.f03b5dab6d73273c1294.png",
     "index.html": "/index.html",
     "main.87a2428f.css.map": "/static/css/main.87a2428f.css.map",
-    "main.055e8986.js.map": "/static/js/main.055e8986.js.map"
+    "main.1c57896e.js.map": "/static/js/main.1c57896e.js.map"
   },
   "entrypoints": [
     "static/css/main.87a2428f.css",
-    "static/js/main.055e8986.js"
+    "static/js/main.1c57896e.js"
   ]
 }

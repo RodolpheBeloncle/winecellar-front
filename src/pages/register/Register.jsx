@@ -186,7 +186,7 @@ const Register = () => {
             By creating an account, I consent to the processing of my data
             personal data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>Create</Button>
+          <Button type="submit">Create</Button>
           {error && (
             <>
               <br />

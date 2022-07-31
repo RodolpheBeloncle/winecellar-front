@@ -101,12 +101,12 @@ const Login = () => {
           <Input type="password" placeholder="password" ref={passwordRef} />
           <Button type="submit">Connect</Button>
           {/* {error && <Error> Something went wrong </Error>} */}
-          <LinkTo>Forgotten password ?</LinkTo>
+          {/* <LinkTo>Forgotten password ?</LinkTo>
           <LinkTo>
             <Link className="link" to="/register">
               Create new Account
             </Link>
-          </LinkTo>
+          </LinkTo> */}
         </Form>
       </Wrapper>
     </Container>
