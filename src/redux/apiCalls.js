@@ -26,7 +26,7 @@ export const login = async (dispatch, user) => {
 export const logout = async (dispatch, user) => {
   dispatch(logoutStart());
   try {
-    const res = await userRequest.post('/auth/logout', { currentUser: user });
+    const res = await publicRequest.post('/auth/logout', { currentUser: user });
     dispatch(logoutSuccess(res.data));
     console.log('currentUser logged in ?', res.data);
   } catch (err) {

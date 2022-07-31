@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userRequest } from '../../utils/api';
+import { userRequest,publicRequest } from '../../utils/api';
 
 // import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 // import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';

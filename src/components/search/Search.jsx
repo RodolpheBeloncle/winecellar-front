@@ -14,7 +14,7 @@ const Search = ({ data, searchText, setSearchText }) => {
         options={data}
         defaultValue={searchText}
         getOptionLabel={(option) => (option.customer ? option.customer : '')}
-        style={{ width: 300 }}
+        style={{ width: 300}}
         value={searchText}
         onChange={(_event, newQuery) => {
           setSearchText(newQuery.customer);

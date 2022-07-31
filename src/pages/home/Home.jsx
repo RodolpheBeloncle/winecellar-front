@@ -8,7 +8,7 @@ import Table from '../../components/table/Table';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { makeStyles, Grid } from '@material-ui/core';
-import { userRequest } from '../../utils/api';
+import { publicRequest } from '../../utils/api';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -89,7 +89,7 @@ const Home = () => {
 
   const getStats = async () => {
     try {
-      const res = await userRequest.get(`/orders/find/${userId}`);
+      const res = await publicRequest.get(`/orders/find/${userId}`);
 
       const list = res.data?.sort((a, b) => {
         return a._id - b._id;

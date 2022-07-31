@@ -1,7 +1,13 @@
 .app.dark {
+
   background-color:  rgb(45, 45, 45);
   color: rgb(156, 156, 156);
+  height: 100vh;
 
+  span{
+    color: rgb(156, 156, 156);
+  }
+  
   .profil-page {
     background-color: rgb(45, 45, 45);
     .formContainer{

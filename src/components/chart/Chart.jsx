@@ -1,7 +1,7 @@
 import React from 'react';
 import './chart.scss';
 import { useEffect, useMemo, useState } from 'react';
-import { userRequest } from '../../utils/api';
+import {publicRequest } from '../../utils/api';
 import { useSelector } from 'react-redux';
 
 import {
@@ -37,7 +37,7 @@ const Chart = ({ aspect, title, month }) => {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await userRequest.get(`/orders/find/${userId}`);
+        const res = await publicRequest.get(`/orders/find/${userId}`);
         console.log('chart userId', userId);
 
         const list = res.data.sort((a, b) => {
