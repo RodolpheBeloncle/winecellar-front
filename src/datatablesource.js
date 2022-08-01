@@ -109,7 +109,7 @@ export const productColumns = [
   {
     field: 'quantity',
     headerName: 'Quantity',
-    flex: 2,
+    flex: 3,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">

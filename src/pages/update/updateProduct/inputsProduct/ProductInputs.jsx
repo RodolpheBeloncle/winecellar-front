@@ -13,8 +13,24 @@ import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
 import { userRequest } from '../../../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { makeStyles, Grid } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: '10px',
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center',
+    },
+  },
+  item: {
+    padding: '25px',
+    border: '1px solid lightblue',
+  },
+}));
 
 const ProductInputs = ({ selection }) => {
+  const classes = useStyles();
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -68,9 +84,8 @@ const ProductInputs = ({ selection }) => {
           text: `Something went wrong with the file`,
         });
       }
-    }else{
+    } else {
       data.append('img', selection.img);
-
     }
 
     try {
@@ -100,9 +115,7 @@ const ProductInputs = ({ selection }) => {
     }
   };
 
-  useEffect((
-
-  ) => [inputsValue, isLoading,selection]);
+  useEffect(() => [inputsValue, isLoading, selection]);
 
   return (
     <div className="productInputs">
@@ -117,76 +130,78 @@ const ProductInputs = ({ selection }) => {
               alt=""
             />
           </div>
-          <div className="right">
-            <form>
-              <div className="formInput">
-                <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: 'none' }}
-                />
-              </div>
-
-              {productInputs.map((input, index) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
+          <Grid container className={classes.item} direction="row">
+            <div className="right">
+              <form>
+                <div className="formInput">
+                  <label htmlFor="file">
+                    Image: <DriveFolderUploadOutlinedIcon className="icon" />
+                  </label>
                   <input
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    name={Object.keys(inputsValue)[index]}
-                    value={Object.values(inputsValue)[index]}
+                    type="file"
+                    id="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    style={{ display: 'none' }}
+                  />
+                </div>
+
+                {productInputs.map((input, index) => (
+                  <div className="formInput" key={input.id}>
+                    <label>{input.label}</label>
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      name={Object.keys(inputsValue)[index]}
+                      value={Object.values(inputsValue)[index]}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                ))}
+                <div className="formInput">
+                  <label>Type</label>
+                  <select
+                    defaultValue={'DEFAULT'}
+                    name="type"
                     onChange={(e) => {
                       handleChange(e);
                     }}
-                  />
+                  >
+                    <option value="DEFAULT" disabled>
+                     wine type
+                    </option>
+                    {typeSelection.map((option) => (
+                      <option value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                  <label>Content</label>
+                  <select
+                    defaultValue={'DEFAULT'}
+                    name="size"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                  >
+                    <option value="DEFAULT" disabled>
+                      content type
+                    </option>
+                    {sizeSelection.map((option) => (
+                      <option value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
                 </div>
-              ))}
-              <div className="formInput">
-                <label>Type</label>
-                <select
-                  defaultValue={'DEFAULT'}
-                  name="type"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                >
-                  <option value="DEFAULT" disabled>
-                    Choose wine type
-                  </option>
-                  {typeSelection.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-                <label>Content</label>
-                <select
-                  defaultValue={'DEFAULT'}
-                  name="size"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                >
-                  <option value="DEFAULT" disabled>
-                    Choose content
-                  </option>
-                  {sizeSelection.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-              </div>
 
-              {isLoading ? (
-                <Box>
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <button onClick={(e) => handleSubmit(e)}>update</button>
-              )}
-            </form>
-          </div>
+                {isLoading ? (
+                  <Box>
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  <button onClick={(e) => handleSubmit(e)}>update</button>
+                )}
+              </form>
+            </div>
+          </Grid>
         </div>
       </div>
     </div>
