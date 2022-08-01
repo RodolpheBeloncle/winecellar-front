@@ -99,7 +99,7 @@ const NewOrder = () => {
     {
       field: 'action',
       headerName: 'Action',
-      flex: 4,
+      flex: 5,
       renderCell: (params) => {
         return (
           <div className="cellAction">

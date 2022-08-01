@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     padding: '25px',
-    border: '1px solid lightblue',
   },
 }));
 
