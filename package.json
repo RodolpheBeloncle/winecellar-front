@@ -30,7 +30,8 @@
     "sass": "^1.54.8",
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.29",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "web-vitals": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,8 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "web-vitals": "^3.0.1"
   }
 }
