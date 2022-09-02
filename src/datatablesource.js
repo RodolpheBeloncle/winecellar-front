@@ -1,8 +1,9 @@
 import React from 'react';
-import wine_bottle from './img/wine-bottle.png';
 import validStock from './img/valid.png';
 import cautionStock from './img/caution.png';
 import warningStock from './img/warning.png';
+import emptyCustomer from './img/emptyCustomer.png';
+import emptyBottle from './img/emptyBottle.png';
 
 export const stockStatus = {
   outOfStock: 'outOfStock',
@@ -23,11 +24,7 @@ export const customerColumns = [
         <div className="cellWithImg">
           <img
             className="cellImg"
-            src={
-              params.row.img
-                ? params.row.img
-                : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
-            }
+            src={params.row.img === "NC" ? emptyCustomer : params.row.img}
             alt="avatar"
           />
           {params.row.customerName}
@@ -71,17 +68,13 @@ export const productColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          {params.row.img === '' ? (
-            <>
-              <img className="cellImg" src={wine_bottle} alt="winelabel" />
-              {params.row.title}
-            </>
-          ) : (
-            <>
-              <img className="cellImg" src={params.row.img} alt="label" />
-              {params.row.title}
-            </>
-          )}
+         
+         <img
+            className="cellImg"
+            src={params.row.img === "NC" ? emptyBottle : params.row.img}
+            alt="avatar"
+          />
+          {params.row.customerName}
         </div>
       );
     },

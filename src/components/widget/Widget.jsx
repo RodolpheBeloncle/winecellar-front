@@ -9,7 +9,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import { Link } from 'react-router-dom';
 
-const Widget = ({ type, nbCustomers}) => {
+const Widget = ({ type, nbCustomers }) => {
   const { orderData, wineData } = useContext(WinesContext);
   let data;
 
@@ -122,7 +122,7 @@ const Widget = ({ type, nbCustomers}) => {
       break;
   }
 
-  useEffect(() => [nbCustomers]);
+  // useEffect(() => [nbCustomers]);
 
   return (
     <div className="widget">

@@ -6,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 // import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 
 const Featured = ({ monthSales, targetPercentage }) => {
-  useEffect(() =>[monthSales, targetPercentage])
+  // useEffect(() =>[monthSales, targetPercentage])
 
   return (
     <div className="featured">

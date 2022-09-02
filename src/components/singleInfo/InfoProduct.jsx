@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import emptyProduct from '../../img/emptyBottle.png';
 
 const InfoProduct = ({ selectedId, wineData }) => {
-  useEffect(() => [selectedId[0]]);
 
   return (
     <div>
@@ -19,9 +19,9 @@ const InfoProduct = ({ selectedId, wineData }) => {
             <div className="item">
               <img
                 src={
-                  info.img
-                    ? info.img
-                    : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
+                  info.img === "NC"
+                    ? emptyProduct
+                    : info.img
                 }
                 alt="ProductImg"
                 className="itemImg"

@@ -52,7 +52,7 @@ const Invoice = (props) => {
     return generateId.toString();
   };
 
-  const invoiceDate = new Date().toLocaleDateString('fr-FR', optionsDate);
+  const invoiceDate = new Date().toLocaleDateString('en-GB', optionsDate);
   const invoiceId = generateInvoiceId();
 
   const [inputs, setInputs] = useState({

@@ -17,7 +17,7 @@ const WinesContextProvider = ({ children }) => {
   const getWineData = async () => {
     setIsLoading(true);
     try {
-      const res = await publicRequest.get('/products/');
+      const res = await publicRequest.get(`/products/${userId}`);
       setWineData(res.data);
       setIsLoading(false);
     } catch (err) {
@@ -39,7 +39,7 @@ const WinesContextProvider = ({ children }) => {
   const getCustomerData = async () => {
     setIsLoading(true);
     try {
-      const res = await publicRequest.get(`/customers`);
+      const res = await publicRequest.get(`/customers/${userId}`);
       setCustomersList(res.data);
       setIsLoading(false);
     } catch (err) {
@@ -65,8 +65,10 @@ const WinesContextProvider = ({ children }) => {
       getCustomerData();
       getWineData();
     }
-    console.log(orderData);
+
+ 
   }, [userId]);
+
 
   return (
     <WinesContext.Provider

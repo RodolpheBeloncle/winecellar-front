@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './customerInputs.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { WinesContext } from '../../../../wineContext/WinesContextProvider';
@@ -7,11 +7,14 @@ import { customerInputs } from '../../../../formSource';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
 import { userRequest } from '../../../../utils/api';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import emptyCustomer from '../../../../img/emptyCustomer.png';
 
 const CustomerInputs = ({ selection }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const publicId = useSelector((state) => state.user.publicId);
   const { isLoading, setIsLoading } = useContext(WinesContext);
   const [inputsValue, setInputsValue] = useState({
     customerName: '',
@@ -31,55 +34,71 @@ const CustomerInputs = ({ selection }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const data = new FormData();
 
-    const { customerName, email, adress, country, phone } = inputsValue;
-    data.append('customerName', customerName);
-    data.append('email', email);
-    data.append('adress', adress);
-    data.append('phone', phone);
-    data.append('country', country);
-
-    try {
-      if (file) {
-        try {
-          data.append('img', file);
-        } catch (err) {
-          setIsLoading(false);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `Something went wrong with the file`,
-          });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    }).then((result) => {
+      if (!result.isConfirmed && result.isDismissed) {
+        setIsLoading(false);
+        return;
+      } else if (result.isConfirmed) {
+        if (file !== null) {
+          const inputFile = document.getElementById('file');
+          const fileData = new FormData();
+          fileData.append('img', inputFile?.files?.item(0));
+          fileData.append('publicId', publicId);
+          userRequest
+            .put(`/customers/uploadFile/${selection._id}`, fileData)
+            .then((response) => {
+              console.log(response);
+              setIsLoading(false);
+            })
+            .catch((err) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Something went wrong!${err}`,
+              });
+            });
         }
-      } 
-
-      await userRequest
-        .post(`/customers/update/${selection._id}`, data)
-        .then(() => {
-          setIsLoading(false);
-          Swal.fire({
-            title: `Customer is updated`,
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
-          });
-          navigate('/customers');
-        });
-    } catch (err) {
-      setIsLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Something went wrong!${err}`,
-      });
-    }
+        try {
+          const { customerName, email, adress, country, phone } = inputsValue;
+          const data = { customerName, email, adress, country, phone };
+          userRequest
+            .put(`/customers/update/${selection._id}`, data)
+            .then(() => {
+              Swal.fire({
+                title: `Customer has been updated`,
+                showClass: {
+                  popup: 'animate__animated animate__fadeInDown',
+                },
+                hideClass: {
+                  popup: 'animate__animated animate__fadeOutUp',
+                },
+              });
+            })
+            .then(() => {
+              setIsLoading(false);
+              navigate('/customers');
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Something went wrong!${err}`,
+              });
+            });
+        } catch (err) {}
+      }
+    });
   };
-
-  useEffect(() => {console.log(file)},[inputsValue, isLoading, selection,file]);
 
   return (
     <div className="customerInputs">
@@ -90,7 +109,13 @@ const CustomerInputs = ({ selection }) => {
         <div className="bottom">
           <div className="left">
             <img
-              src={file ? URL.createObjectURL(file) : selection.img}
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : selection.img === 'NC'
+                  ? emptyCustomer
+                  : selection.img
+              }
               alt=""
             />
           </div>

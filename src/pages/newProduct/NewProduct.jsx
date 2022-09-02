@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './newProduct.scss';
-import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { sizeSelection, typeSelection } from '../../formSource';
+import { useSelector } from 'react-redux';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -11,8 +11,8 @@ import { useNavigate } from 'react-router-dom';
 
 const NewProduct = ({ inputs, title }) => {
   const { isLoading, setIsLoading } = useContext(WinesContext);
+  const userId = useSelector((state) => state.user.userId);
   const navigate = useNavigate();
-  const [file, setFile] = useState(null);
   const [inputsValue, setInputsValue] = useState({
     title: '',
     desc: '',
@@ -37,60 +37,56 @@ const NewProduct = ({ inputs, title }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    const data = new FormData();
-
-    const { title, desc, vintage, price, quantity, country, type, size } =
-      inputsValue;
-    data.append('title', title);
-    data.append('desc', desc);
-    data.append('vintage', vintage);
-    data.append('quantity', quantity);
-    data.append('country', country);
-    data.append('price', price);
-    data.append('size', size);
-    data.append('type', type);
-
-    if (file) {
-      try {
-        data.append('img', file);
-      } catch (err) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, create it!',
+    }).then((result) => {
+      if (!result.isConfirmed && result.isDismissed) {
         setIsLoading(false);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `Something went wrong with the file`,
-        });
+        return;
+      } else if (result.isConfirmed) {
+        setIsLoading(true);
+
+        const { title, desc, vintage, price, quantity, country, type, size } =
+          inputsValue;
+        const data = {
+          title,
+          desc,
+          vintage,
+          price,
+          quantity,
+          country,
+          type,
+          size,
+        };
+
+        userRequest
+          .post(`/products/new/${userId}`, data)
+          .then(() => {
+            Swal.fire({
+              title: `Product added to stock`,
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown',
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp',
+              },
+            });
+            setIsLoading(false);
+            navigate('/products');
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
       }
-    }
-
-    try {
-      await userRequest.post(`/products/new`, data).then(() => {
-        setIsLoading(false);
-        Swal.fire({
-          title: `wine is recorded`,
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
-
-        navigate('/products');
-      });
-    } catch (err) {
-      setIsLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Please provide a wine picture !`,
-      });
-    }
+    });
   };
-
-  useEffect(() => [inputsValue, isLoading]);
 
   return (
     <div className="newProduct">
@@ -99,30 +95,8 @@ const NewProduct = ({ inputs, title }) => {
           <h1>{title}</h1>
         </div>
         <div className="bottom">
-          <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : 'https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg'
-              }
-              alt=""
-            />
-          </div>
           <div className="right">
             <form>
-              <div className="formInput">
-                <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: 'none' }}
-                />
-              </div>
-
               {inputs.map((input, index) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
@@ -140,7 +114,6 @@ const NewProduct = ({ inputs, title }) => {
               <div className="formInput">
                 <label>Type</label>
                 <select
-                  defaultValue={'DEFAULT'}
                   name="type"
                   onChange={(e) => {
                     handleChange(e);

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import emptyProduct from '../../img/emptyBottle.png';
 import './single.scss';
 
 const ProductInfo = ({ info }) => {
-  useEffect(() => [info]);
-
   return (
     <div>
       <div key={info._id}>
@@ -16,11 +15,7 @@ const ProductInfo = ({ info }) => {
         <h1 className="title">Information</h1>
         <div className="item">
           <img
-            src={
-              info.img
-                ? info.img
-                : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
-            }
+            src={info.img === 'NC' ? emptyProduct : info.img}
             alt="productImg"
             className="itemImg"
           />

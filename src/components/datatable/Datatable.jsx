@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
 import CircularProgress from '@mui/material/CircularProgress';
 import ProductInfo from '../singleInfo/ProductInfo';
 import InfoCustomer from '../singleInfo/InfoCustomer';
@@ -41,27 +40,6 @@ const Datatable = ({
       break;
   }
 
-  const useStyles = makeStyles(theme => ({
-    root: {
-      height: '50vh',
-      // backgroundColor: 'blue',
-      [theme.breakpoints.up('sm')]: {
-        // backgroundColor: 'red',
-      },
-      [theme.breakpoints.up('md')]: {
-        // backgroundColor: 'green',
-      },
-      [theme.breakpoints.up('lg')]: {
-        // backgroundColor: 'orange',
-      },
-      [theme.breakpoints.up('xl')]: {
-        // backgroundColor: 'cyan',
-      },
-    },
-  }));
-
-  const classes = useStyles();
-
   useEffect(() => {
     console.log('data selection', data.selected);
     nestedData
@@ -76,7 +54,7 @@ const Datatable = ({
     {
       field: 'action',
       headerName: 'Action',
-    
+
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -89,7 +67,7 @@ const Datatable = ({
                 className="deleteButton"
                 onClick={() => handleRemove(params.row._id)}
               >
-                <DeleteIcon/>
+                <DeleteIcon />
               </div>
             )}
           </div>
@@ -134,8 +112,7 @@ const Datatable = ({
         </div>
       </div>
       {selectedData && (
-        <div className={classes.root}>
-    
+        <div style={{ height: 300, width: '100%' }}>
           <DataGrid
             className="datagrid"
             getRowId={(r) => r._id}
@@ -152,7 +129,6 @@ const Datatable = ({
             }}
             selectionModel={selectedData}
           />
-    
         </div>
       )}
     </div>

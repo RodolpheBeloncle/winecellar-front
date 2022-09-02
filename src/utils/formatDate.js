@@ -5,5 +5,5 @@ export const formatDate = (date) => {
     month: 'long',
     day: 'numeric',
   };
-  return new Date(date).toLocaleDateString('fr-FR', optionsDate);
+  return new Date(date).toLocaleDateString('en-GB', optionsDate);
 };

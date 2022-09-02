@@ -1,11 +1,11 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { login } from '../../redux/apiCalls';
 import { mobile } from '../../responsive';
-import { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {useRef } from 'react';
+import { Link,useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -75,14 +75,18 @@ const Login = () => {
   const dispatch = useDispatch();
   const userAuth = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // const emailRef = useRef();
+  // const passwordRef = useRef();
 
   const handleLogin = (e) => {
     e.preventDefault();
     login(dispatch, {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
+      email: email,
+      password: password,
+      // email: emailRef.current.value,
+      // password: passwordRef.current.value,
     });
   };
 
@@ -90,23 +94,34 @@ const Login = () => {
     if (userAuth) {
       navigate('/');
     }
-  }, [userAuth, navigate]);
+    console.log('test', email, password);
+  }, [userAuth, navigate,email,password]);
 
   return (
     <Container>
       <Wrapper>
         <Title>Login</Title>
         <Form onSubmit={(e) => handleLogin(e)}>
-          <Input type="email" placeholder="email" ref={emailRef} />
-          <Input type="password" placeholder="password" ref={passwordRef} />
+          <Input
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Button type="submit">Connect</Button>
           {/* {error && <Error> Something went wrong </Error>} */}
-          {/* <LinkTo>Forgotten password ?</LinkTo>
+          <LinkTo>Forgotten password ?</LinkTo>
           <LinkTo>
             <Link className="link" to="/register">
               Create new Account
             </Link>
-          </LinkTo> */}
+          </LinkTo>
         </Form>
       </Wrapper>
     </Container>

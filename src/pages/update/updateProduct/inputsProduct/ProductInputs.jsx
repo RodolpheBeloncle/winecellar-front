@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './productInputs.scss';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import {
@@ -8,11 +8,12 @@ import {
 } from '../../../../formSource';
 import { WinesContext } from '../../../../wineContext/WinesContextProvider';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import emptyBottle from '../../../../img/emptyBottle.png';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
 import { userRequest } from '../../../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { makeStyles, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductInputs = ({ selection }) => {
   const classes = useStyles();
   const { isLoading, setIsLoading } = useContext(WinesContext);
+  const publicId = useSelector((state) => state.user.publicId);
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [inputsValue, setInputsValue] = useState({
@@ -41,7 +43,7 @@ const ProductInputs = ({ selection }) => {
     quantity: selection.quantity,
     country: '',
     type: '',
-    size: '',
+    content: '',
   });
 
   const handleChange = (e) => {
@@ -59,62 +61,80 @@ const ProductInputs = ({ selection }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const data = new FormData();
-
-    const { title, desc, vintage, price, quantity, country, type, size } =
-      inputsValue;
-    data.append('title', title);
-    data.append('desc', desc);
-    data.append('vintage', vintage);
-    data.append('quantity', quantity);
-    data.append('country', country);
-    data.append('price', price);
-    data.append('size', size);
-    data.append('type', type);
-
-    if (file) {
-      try {
-        data.append('img', file);
-      } catch (err) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    }).then((result) => {
+      if (!result.isConfirmed && result.isDismissed) {
         setIsLoading(false);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `Something went wrong with the file`,
-        });
+        return;
+      } else if (result.isConfirmed) {
+        if (file !== null) {
+          const inputFile = document.getElementById('file');
+          const fileData = new FormData();
+          fileData.append('img', inputFile?.files?.item(0));
+          fileData.append('publicId', publicId);
+          userRequest
+            .put(`/products/uploadFile/${selection._id}`, fileData)
+            .then((response) => {
+              console.log(response);
+              setIsLoading(false);
+            })
+            .catch((err) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Something went wrong!${err}`,
+              });
+            });
+        }
+        try {
+          const { title, desc, vintage, price, quantity, country, type, content } =
+            inputsValue;
+          const data = {
+            title,
+            desc,
+            vintage,
+            price,
+            quantity,
+            country,
+            type,
+            content,
+          };
+          userRequest
+            .put(`/products/update/${selection._id}`, data)
+            .then(() => {
+              Swal.fire({
+                title: `Product has been updated`,
+                showClass: {
+                  popup: 'animate__animated animate__fadeInDown',
+                },
+                hideClass: {
+                  popup: 'animate__animated animate__fadeOutUp',
+                },
+              });
+            })
+            .then(() => {
+              setIsLoading(false);
+              navigate('/products');
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Something went wrong!${err}`,
+              });
+            });
+        } catch (err) {}
       }
-    } else {
-      data.append('img', selection.img);
-    }
-
-    try {
-      await userRequest
-        .post(`/products/update/${selection._id}`, data)
-        .then(() => {
-          setIsLoading(false);
-          Swal.fire({
-            title: `wine  is updated`,
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown',
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp',
-            },
-          });
-
-          navigate('/products');
-        });
-    } catch (err) {
-      setIsLoading(false);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Something went wrong!${err}`,
-      });
-    }
+    });
   };
-
-  useEffect(() => [inputsValue, isLoading, selection]);
 
   return (
     <div className="productInputs">
@@ -125,7 +145,13 @@ const ProductInputs = ({ selection }) => {
         <div className="bottom">
           <div className="left">
             <img
-              src={file ? URL.createObjectURL(file) : selection.img}
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : selection.img === 'NC'
+                  ? emptyBottle
+                  : selection.img
+              }
               alt=""
             />
           </div>
@@ -139,15 +165,17 @@ const ProductInputs = ({ selection }) => {
                   <input
                     type="file"
                     id="file"
+                    defaultValue={file}
                     onChange={(e) => setFile(e.target.files[0])}
                     style={{ display: 'none' }}
                   />
                 </div>
 
                 {productInputs.map((input, index) => (
-                  <div className="formInput" key={input.id}>
+                  <div key={input.id} className="formInput">
                     <label>{input.label}</label>
                     <input
+                      key={index}
                       type={input.type}
                       placeholder={input.placeholder}
                       name={Object.keys(inputsValue)[index]}
@@ -168,10 +196,12 @@ const ProductInputs = ({ selection }) => {
                     }}
                   >
                     <option value="DEFAULT" disabled>
-                     wine type
+                      wine type
                     </option>
-                    {typeSelection.map((option) => (
-                      <option value={option.value}>{option.label}</option>
+                    {typeSelection.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
                     ))}
                   </select>
                   <label>Content</label>
@@ -185,8 +215,10 @@ const ProductInputs = ({ selection }) => {
                     <option value="DEFAULT" disabled>
                       content type
                     </option>
-                    {sizeSelection.map((option) => (
-                      <option value={option.value}>{option.label}</option>
+                    {sizeSelection.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
                     ))}
                   </select>
                 </div>

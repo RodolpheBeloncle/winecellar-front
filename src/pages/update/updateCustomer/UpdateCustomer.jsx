@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CustomerInputs from './inputsCustomer/CustomerInputs';
+import emptyCustomer from '../../../img/emptyCustomer.png';
 
 const UpdateCustomer = ({ info }) => {
-  useEffect(() => {}, [info]);
   return (
     <>
       <div className="single">
@@ -13,11 +13,7 @@ const UpdateCustomer = ({ info }) => {
                 <h1 className="title">Information</h1>
                 <div className="item">
                   <img
-                    src={
-                      info.img
-                        ? info.img
-                        : `https://cdn-icons-png.flaticon.com/512/149/149071.png`
-                    }
+                    src={info.img === 'NC' ? emptyCustomer : info.img}
                     alt="CustomerImg"
                     className="itemImg"
                   />

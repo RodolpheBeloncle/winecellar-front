@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './list.scss';
 import { useContext } from 'react';
 import Datatable from '../../components/datatable/Datatable';
 import { publicRequest, userRequest } from '../../utils/api';
 import { productColumns, customerColumns } from '../../datatablesource';
+import { useSelector } from 'react-redux';
 import { WinesContext } from '../../wineContext/WinesContextProvider';
 import Swal from 'sweetalert2';
 
@@ -16,10 +17,11 @@ const List = ({ dataType }) => {
     isLoading,
     setIsLoading,
   } = useContext(WinesContext);
+  const userId = useSelector((state) => state.user.userId);
 
   const getWineData = async () => {
     try {
-      const res = await publicRequest.get('/products/');
+      const res = await publicRequest.get(`/products/${userId}`);
       setWineData(res.data);
     } catch (e) {
       console.log(e);
@@ -28,7 +30,7 @@ const List = ({ dataType }) => {
 
   const getCustomerData = async () => {
     try {
-      const res = await publicRequest.get('/customers/');
+      const res = await publicRequest.get(`/customers/${userId}`);
       setCustomersList(res.data);
     } catch (e) {
       console.log(e);
@@ -52,6 +54,7 @@ const List = ({ dataType }) => {
         });
       });
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -62,6 +65,7 @@ const List = ({ dataType }) => {
   };
 
   const handleRemoveCustomer = async (id) => {
+   
     setIsLoading(true);
     try {
       await userRequest.delete(`/customers/${id}`).then(() => {
@@ -78,12 +82,14 @@ const List = ({ dataType }) => {
         });
       });
     } catch (err) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `${err}`,
-        // footer: '<a href="">Why do I have this issue?</a>',
-      });
+      setIsLoading(false);
+      console.log(err)
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Oops...',
+      //   text: `${err}`,
+      //   // footer: '<a href="">Why do I have this issue?</a>',
+      // });
     }
   };
 
@@ -121,6 +127,9 @@ const List = ({ dataType }) => {
     default:
       break;
   }
+
+  // useEffect(() => {console.log('userId', userId)},[userId]);
+
   return (
     <div className="list">
       <div className="listContainer">{data.customList}</div>
