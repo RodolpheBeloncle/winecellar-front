@@ -21,7 +21,7 @@ const NewProduct = ({ inputs, title }) => {
     quantity: 0,
     country: '',
     type: '',
-    size: '',
+    content: '',
   });
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ const NewProduct = ({ inputs, title }) => {
       } else if (result.isConfirmed) {
         setIsLoading(true);
 
-        const { title, desc, vintage, price, quantity, country, type, size } =
+        const { title, desc, vintage, price, quantity, country, type, content } =
           inputsValue;
         const data = {
           title,
@@ -62,7 +62,7 @@ const NewProduct = ({ inputs, title }) => {
           quantity,
           country,
           type,
-          size,
+          content,
         };
 
         userRequest
