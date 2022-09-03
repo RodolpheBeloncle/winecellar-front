@@ -1,4 +1,32 @@
 .table {
+
+  .datatableTitle {
+    width: 100%;
+    font-size: 24px;
+    color: gray;
+    margin-bottom: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    @include mediaQueryForMobile {
+      justify-content: space-around;
+      margin-top: 10px;
+     
+    }
+
+    .link {
+      text-decoration: none;
+      color: green;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid green;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
   .cellWrapper {
     display: flex;
     align-items: center;
@@ -9,34 +37,6 @@
       border-radius: 50%;
       margin-right: 10px;
       object-fit: cover;
-    }
-  }
-
-  .datatableTitle {
-    width: 100%;
-    font-size: 24px;
-    color: gray;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    @include mediaQueryForMobile {
-      justify-content: space-around;
-      margin-top: 10px;
-    }
-
-    .link {
-      text-decoration: none;
-      color: green;
-      font-size: 16px;
-      font-weight: 400;
-      border: 1px solid green;
-      padding: 5px;
-      margin-right: 20px;
-      margin-left: 20px;
-      border-radius: 5px;
-      cursor: pointer;
     }
   }
 

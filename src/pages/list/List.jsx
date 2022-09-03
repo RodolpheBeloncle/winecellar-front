@@ -84,12 +84,12 @@ const List = ({ dataType }) => {
     } catch (err) {
       setIsLoading(false);
       console.log(err)
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Oops...',
-      //   text: `${err}`,
-      //   // footer: '<a href="">Why do I have this issue?</a>',
-      // });
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `${err}`,
+        // footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   };
 
@@ -128,7 +128,6 @@ const List = ({ dataType }) => {
       break;
   }
 
-  // useEffect(() => {console.log('userId', userId)},[userId]);
 
   return (
     <div className="list">

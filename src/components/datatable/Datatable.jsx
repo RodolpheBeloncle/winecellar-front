@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 
+
 const Datatable = ({
   headersColumns,
   nestedData,
@@ -41,13 +42,10 @@ const Datatable = ({
   }
 
   useEffect(() => {
-    console.log('data selection', data.selected);
     nestedData
       .filter((element) => element._id === selectedData)
       .map((info) => console.log(info));
     refreshData();
-    // console.log('customlistdata', nestedData);
-    // console.log('dataType', title);
   }, [selectedData, title, isLoading]);
 
   const actionColumn = [
@@ -112,23 +110,25 @@ const Datatable = ({
         </div>
       </div>
       {selectedData && (
-        <div style={{ height: 300, width: '100%' }}>
-          <DataGrid
-            className="datagrid"
-            getRowId={(r) => r._id}
-            rows={nestedData}
-            columns={headersColumns.concat(actionColumn)}
-            pageSize={9}
-            rowsPerPageOptions={[9]}
-            onSelectionModelChange={(ids) => {
-              nestedData
-                .filter((element) => {
-                  return element._id === ids[0];
-                })
-                .map((item) => setSelectedData(item._id));
-            }}
-            selectionModel={selectedData}
-          />
+        <div className="">
+          <Box sx={{ height: '100vh', minWidth: 300, margin: 'auto auto' }}>
+            <DataGrid
+              className="datatable"
+              getRowId={(r) => r._id}
+              rows={nestedData}
+              columns={headersColumns.concat(actionColumn)}
+              pageSize={9}
+              rowsPerPageOptions={[9]}
+              onSelectionModelChange={(ids) => {
+                nestedData
+                  .filter((element) => {
+                    return element._id === ids[0];
+                  })
+                  .map((item) => setSelectedData(item._id));
+              }}
+              selectionModel={selectedData}
+            />
+          </Box>
         </div>
       )}
     </div>

@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import emptyBottle from '../../../../img/emptyBottle.png';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
-import { userRequest } from '../../../../utils/api';
+import { userRequest ,publicRequest} from '../../../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { makeStyles, Grid } from '@material-ui/core';
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductInputs = ({ selection }) => {
   const classes = useStyles();
-  const { isLoading, setIsLoading } = useContext(WinesContext);
+  const { isLoading, setIsLoading ,setWineData} = useContext(WinesContext);
+  const userId = useSelector((state)=> state.user.userId)
   const publicId = useSelector((state) => state.user.publicId);
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -55,6 +56,15 @@ const ProductInputs = ({ selection }) => {
     }
 
     setInputsValue((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const getWineData = async () => {
+    try {
+      const res = await publicRequest.get(`/products/${userId}`);
+      setWineData(res.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -82,6 +92,7 @@ const ProductInputs = ({ selection }) => {
           userRequest
             .put(`/products/uploadFile/${selection._id}`, fileData)
             .then((response) => {
+              getWineData()
               console.log(response);
               setIsLoading(false);
             })

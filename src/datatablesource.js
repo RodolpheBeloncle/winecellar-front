@@ -74,7 +74,7 @@ export const productColumns = [
             src={params.row.img === "NC" ? emptyBottle : params.row.img}
             alt="avatar"
           />
-          {params.row.customerName}
+          {params.row.title}
         </div>
       );
     },
@@ -102,7 +102,7 @@ export const productColumns = [
   {
     field: 'quantity',
     headerName: 'Quantity',
-    flex: 4,
+    flex: 1,
     renderCell: (params) => {
       return (
         <div className="cellWithImg">

@@ -58,12 +58,12 @@ const InfoProduct = ({ selectedId, wineData }) => {
                     {info.quantity > 0 ? info.quantity : 'outOfStock'}
                   </span>
                 </div>
-                {info.price && (
+               
                   <div className="detailItem">
                     <span className="itemKey">Unit Price:</span>
-                    <span className="itemValue">{info.price}€</span>
+                    <span className="itemValue">{info.price === 0 ? "No price provided" : `${info.price}€`}</span>
                   </div>
-                )}
+            
                 <div className="detailItem">
                   <span className="itemKey">Stock Value:</span>
                   <span className="itemValue">

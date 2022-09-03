@@ -17,9 +17,6 @@ const FormInput = ({ inputsValue, handleChange, userId }) => {
     setIsLoading(true);
     e.preventDefault();
 
-    // necessary built object packages to send data pic
-    //   Optional code to simulate delay
-
     const form = new FormData();
     form.append('username', inputsValue.username);
     if (inputsValue.file) {
@@ -75,8 +72,6 @@ const FormInput = ({ inputsValue, handleChange, userId }) => {
   };
 
   useEffect(() => {
-    console.log('isfetching', isLoading);
-    console.log(inputsValue);
   }, [inputsValue, isLoading]);
 
   return (
