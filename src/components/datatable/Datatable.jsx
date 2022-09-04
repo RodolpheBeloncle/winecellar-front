@@ -6,8 +6,8 @@ import InfoCustomer from '../singleInfo/InfoCustomer';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Link } from 'react-router-dom';
-
 
 const Datatable = ({
   headersColumns,
@@ -76,6 +76,9 @@ const Datatable = ({
   return (
     <div className="datatable">
       <div className="datatableTitle">
+        <Link to={`/`} className="backLink">
+          <ChevronLeftIcon />
+        </Link>
         {title}s
         <Link to={`/${title}s/new`} className="link">
           New {title}

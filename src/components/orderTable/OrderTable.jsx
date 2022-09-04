@@ -14,6 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { makeStyles, Grid } from '@material-ui/core';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -29,17 +30,15 @@ const styles = (theme) => ({
 });
 
 const useStyles = makeStyles((theme) => ({
- 
   container: {
     padding: '5px',
-    margin:'5px',
+    overflowX: 'auto',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'start',
     [theme.breakpoints.down('md')]: {
       textAlign: 'center',
     },
   },
- 
 }));
 
 const List = () => {
@@ -110,6 +109,9 @@ const List = () => {
     <>
       <TableContainer component={Paper} className="table">
         <div className="datatableTitle">
+          <Link to={`/`} className="backLink">
+            <ChevronLeftIcon />
+          </Link>
           Orders
           <Link to={`/orders/new`} className="link">
             New Order

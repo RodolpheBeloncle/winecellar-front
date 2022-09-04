@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './list.scss';
 import { useContext } from 'react';
 import Datatable from '../../components/datatable/Datatable';

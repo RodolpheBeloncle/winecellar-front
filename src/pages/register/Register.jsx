@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { mobile } from '../../responsive';
+import { desktop, mobile } from '../../responsive';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Link, useNavigate } from 'react-router-dom';
 import { publicRequest } from '../../utils/api';
-import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
-import LoginIcon from '@mui/icons-material/Login';
-import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -21,7 +21,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const Wrapper = styled.div`
   width: 40%;
   padding: 1.25rem;
@@ -33,175 +32,223 @@ const Wrapper = styled.div`
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.h1`
   font-size: 1.7rem;
   font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
+  text-align: center;
   margin: 1.2rem 0.7rem 0rem 0rem;
   padding: 0.7rem;
   border-radius: 2rem;
   border: solid 1px #dcc1a8;
 `;
 
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 360px;
+  padding: 0.5rem;
+`;
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const DisplayPassword = styled.div``;
+
 const Agreement = styled.span`
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin: 1.4rem 0rem;
+  text-align: center;
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: auto;
+  ${desktop({ margin: '1rem ', width: '20rem' })}
+  ${mobile({ marginRight: '5rem' })}
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 50%;
   border: none;
   padding: 1rem 1.2rem;
   background-color: #dcc1a8;
   border-radius: 2rem;
   color: white;
   cursor: pointer;
+  margin-left: 1rem;
   ${mobile({ marginLeft: '5rem' })}
 `;
 
-const LinkTo = styled.a`
-  display: flex;
-  flex-direction: row;
-  margin: 0.3rem 0rem;
-  font-size: 1rem;
-  text-decoration: underline;
+const LinkTo = styled.p`
+  width: 50%;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  padding: 1rem 1.2rem;
+  background-color: #dcc1a8;
+  border-radius: 2rem;
+  color: white;
   cursor: pointer;
-  margin-left: 50px;
+  margin-left: 1rem;
+  ${mobile({ marginLeft: '5rem' })}
+`;
+
+const ErrorYup = styled.p`
+  color: tomato;
+  text-align: center;
+  font-size: 0.9rem;
+  &::before {
+    display: inline;
+    content: '⚠';
+  }
+  ${desktop({ fontSize: '1.1rem' })}
 `;
 
 const Register = () => {
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
 
-  const onLogin = () => {
-    navigate('/');
-  };
+  const schema = yup
+    .object({
+      username: yup.string().max(50).required('Please set your username'),
+      email: yup
+        .string()
+        .email('Please set your email')
+        .max(255)
+        .required('Please set your email'),
+      password: yup.string().max(255).required('Please set your password'),
+      controlpassword: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'Password should be identical'),
+    })
+    .required();
 
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      email: '',
-      password: '',
-    },
-    validateOnChange: false,
-    validate: (values) => {
-      const errors = {};
-      if (!values.email) {
-        errors.email = 'Required';
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-      ) {
-        errors.email = 'Invalid email address';
-      }
-
-      if (!values.password) {
-        errors.password = 'Required';
-      } else if (values.password !== values.confirmPassword) {
-        errors.password = 'confirmed password is different';
-      }
-      setError(errors);
-      return errors;
-    },
-    onSubmit: (values) => {
-      publicRequest
-        .post(`auth/register`, values)
-        .then((response) => {
-          console.log(response.data.message);
-          onLogin()
-        })
-        .catch((error) => {
-          setError(true);
-
-          // console.log("Object keys",Object.entries(error.response.data[1]));
-          // setMessageError(Object.entries(error.response.data[1]));
-        });
-    },
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
+  const onSubmit = async (values) => {
+    const { username, email, password, controlpassword } = values;
+    try {
+      publicRequest.post(`auth/register`, {
+        username: username,
+        email: email,
+        password: password,
+        confirmPassword: controlpassword,
+      });
+
+      return navigate('/login');
+    } catch (err) {
+      setError(err.response.data);
+      console.log(err.response.data);
+    }
+  };
+
+  const handleChange = () => setChecked(!checked);
+  const onCancel = () => navigate('/login');
 
   return (
     <Container>
       <Wrapper>
-        <Title>Create new user account</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <span>
-            {formik.errors.username ? (
-              <div className="error">{formik.errors.username}</div>
-            ) : null}
-          </span>
+        <Title>Register</Title>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormContainer>
+            {errors.username && <ErrorYup>{errors.username.message}</ErrorYup>}
+            <Label>
+              {' '}
+              <Input
+                type="text"
+                placeholder="username"
+                name="username"
+                {...register('username')}
+              />
+            </Label>
+          </FormContainer>
 
-          <Input
-            id="username"
-            name="username"
-            type="username"
-            placeholder="username"
-            onChange={formik.handleChange}
-            value={formik.values.username}
-          />
+          <FormContainer>
+            {errors.email && <ErrorYup>{errors.email.message}</ErrorYup>}
+            <Label>
+              {' '}
+              <Input
+                type="text"
+                name="email"
+                placeholder="Email"
+                {...register('email')}
+              />
+            </Label>
+          </FormContainer>
 
-          <span>
-            {formik.errors.email ? (
-              <div className="error">{formik.errors.email}</div>
-            ) : null}
-          </span>
+          <FormContainer>
+            {errors.password && <ErrorYup>{errors.password.message}</ErrorYup>}
+            <Label>
+              {' '}
+              <Input
+                name="password"
+                placeholder="mot de passe"
+                type={checked ? 'text' : 'password'}
+                {...register('password')}
+              />
+            </Label>
+          </FormContainer>
 
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          <span>
-            {formik.errors.password ? (
-              <div className="error">{formik.errors.password}</div>
-            ) : null}
-          </span>
-
-          <Input
-            placeholder="password"
-            id="password"
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-          />
-          <Input
-            placeholder="confirm password"
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.confirmPassword}
-          />
+          <FormContainer>
+            {errors.controlpassword && (
+              <ErrorYup>{errors.controlpassword.message}</ErrorYup>
+            )}
+            <Label>
+              {' '}
+              <Input
+                type={checked ? 'text' : 'password'}
+                {...register('controlpassword')}
+                placeholder="Confirm password"
+              />
+            </Label>
+          </FormContainer>
+          <DisplayPassword>
+            <Label>
+              {' '}
+              Show Password
+              <Input
+                checked={checked}
+                onChange={handleChange}
+                type="checkbox"
+              />
+            </Label>
+          </DisplayPassword>
           <Agreement>
-            By creating an account, I consent to the processing of my data
-            personal data in accordance with the <b>PRIVACY POLICY</b>
+            By creating an account, I consent to the processing of my personal
+            data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button type="submit">Create</Button>
-          {error && (
-            <>
-              <br />
-              <span style={{ color: 'red' }}>{messageError}</span>
-              <br />
-            </>
-          )}
-
-          <LinkTo>
-            <Link className="link" to="/login">
-              <LoginIcon />
-              <br />
-              Back to login page
-            </Link>
-          </LinkTo>
+          <ButtonContainer>
+            <Button>Register</Button>
+            <LinkTo onClick={onCancel}>Login</LinkTo>
+          </ButtonContainer>
         </Form>
       </Wrapper>
     </Container>
