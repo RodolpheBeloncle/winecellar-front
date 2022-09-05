@@ -187,7 +187,7 @@ const Register = () => {
               {' '}
               <Input
                 type="text"
-                placeholder="username"
+                placeholder="Username"
                 name="username"
                 {...register('username')}
               />
@@ -213,7 +213,7 @@ const Register = () => {
               {' '}
               <Input
                 name="password"
-                placeholder="mot de passe"
+                placeholder="Password"
                 type={checked ? 'text' : 'password'}
                 {...register('password')}
               />
