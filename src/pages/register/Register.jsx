@@ -4,7 +4,7 @@ import { desktop, mobile } from '../../responsive';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { publicRequest } from '../../utils/api';
 
 const Container = styled.div`
@@ -34,7 +34,10 @@ const Form = styled.form`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
 `;
+
 
 const Title = styled.h1`
   font-size: 1.7rem;
@@ -229,9 +232,8 @@ const Register = () => {
                 placeholder="Confirm password"
               />
             </Label>
-          </FormContainer>
-          <DisplayPassword>
-            <Label>
+            <DisplayPassword>
+            <Label style={{paddingTop: '10px'}}>
               {' '}
               Show Password
               <Input
@@ -241,6 +243,8 @@ const Register = () => {
               />
             </Label>
           </DisplayPassword>
+          </FormContainer>
+         
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
