@@ -31,7 +31,7 @@ const Wrapper = styled.div`
 
 const Form = styled.form`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
