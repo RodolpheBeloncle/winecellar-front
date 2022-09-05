@@ -116,6 +116,7 @@ const Datatable = ({
         <div className="">
           <Box sx={{ height: '100vh', minWidth: 300, margin: 'auto auto' }}>
             <DataGrid
+              style={{ alignItems: 'stretch' }}
               className="datatable"
               getRowId={(r) => r._id}
               rows={nestedData}

@@ -38,7 +38,6 @@ const Form = styled.form`
   margin-bottom: 1rem;
 `;
 
-
 const Title = styled.h1`
   font-size: 1.7rem;
   font-weight: 300;
@@ -82,8 +81,8 @@ const Agreement = styled.span`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  margin: auto;
+  justify-content: space-between;
+  flex-direction: row;
   ${desktop({ margin: '1rem ', width: '20rem' })}
   ${mobile({ marginRight: '5rem' })}
 `;
@@ -233,18 +232,18 @@ const Register = () => {
               />
             </Label>
             <DisplayPassword>
-            <Label style={{paddingTop: '10px'}}>
-              {' '}
-              Show Password
-              <Input
-                checked={checked}
-                onChange={handleChange}
-                type="checkbox"
-              />
-            </Label>
-          </DisplayPassword>
+              <Label style={{ paddingTop: '10px' }}>
+                {' '}
+                Show Password
+                <Input
+                  checked={checked}
+                  onChange={handleChange}
+                  type="checkbox"
+                />
+              </Label>
+            </DisplayPassword>
           </FormContainer>
-         
+
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
