@@ -93,7 +93,6 @@ const ProductInputs = ({ selection }) => {
             .put(`/products/uploadFile/${selection._id}`, fileData)
             .then((response) => {
               getWineData()
-              console.log(response);
               setIsLoading(false);
             })
             .catch((err) => {

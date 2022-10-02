@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { customerInputs } from '../../../../formSource';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
-import { userRequest } from '../../../../utils/api';
+import { userRequest,publicRequest } from '../../../../utils/api';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import emptyCustomer from '../../../../img/emptyCustomer.png';
@@ -14,8 +14,9 @@ import emptyCustomer from '../../../../img/emptyCustomer.png';
 const CustomerInputs = ({ selection }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const userId = useSelector((state)=> state.user.userId)
   const publicId = useSelector((state) => state.user.publicId);
-  const { isLoading, setIsLoading } = useContext(WinesContext);
+  const { isLoading, setIsLoading,setCustomersList } = useContext(WinesContext);
   const [inputsValue, setInputsValue] = useState({
     customerName: '',
     email: '',
@@ -29,6 +30,17 @@ const CustomerInputs = ({ selection }) => {
     let value = e.target.value;
 
     setInputsValue((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const getCustomerData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await publicRequest.get(`/customers/${userId}`);
+      setCustomersList(res.data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -56,7 +68,7 @@ const CustomerInputs = ({ selection }) => {
           userRequest
             .put(`/customers/uploadFile/${selection._id}`, fileData)
             .then((response) => {
-              console.log(response);
+              getCustomerData()
               setIsLoading(false);
             })
             .catch((err) => {

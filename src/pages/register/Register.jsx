@@ -132,6 +132,7 @@ const Register = () => {
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState('');
 
+  // initialize yup regarding inputs fields
   const schema = yup
     .object({
       username: yup.string().max(50).required('Please set your username'),
@@ -147,6 +148,7 @@ const Register = () => {
     })
     .required();
 
+    // apply yup schema to yup useform
   const {
     register,
     formState: { errors },
@@ -155,6 +157,7 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
+  // initialize onSubmit function to send data on register
   const onSubmit = async (values) => {
     const { username, email, password, controlpassword } = values;
     try {
